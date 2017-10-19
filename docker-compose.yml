@@ -7,7 +7,6 @@ services:
       - 8080:8080
 
   mysql:
-    image: danida/beer_stock_for_rft_levelezo:sql_ready_for_use
+    image: danida/beer_stock_for_rft_levelezo:mysql_hopefully
     environment:
       MYSQL_ROOT_PASSWORD: admin
-      
