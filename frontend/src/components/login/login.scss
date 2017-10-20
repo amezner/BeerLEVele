@@ -1,0 +1,23 @@
+.login-content {
+  display:block;
+  box-sizing:border-box;
+  width:96%;
+  max-width:400px;
+  min-height:300px;
+  margin:auto;
+  padding:40px 20px 40px 20px;
+  background:#282828;
+  color:#fff;
+
+  .form-row{
+    margin-bottom:20px;
+    &:last-of-type {
+      margin-bottom:0px;
+    }
+  }
+
+  .button {
+    display:block;
+    width:100%;
+  }
+}
