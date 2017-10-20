@@ -1,30 +1,31 @@
 import React, { Component } from 'react';
 
+import FormRow from '../formrow';
 import Field from '../field';
 import Button from '../button';
 
 class Customerform extends Component {
   render() {
     return (
-      <div className="customer-form">
-        <div class="form-row">
+      <div className="customer-form content-width">
+        <FormRow>
           <Field type="text" placeholder="név" name="name" />
-        </div>
-        <div class="form-row">
+        </FormRow>
+        <FormRow>
           <Field type="text" placeholder="cím" name="address" />
-        </div>
-        <div class="form-row">
+        </FormRow>
+        <FormRow>
           <Field type="text" placeholder="telefonszám" name="phone" />
-        </div>
-        <div class="form-row">
+        </FormRow>
+        <FormRow>
           <Field type="text" placeholder="partnerszám" name="loyaltycard" />
-        </div>
-        <div class="form-row">
+        </FormRow>
+        <FormRow>
           Kedvezmény mértéke
-        </div>
-        <div class="form-row">
+        </FormRow>
+        <FormRow>
           <Button text="mentés" />
-        </div>
+        </FormRow>
       </div>
     );
   }

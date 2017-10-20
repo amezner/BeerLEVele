@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './login.css';
 
+import FormRow from '../formrow';
 import Field from '../field';
 import Button from '../button';
 
@@ -8,15 +9,15 @@ class Login extends Component {
   render() {
     return (
       <div className="login-content">
-        <div className="form-row">
+        <FormRow>
           <Field placeholder="felhasználónév" name="username" />
-        </div>
-        <div className="form-row">
+        </FormRow>
+        <FormRow>
           <Field type="password" name="password" placeholder="jelszó" />
-        </div>
-        <div className="form-row">
+        </FormRow>
+        <FormRow>
           <Button text="belépés" />
-        </div>
+        </FormRow>
       </div>
     );
   }

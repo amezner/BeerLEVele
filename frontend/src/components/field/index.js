@@ -1,14 +1,19 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import './field.css';
 
 class Field extends Component {
-  static get defaultProps() {
-      return {
-        type: 'text',
-        placeholder: '',
-        name: ''
-      };
-  }
+  static defaultProps = {
+    type: 'text',
+    placeholder: '',
+    name: ''
+  };
+
+  static propTypes = {
+    type: PropTypes.string,
+    placeholder: PropTypes.string,
+    name: PropTypes.string
+  };
 
   render() {
     const { type, placeholder, name } = this.props;
