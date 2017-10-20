@@ -1,15 +1,15 @@
 .field {
   display:block;
-  border:none;
   box-sizing:border-box;
-  border:0px;
   outline:0;
   box-shadow: none;
   background:#ffffff;
-  border-radius:2px;
+
   padding:5px 12px 5px 12px;
   font-size:16px;
-  line-height:24px;
+  line-height:22px;
   height:48px;
   width:100%;
+  border:2px solid #282828;
+  border-radius:2px;
 }

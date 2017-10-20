@@ -5,15 +5,16 @@ class Field extends Component {
   static get defaultProps() {
       return {
         type: 'text',
-        placeholder: ''
+        placeholder: '',
+        name: ''
       };
   }
 
   render() {
-    const { type, placeholder } = this.props;
-    
+    const { type, placeholder, name } = this.props;
+
     return (
-      <input type={type} name="" placeholder={placeholder} className="field" />
+      <input type={type} name={name} placeholder={placeholder} className="field" />
     );
   }
 }

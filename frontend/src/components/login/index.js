@@ -9,13 +9,13 @@ class Login extends Component {
     return (
       <div className="login-content">
         <div className="form-row">
-          <Field placeholder="felhasználónév" />
+          <Field placeholder="felhasználónév" name="username" />
         </div>
         <div className="form-row">
-          <Field type="password" placeholder="jelszó" />
+          <Field type="password" name="password" placeholder="jelszó" />
         </div>
         <div className="form-row">
-          <Button />
+          <Button text="belépés" />
         </div>
       </div>
     );
