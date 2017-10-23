@@ -6,7 +6,7 @@
 
 $(document).ready(function (){
     console.log("asdasd");
-    $("#submit").click(function () {$.get('resources/Customer/SaveCustomer', {
+    $("#submit").click(function () {$.post('resources/Customer/SaveCustomer', {
                         name : $("#name").val(),
                         address:$("#address").val(),
                         email:$("#email").val(),

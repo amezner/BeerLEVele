@@ -9,10 +9,10 @@ import Beans.CustomerBean;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
-import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.core.Response;
 
 /**
@@ -29,15 +29,14 @@ public class CustomerController {
     private CustomerBean customerBean;
 
     @Path("SaveCustomer")
-    @GET
+    @POST
     @Produces("text/plain")
-    public Response save(@QueryParam("name") String name, @QueryParam("address") String address, @QueryParam("email") String email, @QueryParam("phone") int phone, @QueryParam("loyalty") boolean loyaltycard, @QueryParam("discount") int discount) {
+    public void save(@FormParam("name") String name, @FormParam("address") String address, @FormParam("email") String email, @FormParam("phone") int phone, @FormParam("loyalty") boolean loyaltycard, @FormParam("discount") int discount) {
         try {
             customerBean.insertCustomer(name, address, email, phone, loyaltycard, discount);
         } catch (Exception ex) {
-            return Response.status(0).build();
+            ex.printStackTrace();
         }
-        return Response.status(1).build();
 
     }
 

@@ -1,12 +1,30 @@
-version: '3'
+version: "3.0"
 services:
   backend:
-    image: danida/beer_stock_for_rft_levelezo:glassfish_ready_for_use
+    image: danida/beer_stock_for_rft_levelezo:GLASSFISH
     ports:
       - 4848:4848
       - 8080:8080
+    networks: 
+      my_net: 
+          ipv4_address: 192.168.2.2
 
   mysql:
-    image: danida/beer_stock_for_rft_levelezo:mysql_hopefully
+    image: danida/beer_stock_for_rft_levelezo:SQL
     environment:
       MYSQL_ROOT_PASSWORD: admin
+    networks: 
+      my_net: 
+        ipv4_address: 192.168.2.3
+
+      
+    volumes:
+      - my-datavolume:/var/lib/mysql
+volumes:
+  my-datavolume:
+networks:
+  my_net:
+     driver: bridge
+     ipam:
+          config: 
+               - subnet: 192.168.2.0/24
