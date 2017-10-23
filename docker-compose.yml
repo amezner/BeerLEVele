@@ -1,0 +1,12 @@
+version: '3'
+services:
+  backend:
+    image: danida/beer_stock_for_rft_levelezo:glassfish_ready_for_use
+    ports:
+      - 4848:4848
+      - 8080:8080
+
+  mysql:
+    image: danida/beer_stock_for_rft_levelezo:mysql_hopefully
+    environment:
+      MYSQL_ROOT_PASSWORD: admin
