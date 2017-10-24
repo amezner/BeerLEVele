@@ -1,9 +1,15 @@
 import React, {Component} from 'react';
-import './login.css';
-
+import {get} from '../../lib/client';
 import FormRow from '../formrow';
 import Field from '../field';
 import Button from '../button';
+
+import AuthStore from '../../stores/authorization';
+import {observer} from 'mobx-react';
+import {withRouter} from 'react-router-dom';
+
+import './login.css';
+
 
 class Login extends Component {
   constructor(props) {
@@ -13,11 +19,13 @@ class Login extends Component {
 
   }
 
-  handleSubmit(e) {
+  async handleSubmit(e) {
     e.preventDefault();
     const {username, password} = this.refs;
-    console.log(username);
-    console.log(password);
+
+    AuthStore.isLoggedIn = true;
+    localStorage.isLoggedIn = true;
+    this.props.history.push(AuthStore.oldUrl);
   }
 
   render() {
@@ -28,7 +36,7 @@ class Login extends Component {
             <Field ref="username" placeholder="felhasználónév" value="Béla"/>
           </FormRow>
           <FormRow>
-            <Field ref="password" type="password"  placeholder="jelszó"/>
+            <Field ref="password" type="password" placeholder="jelszó"/>
           </FormRow>
           <FormRow>
             <Button text="belépés" type="submit"/>
@@ -39,4 +47,4 @@ class Login extends Component {
   }
 }
 
-export default Login;
+export default observer(withRouter(Login));
