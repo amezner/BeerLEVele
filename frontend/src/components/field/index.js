@@ -1,26 +1,42 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import './field.css';
 
 class Field extends Component {
+
   static defaultProps = {
     type: 'text',
     placeholder: '',
-    name: ''
+    value: ''
   };
 
   static propTypes = {
     type: PropTypes.string,
     placeholder: PropTypes.string,
-    name: PropTypes.string
+    value: PropTypes.string
   };
 
-  render() {
-    const { type, placeholder, name } = this.props;
+  constructor(props) {
+    super(props);
 
-    return (
-      <input type={type} name={name} placeholder={placeholder} className="field" />
-    );
+    this.handleChange = this.handleChange.bind(this);
+
+    this.state = {
+      value: props.value
+    };
+  }
+
+  handleChange(arg1) {
+    const value = arg1.target.value;
+
+    this.setState({value});
+  }
+
+  render() {
+    const {type, placeholder} = this.props;
+    const {value} = this.state;
+
+    return (<input type={type} placeholder={placeholder} className="field" value={value} onChange={this.handleChange}/>);
   }
 }
 

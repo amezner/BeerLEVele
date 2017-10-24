@@ -5,7 +5,8 @@ import './button.css';
 class Button extends Component {
   static defaultProps = {
     type: 'button',
-    text: 'gomb'
+    text: 'gomb',
+    clickEvt: null
   };
 
   static propTypes = {
@@ -14,9 +15,10 @@ class Button extends Component {
   };
 
   render() {
-    const { type, text } = this.props;
+    const { type, text, clickEvt } = this.props;
+    
     return (
-      <button type={type} className="button">{text}</button>
+      <button type={type} className="button" onClick={clickEvt} >{text}</button>
     )
   }
 }
