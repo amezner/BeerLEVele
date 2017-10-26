@@ -9,7 +9,7 @@ and open the template in the editor.
         <title>Customers</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="js/customer.js"></script>
     </head>
     <body>
@@ -19,6 +19,21 @@ and open the template in the editor.
         Phone: <input id="phone" type="text"  ><br>
         Loyalty Card: <input id="loyalty" type="checkbox" ><br>
         Discount: <input id="discount" type="text"  ><br>
-        <button id="submit">Add customer</button>
+        <button id="submit">Add customer</button><br>
+        <button id="getall">Get_all</button>
+        <button id="deletecustomer">Delete</button>
+        <table id="customer_table">
+            <tr>
+                <th>
+                    Customer
+                </th>
+                <th>
+                    Delete?
+                </th>
+            </tr>
+
+            
+        </table>
+
     </body>
 </html>
