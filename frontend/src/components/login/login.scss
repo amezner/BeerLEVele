@@ -1,20 +1,21 @@
+@import '../../global.scss';
+
 .login-content {
   display:block;
+  position:absolute;
+  left:0px;
+  right:0px;
+  top:50%;
   box-sizing:border-box;
   width:96%;
   max-width:400px;
   min-height:300px;
   margin:auto;
   padding:40px 20px 40px 20px;
-  background:#282828;
-  color:#fff;
+  background:$dark-gray;
+  color:$secondary-color;
+  @include transform(translateY(-50%));
 
-  .form-row{
-    margin-bottom:20px;
-    &:last-of-type {
-      margin-bottom:0px;
-    }
-  }
 
   .button {
     display:block;

@@ -1,6 +1,6 @@
 import join from 'url-join';
 
-const BASE_URL = 'http://localhost:3000/';
+const BASE_URL = 'http://localhost:8080/RFT_BEERLEVELE-war/resources/';
 
 const addHeaders = options => {
   const result = {
@@ -33,7 +33,6 @@ const methodFactory = (method, bodyAllowed = true) => {
       headers: {}
     }) => {
       options = addHeaders(options)
-
       return attachHandlers(fetch(join(BASE_URL, path), {
         ...defaultOptions,
         ...options,

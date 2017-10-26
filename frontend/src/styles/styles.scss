@@ -1,0 +1,38 @@
+@import 'variables.scss';
+@import 'mixins.scss';
+
+body {
+  font-size: $primary-fsize;
+  line-height: $primary-lheight;
+  color:$primary-color;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-overflow-scrolling: touch;
+  text-rendering: auto;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.content-width {
+  width:96%;
+  max-width:$content-width;
+  display:block;
+  margin:auto;
+}
+
+.form-row {
+  margin-bottom:20px;
+  &:last-of-type {
+    margin-bottom:§px;
+  }
+}
+
+.clear {
+  display:block;
+  float:none;
+  clear:both;
+  width:0px;
+  height:0px;
+}

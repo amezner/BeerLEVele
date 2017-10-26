@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {Redirect, withRouter} from 'react-router-dom';
+import {Component} from 'react';
+import {withRouter} from 'react-router-dom';
 import AuthStore from '../../stores/authorization';
 
 class Protected extends Component {
@@ -10,7 +10,7 @@ class Protected extends Component {
   }
 
   componentWillUpdate(nextProps, nextState) {
-    if (nextProps.isLoggedIn != this.props.isLoggedIn) {
+    if (nextProps.isLoggedIn !== this.props.isLoggedIn) {
       this.checkLoggedIn(nextProps);
     }
   }

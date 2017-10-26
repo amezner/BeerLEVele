@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './App.css';
+import './global.css';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import {observer} from 'mobx-react';
 
@@ -15,7 +15,7 @@ class App extends Component {
       <Router>
         <div>
           <Protected isLoggedIn={AuthStore.isLoggedIn}>
-            <Route exact path="/" component={ProductForm} />
+            <Route exact path="/" component={CustomerForm} />
             <Route path="/productform" component={ProductForm} />
             <Route path="/customerform" component={CustomerForm} />
           </Protected>
