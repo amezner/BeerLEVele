@@ -32,6 +32,10 @@ class Field extends Component {
     this.setState({value});
   }
 
+  get value() {
+    return this.state.value;
+  }
+
   render() {
     const {type, placeholder} = this.props;
     const {value} = this.state;

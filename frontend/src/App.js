@@ -1,18 +1,20 @@
 import React, { Component } from 'react';
 import './App.css';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
+import {observer} from 'mobx-react';
 
 import LoginPage from './components/login';
 import ProductForm from './components/productform';
 import CustomerForm from './components/customerform';
 import Protected from './components/protected';
+import AuthStore from './stores/authorization';
 
 class App extends Component {
   render() {
     return (
       <Router>
         <div>
-          <Protected>
+          <Protected isLoggedIn={AuthStore.isLoggedIn}>
             <Route exact path="/" component={ProductForm} />
             <Route path="/productform" component={ProductForm} />
             <Route path="/customerform" component={CustomerForm} />
@@ -24,4 +26,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default observer(App);

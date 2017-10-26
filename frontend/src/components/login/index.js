@@ -7,6 +7,7 @@ import Button from '../button';
 import AuthStore from '../../stores/authorization';
 import {observer} from 'mobx-react';
 import {withRouter} from 'react-router-dom';
+import {post} from '../../lib/client';
 
 import './login.css';
 
@@ -23,8 +24,7 @@ class Login extends Component {
     e.preventDefault();
     const {username, password} = this.refs;
 
-    AuthStore.isLoggedIn = true;
-    localStorage.isLoggedIn = true;
+    AuthStore.setIsLoggedIn(true);
     this.props.history.push(AuthStore.oldUrl);
   }
 

@@ -1,14 +1,16 @@
-import {observable} from 'mobx';
+import {extendObservable} from 'mobx';
 
-const defaultState = {
-  isLoggedIn: false,
-  oldUrl: '/'
-};
-
-if ( localStorage.isLoggedIn ) {
-  defaultState.isLoggedIn = true;
+class Auth {
+  constructor() {
+    extendObservable(this, {
+      isLoggedIn: !!localStorage.isLoggedIn,
+      oldUrl: '/'
+    });
+  }
+  setIsLoggedIn(value) {
+    localStorage.isLoggedIn = value;
+    this.isLoggedIn = value;
+  }
 }
 
-const Auth = observable(defaultState);
-
-export default Auth;
+export default new Auth();
