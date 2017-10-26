@@ -25,9 +25,9 @@ class Customerform extends Component {
       discount: 0
     };
     console.log(data);
-    // const response = await post('Customer/SaveCustomer', data);
-    //
-    // console.log(response);
+    const response = await post('Customer/SaveCustomer', data);
+
+    console.log(response);
   }
 
   render() {

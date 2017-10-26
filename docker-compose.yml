@@ -10,16 +10,31 @@ services:
           ipv4_address: 192.168.2.2
 
   mysql:
-    image: danida/beer_stock_for_rft_levelezo:SQL
+    image: mysql:5.6
     environment:
       MYSQL_ROOT_PASSWORD: admin
       MYSQL_DATABASE: beer_stock
+    volumes:
+      - ./beer_stock.sql:/docker-entrypoint-initdb.d/beer_stock.sql:ro
+      - ./data:/var/lib/mysql
     networks:
       my_net:
         ipv4_address: 192.168.2.3
-    volumes:
-      - ./beer_stock.sql:/docker-entrypoint-initdb.d/beer_stock.sql:ro
-      - ./my-datavolume:/var/lib/mysql
+
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    depends_on: [mysql]
+    environment:
+      PMA_HOST: 192.168.2.3
+      PMA_USER: root
+      PMA_PASSWORD: admin
+    ports:
+      - 8081:80
+    networks:
+      my_net:
+        ipv4_address: 192.168.2.4
+
 
 networks:
   my_net:
