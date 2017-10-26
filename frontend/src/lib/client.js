@@ -5,28 +5,28 @@ const BASE_URL = 'http://localhost:3000/';
 const addHeaders = options => {
   const result = {
     ...options
-  }
+  };
 
   if (!result.headers)
-    result.headers = {}
+    result.headers = {};
 
-  return result
+  return result;
 }
 
 const attachHandlers = promise => promise.then(response => new Promise((resolve, reject) => {
   if (response.ok && response.status === 204) {
-    return resolve()
+    return resolve();
   }
 
   response.json().then(response.ok
     ? resolve
-    : reject)
+    : reject);
 }))
 
 const methodFactory = (method, bodyAllowed = true) => {
   const defaultOptions = {
     method
-  }
+  };
 
   if (bodyAllowed) {
     return (path, body, options = {
@@ -44,17 +44,17 @@ const methodFactory = (method, bodyAllowed = true) => {
         },
         cache: 'no-store',
         body: JSON.stringify(body)
-      }))
+      }));
     }
   }
 
   return (path, options) => {
-    options = addHeaders(options)
+    options = addHeaders(options);
 
-    return attachHandlers(fetch(join(process.env.API_BASE_URL, path), {
+    return attachHandlers(fetch(join(BASE_URL, path), {
       ...defaultOptions,
       ...options
-    }))
+    }));
   }
 }
 
