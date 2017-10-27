@@ -27,9 +27,18 @@ public class CustomerFacade {
 
     public void saveCustomer(Customer cu) {
         Logger logger = LoggerFactory.getLogger(CustomerFacade.class);
-        logger.debug("persisitng");
+        logger.debug("Persist customer");
         em.persist(cu);
-
+    }
+    public void deleteCustomer(Customer cu){
+        Logger logger = LoggerFactory.getLogger(CustomerFacade.class);
+        logger.debug("Remove customer");
+        em.remove(cu);
+    }
+    public void editCustomer (Customer cu){
+        Logger logger = LoggerFactory.getLogger(CustomerFacade.class);
+        logger.debug("Editting customer");
+        em.merge(cu);
     }
 
     public List<Customer> findAll() {
@@ -37,8 +46,25 @@ public class CustomerFacade {
     }
     public List<Customer> findByName(String name){
         Logger logger = LoggerFactory.getLogger(CustomerFacade.class);
-        logger.debug("findbyname");
+        logger.debug("findCustomerbyname");
         return em.createNamedQuery("Customer.findByName").setParameter("name", name).getResultList();
     }
-
+    public Customer findById(Integer id){
+        Logger logger = LoggerFactory.getLogger(CustomerFacade.class);
+        logger.debug("findCustomerbyId");
+        return (Customer)em.createNamedQuery("Customer.findById").setParameter("id", id).getResultList().get(0);
+    }
+    public List<Customer> findByEmail(String email){
+        Logger logger = LoggerFactory.getLogger(CustomerFacade.class);
+        logger.debug("findByEmail");
+        return em.createNamedQuery("Customer.findByEmail").setParameter("email", email).getResultList();
+    }
+     public List<Customer> findByAddress(String address){
+        Logger logger = LoggerFactory.getLogger(CustomerFacade.class);
+        logger.debug("findByAddress");
+        return em.createNamedQuery("Customer.findByEmail").setParameter("address", address).getResultList();
+    }
+    
+    
+    
 }

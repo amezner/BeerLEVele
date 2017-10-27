@@ -6,7 +6,7 @@
 
 $(document).ready(function (){
     console.log("asdasd");
-    $("#submit").click(function () {$.post('resources/Customer/SaveCustomer', {
+    $("#submit").click(function () {$.post('resources/customer/savecustomer', {
                         name : $("#name").val(),
                         address:$("#address").val(),
                         email:$("#email").val(),
@@ -17,4 +17,23 @@ $(document).ready(function (){
                 }, function(responseText) {
                         $('#ajaxGetUserServletResponse').text(responseText);
                 })});
-    });
+          $("#getall").click(function () {
+              
+              console.log("asdasd");
+              $.get('resources/customer/getallcustomer', {
+                             
+                }, function(responseText) {
+                        $('#ajaxGetUserServletResponse').text(responseText);
+                })});  
+          $("#deletecustomer").click(function(){
+              console.log("delete");
+              $.ajax({
+                    url:'resources/customer/deletecustomer/11',
+                    type: 'DELETE',
+                    
+                    success: function(responseText) {
+                        $('#ajaxGetUserServletResponse').text(responseText);
+              }})});  
+            
+            
+    });    
