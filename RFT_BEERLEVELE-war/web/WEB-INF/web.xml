@@ -6,6 +6,7 @@
         <init-param>
             <param-name>com.sun.jersey.config.property.packages</param-name>
             <param-value>Controller</param-value>
+            <param-value>Config.NewCrossOriginResourceSharingFilter</param-value>
         </init-param>
         <load-on-startup>1</load-on-startup>    
     </servlet>    
