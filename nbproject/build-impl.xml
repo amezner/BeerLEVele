@@ -14,7 +14,7 @@ is divided into following sections:
   - cleanup
 
 -->
-<project xmlns:ear2="http://www.netbeans.org/ns/j2ee-earproject/2" basedir=".." default="default" name="RFT_BEERLEVELE-impl">
+<project xmlns:ear2="http://www.netbeans.org/ns/j2ee-earproject/2" basedir=".." default="default" name="RFT_-impl">
     <import file="ant-deploy.xml"/>
     <fail message="Please build using Ant 1.7.1 or higher.">
         <condition>
@@ -221,8 +221,8 @@ exists or setup the property manually. For example like this:
         </copy>
     </target>
     <target depends="init,deps-jar,pre-pre-compile,pre-compile" name="-do-compile-deps">
-        <copyfiles files="${reference.RFT_BEERLEVELE-war.dist-ear}" todir="${build.dir}//"/>
         <copyfiles files="${reference.RFT_BEERLEVELE-ejb.dist-ear}" todir="${build.dir}//"/>
+        <copyfiles files="${reference.RFT_BEERLEVELE-war.dist-ear}" todir="${build.dir}//"/>
     </target>
     <target name="post-compile">
         <!-- Empty placeholder for easier customization. -->
@@ -407,17 +407,17 @@ exists or setup the property manually. For example like this:
         <ear2:run-appclient subprojectname="${app.client}"/>
     </target>
     <target if="j2ee.appclient.mainclass.args" name="-as-retrieve-option-workaround" unless="j2ee.clientName">
-        <property name="client.jar" value="${dist.dir}/RFT_BEERLEVELEClient.jar"/>
+        <property name="client.jar" value="${dist.dir}/RFT_Client.jar"/>
         <sleep seconds="3"/>
-        <copy failonerror="false" file="${wa.copy.client.jar.from}/RFT_BEERLEVELE/RFT_BEERLEVELEClient.jar" todir="${dist.dir}"/>
+        <copy failonerror="false" file="${wa.copy.client.jar.from}/RFT_/RFT_Client.jar" todir="${dist.dir}"/>
         <copy failonerror="false" flatten="true" todir="${dist.dir}/">
-            <fileset dir="${wa.copy.client.jar.from}/RFT_BEERLEVELE" includes="**/RFT_BEERLEVELEClient.jar"/>
+            <fileset dir="${wa.copy.client.jar.from}/RFT_" includes="**/RFT_Client.jar"/>
         </copy>
-        <copy flatten="true" todir="${dist.dir}/RFT_BEERLEVELEClient">
-            <fileset dir="${wa.copy.client.jar.from}/RFT_BEERLEVELE" includes="**/*.*ar"/>
+        <copy flatten="true" todir="${dist.dir}/RFT_Client">
+            <fileset dir="${wa.copy.client.jar.from}/RFT_" includes="**/*.*ar"/>
         </copy>
-        <copy failonerror="false" flatten="false" todir="${dist.dir}/RFT_BEERLEVELEClient">
-            <fileset dir="${dist.dir}/gfdeploy/RFT_BEERLEVELE" includes="**/*.jar"/>
+        <copy failonerror="false" flatten="false" todir="${dist.dir}/RFT_Client">
+            <fileset dir="${dist.dir}/gfdeploy/RFT_" includes="**/*.jar"/>
         </copy>
     </target>
     <target depends="init" name="-init-run-macros">

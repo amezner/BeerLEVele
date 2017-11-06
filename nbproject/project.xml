@@ -3,16 +3,16 @@
     <type>org.netbeans.modules.j2ee.earproject</type>
     <configuration>
         <data xmlns="http://www.netbeans.org/ns/j2ee-earproject/2">
-            <name>RFT_BEERLEVELE</name>
+            <name>RFT_</name>
             <minimum-ant-version>1.6.5</minimum-ant-version>
             <web-module-libraries/>
             <web-module-additional-libraries>
                 <library>
-                    <file>${reference.RFT_BEERLEVELE-war.dist-ear}</file>
+                    <file>${reference.RFT_BEERLEVELE-ejb.dist-ear}</file>
                     <path-in-war>/</path-in-war>
                 </library>
                 <library>
-                    <file>${reference.RFT_BEERLEVELE-ejb.dist-ear}</file>
+                    <file>${reference.RFT_BEERLEVELE-war.dist-ear}</file>
                     <path-in-war>/</path-in-war>
                 </library>
             </web-module-additional-libraries>
