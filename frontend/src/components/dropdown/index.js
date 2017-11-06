@@ -16,7 +16,7 @@ class DropDown extends Component {
     name: PropTypes.string,
     id: PropTypes.string,
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    options: PropTypes.array
+    options: PropTypes.object
   };
 
   constructor(props) {
@@ -43,9 +43,9 @@ class DropDown extends Component {
       <span className="custom-select">
         <select name={name} id={id}>
             {
-              options.length > 0 ?
-                options.map(opt => {
-                  return <option value={opt.value}>{opt.label}</option>
+              Object.keys(options).length > 0 ?
+                Object.entries(options).map(([value, label]) => {
+                  return <option key={value} value={value}>{label}</option>
                 }) : null
             }
         </select>

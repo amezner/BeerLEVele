@@ -8,24 +8,12 @@ import DropDown from '../dropdown';
 
 class Customerform extends Component {
   static defaultProps = {
-    discountOptions: [
-      {
-        value: 0,
-        label: 'Kérem válasszon'
-      },
-      {
-        value: 1,
-        label: 'bronz'
-      },
-      {
-        value: 2,
-        label: 'ezüst'
-      },
-      {
-        value: 3,
-        label: 'arany'
-      }
-    ]
+    discountOptions: {
+      '0': 'Kérem válasszon',
+      '1': 'bronz',
+      '2': 'ezüst',
+      '3': 'arany'
+    }
   };
 
 
@@ -55,7 +43,6 @@ class Customerform extends Component {
 
   render() {
     const { discountOptions } = this.props;
-    console.log(discountOptions);
 
     return (
       <div className="customer-form content-width">
