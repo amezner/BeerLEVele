@@ -6,6 +6,7 @@
 package Facades;
 
 import Entities.Invoice;
+import Interfaces.FacadeInterface;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.LocalBean;
@@ -21,11 +22,29 @@ import org.slf4j.LoggerFactory;
  */
 @LocalBean
 @Stateless
-public class InvoiceFacade {
+public class InvoiceFacade implements FacadeInterface<Invoice>{
 
     @PersistenceContext(name = "RFT_BEERLEVELE-ejbPU")
     EntityManager em;
 
+    
+    
+    @Override
+    public void create(Invoice t) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void remove(Invoice t) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void edit(Invoice t) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    
     public List<Invoice> findAll() {
         Logger logger = LoggerFactory.getLogger(InvoiceFacade.class);
         logger.debug("findAllInvoices");
@@ -49,5 +68,6 @@ public class InvoiceFacade {
         logger.debug("findInvoiceByDiscount");
         return em.createNamedQuery("Invoice.findByDiscount").setParameter("discount", discount).getResultList();
     }
+
    
 }

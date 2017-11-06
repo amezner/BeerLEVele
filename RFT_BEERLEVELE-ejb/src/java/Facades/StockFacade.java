@@ -6,6 +6,7 @@
 package Facades;
 
 import Entities.Stock;
+import Interfaces.FacadeInterface;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -16,16 +17,26 @@ import org.slf4j.LoggerFactory;
  *
  * @author danida
  */
-public class StockFacade {
+public class StockFacade implements FacadeInterface<Stock> {
 
     @PersistenceContext(name = "RFT_BEERLEVELE-ejbPU")
     EntityManager em;
 
-    public void saveStock(Stock cu) {
+    @Override
+    public void create(Stock cu) {
         Logger logger = LoggerFactory.getLogger(StockFacade.class);
         logger.debug("Persist stock");
         em.persist(cu);
+    }
 
+    @Override
+    public void remove(Stock t) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void edit(Stock t) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     public List<Stock> findAll() {

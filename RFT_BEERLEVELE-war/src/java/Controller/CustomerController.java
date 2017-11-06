@@ -5,7 +5,7 @@
  */
 package Controller;
 
-import Logic.CustomerBean;
+import Logic.CustomerLogic;
 import Entities.Customer;
 import java.util.List;
 import javax.ejb.EJB;
@@ -17,8 +17,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.PathParam;
-import javax.ws.rs.QueryParam;
 
 /**
  *
@@ -31,14 +31,16 @@ import javax.ws.rs.QueryParam;
 public class CustomerController {
 
     @EJB
-    private CustomerBean customerBean;
+    private CustomerLogic customerLogic;
 
     @Path("savecustomer")
     @POST
     @Produces("text/plain")
-    public void save(@FormParam("name") String name, @FormParam("address") String address, @FormParam("email") String email, @FormParam("phone") int phone, @FormParam("loyalty") boolean loyaltycard, @FormParam("discount") int discount) {
+    public void saveCustomer(@HeaderParam("authToken") String authToken,@FormParam("name") String name, @FormParam("address") String address, @FormParam("email") String email, @FormParam("phone") int phone, @FormParam("loyalty") boolean loyaltycard, @FormParam("discount") int discount) {
+        System.out.println("adasdas" + authToken);
         try {
-            customerBean.insertCustomer(name, address, email, phone, loyaltycard, discount);
+           
+            customerLogic.insertCustomer(name, address, email, phone, loyaltycard, discount);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -48,9 +50,9 @@ public class CustomerController {
     @Path("getallcustomer")
     @GET
     @Produces("application/json")
-    public List<Customer> save() {
+    public List<Customer> getAll() {
         try {
-            return customerBean.findAllCustomer();
+            return customerLogic.findAllCustomer();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -61,8 +63,7 @@ public class CustomerController {
     @DELETE
     public void save(@PathParam ("id") Integer id) {
         try {
-            System.out.println(id);
-            customerBean.deleteCustomerById(id);
+            customerLogic.deleteCustomerById(id);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
