@@ -5,7 +5,7 @@ import Field from '../field';
 class Productform extends Component {
   render() {
     return (
-      <div class="content-width">
+      <div className="content-width">
         <FormRow>
           <Field name="cica" />
         </FormRow>

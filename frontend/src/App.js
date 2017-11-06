@@ -8,6 +8,7 @@ import ProductForm from './components/productform';
 import CustomerForm from './components/customerform';
 import Protected from './components/protected';
 import AuthStore from './stores/authorization';
+import CustomerList from './components/customerlist';
 
 class App extends Component {
   render() {

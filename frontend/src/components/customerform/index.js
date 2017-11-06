@@ -4,8 +4,31 @@ import {post} from '../../lib/client';
 import FormRow from '../formrow';
 import Field from '../field';
 import Button from '../button';
+import DropDown from '../dropdown';
 
 class Customerform extends Component {
+  static defaultProps = {
+    discountOptions: [
+      {
+        value: 0,
+        label: 'Kérem válasszon'
+      },
+      {
+        value: 1,
+        label: 'bronz'
+      },
+      {
+        value: 2,
+        label: 'ezüst'
+      },
+      {
+        value: 3,
+        label: 'arany'
+      }
+    ]
+  };
+
+
   constructor(props) {
     super(props);
 
@@ -31,6 +54,9 @@ class Customerform extends Component {
   }
 
   render() {
+    const { discountOptions } = this.props;
+    console.log(discountOptions);
+
     return (
       <div className="customer-form content-width">
         <form onSubmit={this.handleSubmit}>
@@ -50,7 +76,7 @@ class Customerform extends Component {
             <Field ref="loyalty" type="text" placeholder="partnerszám" name="loyalty" />
           </FormRow>
           <FormRow>
-            Kedvezmény mértéke
+            <DropDown name="discount" label="kedvezmény mértéke" id="discount" options={discountOptions} />
           </FormRow>
           <FormRow>
             <Button text="mentés" type="submit" />

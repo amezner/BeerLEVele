@@ -26,8 +26,8 @@ class Field extends Component {
     };
   }
 
-  handleChange(arg1) {
-    const value = arg1.target.value;
+  handleChange(evt) {
+    const value = evt.target.value;
 
     this.setState({value});
   }
