@@ -1,1 +1,9 @@
 .DS_Store
+/nbproject/private/
+/RFT_BEERLEVELE-ejb/nbproject/private/
+/RFT_BEERLEVELE-war/nbproject/private/
+/build/
+/RFT_BEERLEVELE-ejb/dist/
+/RFT_BEERLEVELE-war/dist/
+/RFT_BEERLEVELE-ejb/build/
+/RFT_BEERLEVELE-war/build/

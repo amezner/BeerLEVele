@@ -21,25 +21,26 @@ import org.slf4j.LoggerFactory;
 @ManagedBean
 @Stateless
 
-public class CustomerBean {
+public class CustomerLogic {
 
     @Inject
     CustomerFacade facade;
 
     public void insertCustomer(String name, String address, String email, int phone, boolean loyaltycard, int discount) throws Exception {
         Customer customer = new Customer(name, address, email, phone, loyaltycard, discount);
-        Logger logger = LoggerFactory.getLogger(CustomerBean.class);
+        Logger logger = LoggerFactory.getLogger(CustomerLogic.class);
         logger.debug("Check, if the customer is persistable");
         if (CheckIfCorrectCustomer(customer) && !CheckIfDuplicatedCustomer(customer)) {
-            facade.saveCustomer(customer);
+            facade.create(customer);
+        } else {
+            throw new Exception("This customer already exists, or the values are not correct");
         }
-        throw new Exception("This customer already exists, or the values are not correct");
     }
 
     public void deleteCustomerById(Integer id) throws Exception {
         Customer cu = facade.findById(id);
         if (cu != null) {
-            facade.deleteCustomer(cu);
+            facade.remove(cu);
         } else {
             throw new Exception("No such a customer");
 
@@ -47,7 +48,7 @@ public class CustomerBean {
     }
 
     public void editCustomer(Customer cu) {
-        facade.editCustomer(cu);
+        facade.edit(cu);
     }
 
     public List<Customer> findAllCustomer() {
@@ -64,6 +65,7 @@ public class CustomerBean {
     }
 
     private boolean CheckIfDuplicatedCustomer(Customer customer) {
+
         if (facade.findByName(customer.getName()).isEmpty()) {
             return false;
         }

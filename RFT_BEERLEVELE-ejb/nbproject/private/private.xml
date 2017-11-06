@@ -3,8 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/root/NetBeansProjects/RFT_BEERLEVELE/RFT_BEERLEVELE-ejb/src/java/Beans/CustomerBean.java</file>
-            <file>file:/root/NetBeansProjects/RFT_BEERLEVELE/RFT_BEERLEVELE-ejb/src/java/Facades/CustomerFacade.java</file>
+            <file>file:/C:/Users/danida/Desktop/RFT_/RFT_BEERLEVELE-ejb/src/java/Facades/UserFacade.java</file>
+            <file>file:/C:/Users/danida/Desktop/RFT_/RFT_BEERLEVELE-ejb/src/java/Helper/Authorizator.java</file>
+            <file>file:/C:/Users/danida/Desktop/RFT_/RFT_BEERLEVELE-ejb/src/java/Logic/CustomerLogic.java</file>
+            <file>file:/C:/Users/danida/Desktop/RFT_/RFT_BEERLEVELE-ejb/src/java/Entities/User.java</file>
+            <file>file:/C:/Users/danida/Desktop/RFT_/RFT_BEERLEVELE-ejb/src/java/Helper/Authenticator.java</file>
         </group>
     </open-files>
 </project-private>

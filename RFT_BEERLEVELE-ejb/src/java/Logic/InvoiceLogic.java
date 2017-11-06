@@ -9,6 +9,6 @@ package Logic;
  *
  * @author danida
  */
-public class InvoiceBean {
+public class InvoiceLogic {
     
 }
