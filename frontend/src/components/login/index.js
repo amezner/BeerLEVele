@@ -22,14 +22,11 @@ class Login extends Component {
   async handleSubmit(e) {
     e.preventDefault();
     const {username, password} = this.refs;
-    console.log(username.value);
-    console.log(password.value);
-    console.log(AuthStore.isLoggedIn);
 
-    // const resp = await get('/cica.json', {
-    //   username: username.value,
-    //   password: password.value
-    // });
+    const resp = await get('/cica.json', {
+      username: username.value,
+      password: password.value
+    });
 
     AuthStore.setIsLoggedIn(true);
     this.props.history.push(AuthStore.oldUrl);
@@ -46,7 +43,7 @@ class Login extends Component {
             <Field ref="password" type="password" placeholder="jelszó"/>
           </FormRow>
           <FormRow>
-            <Button text="belépés" type="submit"/>
+            <Button text="belépés" type="submit" />
           </FormRow>
         </form>
       </div>

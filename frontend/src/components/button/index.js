@@ -6,19 +6,22 @@ class Button extends Component {
   static defaultProps = {
     type: 'button',
     text: 'gomb',
-    clickEvt: null
+    clickEvt: null,
+    extraClass: ''
   };
 
   static propTypes = {
     type: PropTypes.string,
     text: PropTypes.string,
+    extraClass: PropTypes.string
   };
 
   render() {
-    const { type, text, clickEvt } = this.props;
-    
+    const { type, text, clickEvt, extraClass } = this.props;
+    const className = extraClass ? 'button '+extraClass : 'button';
+
     return (
-      <button type={type} className="button" onClick={clickEvt} >{text}</button>
+      <button type={type} className={className} onClick={clickEvt} >{text}</button>
     )
   }
 }

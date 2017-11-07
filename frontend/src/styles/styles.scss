@@ -1,10 +1,13 @@
 @import 'variables.scss';
 @import 'mixins.scss';
 
+@import url('https://fonts.googleapis.com/css?family=Titillium+Web:300,400,400i,700,700i&subset=latin-ext');
+
 body {
   font-size: $primary-fsize;
   line-height: $primary-lheight;
   color:$primary-color;
+  font-family:$fontstack;
 
   -webkit-font-smoothing: antialiased;
   -moz-font-smoothing: antialiased;
@@ -35,4 +38,24 @@ body {
   clear:both;
   width:0px;
   height:0px;
+}
+
+h1, h2, h3 {
+  font-weight:$bold-fweight;
+  margin:0px;
+}
+
+h1 {
+  font-size:42px;
+  line-height:52px;
+}
+
+h2 {
+  font-size:34px;
+  line-height:44px;
+}
+
+h3 {
+  font-size:26px;
+  line-height:36px;
 }
