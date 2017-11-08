@@ -23,10 +23,10 @@ class Login extends Component {
     e.preventDefault();
     const {username, password} = this.refs;
 
-    const resp = await get('/cica.json', {
-      username: username.value,
-      password: password.value
-    });
+    // const resp = await get('/cica.json', {
+    //   username: username.value,
+    //   password: password.value
+    // });
 
     AuthStore.setIsLoggedIn(true);
     this.props.history.push(AuthStore.oldUrl);
