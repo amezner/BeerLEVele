@@ -1,10 +1,13 @@
 .DS_Store
-/nbproject/private/
-/RFT_BEERLEVELE-ejb/nbproject/private/
-/RFT_BEERLEVELE-war/nbproject/private/
+/lib/
+/data/
+/nbproject/
+/dist/
 /build/
+/RFT_BEERLEVELE-ejb/nbproject/
+/RFT_BEERLEVELE-war/nbproject/
 /RFT_BEERLEVELE-ejb/dist/
 /RFT_BEERLEVELE-war/dist/
 /RFT_BEERLEVELE-ejb/build/
 /RFT_BEERLEVELE-war/build/
-/dist/
+**/build.xml
