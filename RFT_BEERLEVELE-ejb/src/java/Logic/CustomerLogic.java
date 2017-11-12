@@ -55,6 +55,9 @@ public class CustomerLogic {
         return facade.findAll();
 
     }
+    public Customer findCustomerById(int id){
+        return facade.findById(id);
+    }
 
     private boolean CheckIfCorrectCustomer(Customer customer) {
         if (customer.getLoyaltycard() == null || customer.getAddress() == null || customer.getDiscount() == null || customer.getEmail() == null || customer.getName() == null) {

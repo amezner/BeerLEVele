@@ -7,6 +7,7 @@ package Controller;
 
 import Logic.CustomerLogic;
 import Entities.Customer;
+import Helper.Authorizator;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -19,6 +20,7 @@ import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.QueryParam;
 
 /**
  *
@@ -32,41 +34,41 @@ public class CustomerController {
 
     @EJB
     private CustomerLogic customerLogic;
+    @EJB
+    private Authorizator authorizator;
 
     @Path("savecustomer")
     @POST
     @Produces("text/plain")
-    public void saveCustomer(@HeaderParam("authToken") String authToken,@FormParam("name") String name, @FormParam("address") String address, @FormParam("email") String email, @FormParam("phone") int phone, @FormParam("loyalty") boolean loyaltycard, @FormParam("discount") int discount) {
-        System.out.println("adasdas" + authToken);
-        try {
-           
-            customerLogic.insertCustomer(name, address, email, phone, loyaltycard, discount);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+    public void saveCustomer(@HeaderParam("authToken") String authToken, @FormParam("name") String name, @FormParam("address") String address, @FormParam("email") String email, @FormParam("phone") int phone, @FormParam("loyalty") boolean loyaltycard, @FormParam("discount") int discount) throws Exception {
+        authorizator.checkAuthorization(authToken, "admin");
+        customerLogic.insertCustomer(name, address, email, phone, loyaltycard, discount);
 
     }
 
     @Path("getallcustomer")
     @GET
     @Produces("application/json")
-    public List<Customer> getAll() {
-        try {
-            return customerLogic.findAllCustomer();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return null;
+    public List<Customer> getAll(@HeaderParam("authToken") String authToken) throws Exception {
+        authorizator.checkAuthorization(authToken, "customer");
+        return customerLogic.findAllCustomer();
+
     }
 
     @Path("deletecustomer/{id}")
     @DELETE
-    public void save(@PathParam ("id") Integer id) {
-        try {
-            customerLogic.deleteCustomerById(id);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+    public void save(@HeaderParam("authToken") String authToken,@PathParam("id") Integer id) throws Exception {
+        authorizator.checkAuthorization(authToken, "admin");
+        customerLogic.deleteCustomerById(id);
+
+    }
+
+    @Path("getcustomer")
+    @GET
+    public void getCustomer(@HeaderParam("authToken") String authToken,@QueryParam("id") int id) throws Exception {
+        authorizator.checkAuthorization(authToken, "operator");
+       
+        customerLogic.findCustomerById(id);
 
     }
 

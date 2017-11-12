@@ -5,14 +5,12 @@
  */
 package Controller;
 
-import Entities.Customer;
 import Helper.Authenticator;
-import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.security.auth.login.LoginException;
 import javax.ws.rs.FormParam;
-import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -26,22 +24,15 @@ import javax.ws.rs.Produces;
 @Path("authentication")
 
 public class LoginController {
-    
-    @EJB 
+
+    @EJB
     private Authenticator authenticator;
-    
-    
+
     @Path("login")
     @POST
     @Produces("application/json")
-    public String login( @FormParam("username") String username,@FormParam("password") String password) {
-        try {
-            return authenticator.login(username, password);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return "No such a user";
-    }
-    
+    public String login(@FormParam("username") String username, @FormParam("password") String password) throws LoginException {
+        return authenticator.login(username, password);
 
+    }
 }

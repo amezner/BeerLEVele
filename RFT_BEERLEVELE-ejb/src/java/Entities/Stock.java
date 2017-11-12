@@ -61,6 +61,15 @@ public class Stock implements Serializable {
     public Stock() {
     }
 
+    public Stock(String name, String description, Integer purchaseprice, Integer sellingprice, Integer onstockquantity, String type) {
+        this.name = name;
+        this.description = description;
+        this.purchaseprice = purchaseprice;
+        this.sellingprice = sellingprice;
+        this.onstockquantity = onstockquantity;
+        this.type = type;
+    }
+
     public Stock(Integer id) {
         this.id = id;
     }
