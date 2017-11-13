@@ -36,29 +36,40 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Stock.findByType", query = "SELECT s FROM Stock s WHERE s.type = :type")})
 public class Stock implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "ID")
-    private Integer id;
     @Size(max = 20)
     @Column(name = "name")
     private String name;
     @Size(max = 255)
     @Column(name = "description")
     private String description;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "purchaseprice")
-    private Integer purchaseprice;
+    private Double purchaseprice;
     @Column(name = "sellingprice")
-    private Integer sellingprice;
-    @Column(name = "onstockquantity")
-    private Integer onstockquantity;
+    private Double sellingprice;
     @Size(max = 20)
     @Column(name = "type")
     private String type;
 
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "ID")
+    private Integer id;
+    @Column(name = "onstockquantity")
+    private Integer onstockquantity;
+
     public Stock() {
+    }
+
+    public Stock(String name, String description, Double purchaseprice, Double sellingprice, Integer onstockquantity, String type) {
+        this.name = name;
+        this.description = description;
+        this.purchaseprice = purchaseprice;
+        this.sellingprice = sellingprice;
+        this.onstockquantity = onstockquantity;
+        this.type = type;
     }
 
     public Stock(Integer id) {
@@ -73,37 +84,6 @@ public class Stock implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Integer getPurchaseprice() {
-        return purchaseprice;
-    }
-
-    public void setPurchaseprice(Integer purchaseprice) {
-        this.purchaseprice = purchaseprice;
-    }
-
-    public Integer getSellingprice() {
-        return sellingprice;
-    }
-
-    public void setSellingprice(Integer sellingprice) {
-        this.sellingprice = sellingprice;
-    }
 
     public Integer getOnstockquantity() {
         return onstockquantity;
@@ -113,13 +93,6 @@ public class Stock implements Serializable {
         this.onstockquantity = onstockquantity;
     }
 
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
 
     @Override
     public int hashCode() {
@@ -144,6 +117,46 @@ public class Stock implements Serializable {
     @Override
     public String toString() {
         return "Entities.Stock[ id=" + id + " ]";
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Double getPurchaseprice() {
+        return purchaseprice;
+    }
+
+    public void setPurchaseprice(Double purchaseprice) {
+        this.purchaseprice = purchaseprice;
+    }
+
+    public Double getSellingprice() {
+        return sellingprice;
+    }
+
+    public void setSellingprice(Double sellingprice) {
+        this.sellingprice = sellingprice;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
     
 }

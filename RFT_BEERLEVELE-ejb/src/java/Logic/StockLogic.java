@@ -5,10 +5,64 @@
  */
 package Logic;
 
+import Entities.Stock;
+import Facades.StockFacade;
+import java.util.List;
+import javax.inject.Inject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  *
  * @author danida
  */
 public class StockLogic {
+         
+    @Inject
+    StockFacade facade;
+
+    public void insertStock(String name,String description,Double purchaseprice,Double sellingprice,int onstockquantity,String type) throws Exception {
+        Stock stock = new Stock(name, description, purchaseprice, sellingprice, onstockquantity, type);
+        Logger logger = LoggerFactory.getLogger(StockLogic.class);
+        logger.debug("Check, if the stock is persistable");
+        if (CheckIfCorrectStock(stock)) {
+            facade.create(stock);
+        } else {
+            throw new Exception("This stock already exists, or the values are not correct");
+        }
+    }
+
+    public void deleteStockById(Integer id) throws Exception {
+        Stock cu = facade.findStockById(id);
+        if (cu != null) {
+            facade.remove(cu);
+        } else {
+            throw new Exception("No such a stock");
+
+        }
+    }
+
+    public void editStock(Stock cu) {
+        facade.edit(cu);
+    }
+
+    public List<Stock> findAllStock() {
+        return facade.findAll();
+
+    }
+
+    private boolean CheckIfCorrectStock(Stock stock) {
+        if (stock.getSellingprice()== null || stock.getDescription() == null || stock.getName()== null || stock.getOnstockquantity() == null || stock.getPurchaseprice() == null || stock.getType()==null) {
+            return false;
+        }
+        return true;
+
+    }
+
+    public Stock findStockById(int id) {
+        return facade.findStockById(id);
+
+    }
+
     
 }

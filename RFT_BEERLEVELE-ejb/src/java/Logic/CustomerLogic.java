@@ -26,7 +26,7 @@ public class CustomerLogic {
     @Inject
     CustomerFacade facade;
 
-    public void insertCustomer(String name, String address, String email, int phone, boolean loyaltycard, int discount) throws Exception {
+    public void insertCustomer(String name, String address, String email, String phone, boolean loyaltycard, int discount) throws Exception {
         Customer customer = new Customer(name, address, email, phone, loyaltycard, discount);
         Logger logger = LoggerFactory.getLogger(CustomerLogic.class);
         logger.debug("Check, if the customer is persistable");
@@ -54,6 +54,9 @@ public class CustomerLogic {
     public List<Customer> findAllCustomer() {
         return facade.findAll();
 
+    }
+    public Customer findCustomerById(int id){
+        return facade.findById(id);
     }
 
     private boolean CheckIfCorrectCustomer(Customer customer) {

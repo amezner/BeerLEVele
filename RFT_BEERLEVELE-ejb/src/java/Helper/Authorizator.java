@@ -7,6 +7,9 @@ package Helper;
 
 import Entities.User;
 import Facades.UserFacade;
+import java.util.HashMap;
+import java.util.Map;
+import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
 import javax.faces.bean.ManagedBean;
 import javax.inject.Inject;
@@ -25,13 +28,20 @@ public class Authorizator {
 
     
     
-    enum Roles {
-        customer, admin, operator
-    }
+   
 
         private static Authorizator authorizator = null;
-
-    
+        private  Map<String,Integer> roles= new HashMap<String, Integer>();
+   
+     @PostConstruct
+     public void init(){
+         roles.put("admin", 100);
+         roles.put("operator",50);
+         roles.put("customer",1);
+     
+     }
+        
+        
     
     public Authorizator() {
     }
@@ -51,8 +61,7 @@ public class Authorizator {
             String username = Authenticator.getAuthorizationTokensStorage().get(authToken);
             User user = userfacade.findByUsername(username);
             
-            
-            if(user.getRole().toLowerCase().equals(requirement)){
+            if(roles.get(user.getRole().toLowerCase()) >= roles.get(requirement)){
                 return true;
             }
 
