@@ -1,4 +1,8 @@
 .DS_Store
+<<<<<<< HEAD
+=======
+/lib/
+>>>>>>> 866f50a20a45de34fe96ca511f846a2d23cb74ea
 /data/
 /nbproject/
 /dist/
@@ -9,4 +13,8 @@
 /RFT_BEERLEVELE-war/dist/
 /RFT_BEERLEVELE-ejb/build/
 /RFT_BEERLEVELE-war/build/
+<<<<<<< HEAD
 build.xml
+=======
+**/build.xml
+>>>>>>> 866f50a20a45de34fe96ca511f846a2d23cb74ea

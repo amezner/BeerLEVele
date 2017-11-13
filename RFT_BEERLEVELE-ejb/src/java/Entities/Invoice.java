@@ -20,6 +20,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -35,6 +36,23 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Invoice.findByDate", query = "SELECT i FROM Invoice i WHERE i.date = :date")
     , @NamedQuery(name = "Invoice.findByDiscount", query = "SELECT i FROM Invoice i WHERE i.discount = :discount")})
 public class Invoice implements Serializable {
+
+    @Size(max = 100)
+    @Column(name = "name")
+    private String name;
+    @Size(max = 200)
+    @Column(name = "address")
+    private String address;
+    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
+    @Size(max = 100)
+    @Column(name = "email")
+    private String email;
+    // @Pattern(regexp="^\\(?(\\d{3})\\)?[- ]?(\\d{3})[- ]?(\\d{4})$", message="Invalid phone/fax format, should be as xxx-xxx-xxxx")//if the field contains phone or fax number consider using this annotation to enforce field validation
+    @Size(max = 20)
+    @Column(name = "phone")
+    private String phone;
+    @Column(name = "loyaltycard")
+    private Boolean loyaltycard;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -113,6 +131,46 @@ public class Invoice implements Serializable {
     @Override
     public String toString() {
         return "Entities.Invoice[ invoicenumber=" + invoicenumber + " ]";
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public Boolean getLoyaltycard() {
+        return loyaltycard;
+    }
+
+    public void setLoyaltycard(Boolean loyaltycard) {
+        this.loyaltycard = loyaltycard;
     }
     
 }

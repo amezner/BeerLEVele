@@ -21,7 +21,7 @@ public class StockLogic {
     @Inject
     StockFacade facade;
 
-    public void insertStock(String name,String description,int purchaseprice,int sellingprice,int onstockquantity,String type) throws Exception {
+    public void insertStock(String name,String description,Double purchaseprice,Double sellingprice,int onstockquantity,String type) throws Exception {
         Stock stock = new Stock(name, description, purchaseprice, sellingprice, onstockquantity, type);
         Logger logger = LoggerFactory.getLogger(StockLogic.class);
         logger.debug("Check, if the stock is persistable");

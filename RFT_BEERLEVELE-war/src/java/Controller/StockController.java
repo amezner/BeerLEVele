@@ -28,7 +28,7 @@ import javax.ws.rs.QueryParam;
  */
 @Stateless
 @LocalBean
-public class StockControlller {
+public class StockController {
 
     @EJB
     private StockLogic stockLogic;
@@ -38,7 +38,7 @@ public class StockControlller {
     @Path("savestock")
     @POST
     @Produces("text/plain")
-    public void saveStock(@HeaderParam("authToken") String authToken, @FormParam("name") String name, @FormParam("description") String description, @FormParam("purchaseprice") int purchaseprice, @FormParam("sellingprice") int sellingprice, @FormParam("onstockquantity") int onstockquantity, @FormParam("type") String type) throws Exception {
+    public void saveStock(@HeaderParam("authToken") String authToken, @FormParam("name") String name, @FormParam("description") String description, @FormParam("purchaseprice") Double purchaseprice, @FormParam("sellingprice") Double sellingprice, @FormParam("onstockquantity") int onstockquantity, @FormParam("type") String type) throws Exception {
         authorizator.checkAuthorization(authToken, "admin");
 
         stockLogic.insertStock(name, description, purchaseprice, sellingprice, onstockquantity, type);

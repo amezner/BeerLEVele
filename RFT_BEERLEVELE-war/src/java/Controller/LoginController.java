@@ -6,11 +6,13 @@
 package Controller;
 
 import Helper.Authenticator;
+import java.security.GeneralSecurityException;
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.security.auth.login.LoginException;
 import javax.ws.rs.FormParam;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -33,6 +35,13 @@ public class LoginController {
     @Produces("application/json")
     public String login(@FormParam("username") String username, @FormParam("password") String password) throws LoginException {
         return authenticator.login(username, password);
+
+    }
+    @Path("logout")
+    @POST
+    @Produces("application/json")
+    public void login(@HeaderParam("authToken") String token) throws LoginException, GeneralSecurityException {
+        authenticator.logout(token);
 
     }
 }
