@@ -28,7 +28,7 @@ body {
 .form-row {
   margin-bottom:20px;
   &:last-of-type {
-    margin-bottom:§px;
+    margin-bottom:0px;
   }
 }
 
@@ -40,22 +40,25 @@ body {
   height:0px;
 }
 
-h1, h2, h3 {
+h1, .like-h1,
+h2, .like-h2,
+h3, .like-h3
+ {
   font-weight:$bold-fweight;
   margin:0px;
 }
 
-h1 {
+h1, .like-h1 {
   font-size:42px;
   line-height:52px;
 }
 
-h2 {
+h2, .like-h2 {
   font-size:34px;
   line-height:44px;
 }
 
-h3 {
+h3, .like-h3 {
   font-size:26px;
   line-height:36px;
 }

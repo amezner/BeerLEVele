@@ -1,7 +1,8 @@
 /* color */
 $green: #10681a;
+$light-green: #b0caaf;
 $green-pressed: #004e09;
-$green-inactive: #b0caaf;
+$green-inactive: $light-green;
 
 $dark-green: #384333;
 
@@ -11,6 +12,8 @@ $blue-inactive: #afc8ca;
 
 $primary-color:$dark-green;
 $secondary-color:#ffffff;
+
+$error-color:#ec4242;
 
 
 /* Buttons */

@@ -36,9 +36,14 @@ class Customerform extends Component {
       discount: 0
     };
     console.log(data);
-    const response = await post('customer/savecustomer', data);
+    try {
+      const response = await post('customer/savecustomer', data);
+      console.log(response);
+    } catch (e) {
+      console.log(e.message);
+    }
 
-    console.log(response);
+
   }
 
   render() {
@@ -46,29 +51,32 @@ class Customerform extends Component {
 
     return (
       <div className="customer-form content-width">
-        <form onSubmit={this.handleSubmit}>
-          <FormRow>
-            <Field ref="name" type="text" placeholder="név" name="name" />
-          </FormRow>
-          <FormRow>
-            <Field ref="email" type="text" placeholder="e-mail cím" name="email" />
-          </FormRow>
-          <FormRow>
-            <Field ref="address" type="text" placeholder="cím" name="address" />
-          </FormRow>
-          <FormRow>
-            <Field ref="phone" type="text" placeholder="telefonszám" name="phone" />
-          </FormRow>
-          <FormRow>
-            <Field ref="loyalty" type="text" placeholder="partnerszám" name="loyalty" />
-          </FormRow>
-          <FormRow>
-            <DropDown name="discount" label="kedvezmény mértéke" id="discount" options={discountOptions} />
-          </FormRow>
-          <FormRow>
-            <Button text="mentés" type="submit" />
-          </FormRow>
-        </form>
+        <section className="content-section">
+          <h1>Vásárló hozzáadása</h1>
+          <form onSubmit={this.handleSubmit}>
+            <FormRow>
+              <Field ref="name" type="text" placeholder="név" name="name" />
+            </FormRow>
+            <FormRow>
+              <Field ref="email" type="text" placeholder="e-mail cím" name="email" />
+            </FormRow>
+            <FormRow>
+              <Field ref="address" type="text" placeholder="cím" name="address" />
+            </FormRow>
+            <FormRow>
+              <Field ref="phone" type="text" placeholder="telefonszám" name="phone" />
+            </FormRow>
+            <FormRow>
+              <Field ref="loyalty" type="text" placeholder="partnerszám" name="loyalty" />
+            </FormRow>
+            <FormRow>
+              <DropDown name="discount" label="kedvezmény mértéke" id="discount" options={discountOptions} />
+            </FormRow>
+            <FormRow extraClass="button-row">
+              <Button text="mentés" type="submit" />
+            </FormRow>
+          </form>
+        </section>
       </div>
     );
   }

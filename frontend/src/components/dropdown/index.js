@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+import './dropdown.css';
+
 class DropDown extends Component {
 
   static defaultProps = {

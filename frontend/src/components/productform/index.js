@@ -6,9 +6,12 @@ class Productform extends Component {
   render() {
     return (
       <div className="content-width">
-        <FormRow>
-          <Field name="cica" />
-        </FormRow>
+        <section className="content-section">
+          <h1>Termék hozzáadása</h1>
+          <FormRow>
+            <Field placeholder="termék név" />
+          </FormRow>
+        </section>
       </div>
     );
   }

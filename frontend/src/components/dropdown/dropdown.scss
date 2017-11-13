@@ -1,0 +1,69 @@
+@import '../../global.scss';
+
+.custom-select {
+  position:relative;
+  display:block;
+  height:50px;
+  box-sizing:border-box;
+  z-index:1;
+
+  &:before {
+    width:100%;
+    height:100%;
+    content:'';
+    display:block;
+    position:absolute;
+    top:0px;
+    left:0px;
+    border:$border-style;
+    border-radius:$border-radius;
+    z-index:2;
+    box-sizing:border-box;
+  }
+
+  &:after {
+    content:'';
+    z-index:2;
+    position:absolute;
+    right:15px;
+    top:0px;
+    bottom:0px;
+    margin:auto;
+    display:block;
+    width:10px;
+    height:10px;
+    box-sizing:border-box;
+    border-bottom:1px solid $green;
+    border-left:1px solid $green;
+    @include transform(rotate(-45deg));
+  }
+
+  select {
+    z-index:4;
+    display:block;
+    position:relative;
+    width:100%;
+    height:50px;
+    padding:0px 35px 0px 15px;
+    font-family: $fontstack;
+    font-size:$primary-fsize;
+    line-height:$primary-lheight;
+    box-shadow: none;
+    background: none;
+    outline:0;
+    border:none;
+    @include appearance(none);
+
+    &::-ms-expand{
+      display:none;
+    }
+  }
+}
+
+@-moz-document url-prefix(){
+  .custom-select{
+    select{
+      text-indent: -2px;
+    }
+  }
+}

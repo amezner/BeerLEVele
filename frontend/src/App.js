@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import {observer} from 'mobx-react';
 
 import LoginPage from './components/login';
+import Layout1 from './components/layout1';
 import ProductForm from './components/productform';
 import CustomerForm from './components/customerform';
 import Protected from './components/protected';
@@ -16,9 +17,12 @@ class App extends Component {
       <Router>
         <div>
           <Protected isLoggedIn={AuthStore.isLoggedIn}>
-            <Route exact path="/" component={CustomerForm} />
-            <Route path="/productform" component={ProductForm} />
-            <Route path="/customerform" component={CustomerForm} />
+            <Layout1>
+              <Route exact path="/" component={CustomerForm} />
+              <Route path="/productform" component={ProductForm} />
+              <Route path="/customerform" component={CustomerForm} />
+              <Route path="/customerlist" component={CustomerList} />
+            </Layout1>
           </Protected>
           <Route path="/login" component={LoginPage} />
         </div>

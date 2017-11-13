@@ -1,0 +1,60 @@
+@import '../../global.scss';
+
+header {
+  background:$green;
+  box-sizing:border-box;
+  height:93px;
+  margin-bottom:95px;
+
+  .content-width {
+    position:relative;
+    height:100%;
+  }
+
+  .menu-outer {
+    position:absolute;
+    width:60px;
+    height:100%;
+    display:block;
+    top:0px;
+    left:0px;
+  }
+
+  .logo-content {
+    text-align:center;
+    height:26px;
+    width:224px;
+    display:block;
+    position:absolute;
+    top:0px;
+    left:0px;
+    right:0px;
+    bottom:0px;
+    margin:auto;
+  }
+}
+
+body {
+  background:#dcefdb;
+}
+
+#wrapper {
+  padding-bottom:50px;
+
+  .content-section {
+    background:#ffffff;
+    border-radius:$border-radius;
+    padding:40px;
+    box-sizing:border-box;
+    box-shadow: 0px 10px 15px rgba(17, 53, 21, 0.2);
+    margin-bottom:20px;
+
+    h1 {
+      margin-bottom:40px;
+    }
+
+    .button-row {
+      text-align:right;
+    }
+  }
+}

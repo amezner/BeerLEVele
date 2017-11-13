@@ -86,7 +86,7 @@
   :-ms-input-placeholder      {@content}
 }
 
-@mixin selection{
+@mixin selection {
     ::selection {@content}
     ::-moz-selection {@content}
     :-moz-selection {@content}
@@ -138,4 +138,10 @@
 @mixin transform($transforms) {
   -webkit-transform: $transforms;
           transform: $transforms;
+}
+
+@mixin appearance ($appearance) {
+  -webkit-appearance: $appearance;
+  -moz-appearance: $appearance;
+  appearance: $appearance;
 }
