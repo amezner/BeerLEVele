@@ -61,5 +61,16 @@ create table invoicedproducts (
 	FOREIGN KEY (`invoicenumber`) REFERENCES `invoice`(`invoicenumber`)
 );
 
+create table order (
+ID  int NOT NULL AUTO_INCREMENT, 
+uid VARCHAR(100), 
+stock_id int, 
+quantity int, 
+foreign key (stock_id) references stock(ID),
+primary key (ID));
+
 SET FOREIGN_KEY_CHECKS=1;
 COMMIT;
+
+
+
