@@ -9,7 +9,6 @@ $(document).ready(function () {
     var token;
     $("#submit").click(function () {
         $.ajax({
-
             url: 'resources/customer/savecustomer',
             type: 'POST',
             headers: {'authToken': token},
@@ -25,16 +24,16 @@ $(document).ready(function () {
             $('#ajaxGetUserServletResponse').text(responseText);
         })
     });
- /*   $("#getall").click(function () {
-
-        console.log("asdasd");
-       $.get('resources/customer/getallcustomer', {
-
-        }, function (responseText) {
-            $('#ajaxGetUserServletResponse').text(responseText);
-        })
-    });
-*/
+    /*   $("#getall").click(function () {
+     
+     console.log("asdasd");
+     $.get('resources/customer/getallcustomer', {
+     
+     }, function (responseText) {
+     $('#ajaxGetUserServletResponse').text(responseText);
+     })
+     });
+     */
     $("#deletecustomer").click(function () {
         $.ajax({
             url: 'resources/customer/deletecustomer/' + $("#azonosito").val(),
@@ -42,7 +41,6 @@ $(document).ready(function () {
             headers: {
                 'authToken': token
             },
-
             success: function (responseText) {
                 $('#ajaxGetUserServletResponse').text(responseText);
             }}
@@ -55,8 +53,6 @@ $(document).ready(function () {
             url: 'resources/authentication/login',
             data: {username: $('#username').val(), password: $('#password').val()},
             contentType: "application/json; charset=UTF-8",
-            
-
             complete: function (responseText) {
                 token = responseText.responseText;
             },
@@ -64,21 +60,20 @@ $(document).ready(function () {
     }
     );
 
- $("#getall").click(
-function () {
-    var request = $.ajax({
-      url: 'resources/customer/getallcustomer',
-    });
-  
-    request.done(function(resp) {
-      console.log(resp);
-    });
-  
-    request.fail(function(jqXHR, textStatus) {
-      console.log("Request failed: " + textStatus);
-    });
-});
+    $("#getall").click(
+            function () {
+                var request = $.ajax({
+                    url: 'resources/customer/getallcustomer',
+                });
 
+                request.done(function (resp) {
+                    console.log(resp);
+                });
+
+                request.fail(function (jqXHR, textStatus) {
+                    console.log("Request failed: " + textStatus);
+                });
+            });
 
 }
 );
