@@ -5,13 +5,10 @@
  */
 package Controller;
 
-import Facades.CustomerFacade;
-import Facades.StockFacade;
 import java.io.IOException;
-import javax.ws.rs.container.ContainerRequestContext;
-import javax.ws.rs.container.ContainerResponseContext;
-import javax.ws.rs.container.ContainerResponseFilter;
-import javax.ws.rs.ext.Provider;
+import com.sun.jersey.spi.container.ContainerRequest;
+import com.sun.jersey.spi.container.ContainerResponse;
+import com.sun.jersey.spi.container.ContainerResponseFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,23 +16,20 @@ import org.slf4j.LoggerFactory;
  *
  * @author danida
  */
-@Provider
-public class CORSFilter implements ContainerResponseFilter {
 
+public class CORSFilter implements ContainerResponseFilter {
     @Override
-    public void filter(ContainerRequestContext requestContext, ContainerResponseContext responseContext) throws IOException {
-        Logger logger = LoggerFactory.getLogger(CORSFilter.class);
-        logger.debug("CORS Activated");
-        responseContext.getHeaders().add(
-                "Access-Control-Allow-Origin", "*");
-        responseContext.getHeaders().add(
-                "Access-Control-Allow-Credentials", "true");
-        responseContext.getHeaders().add(
-                "Access-Control-Allow-Headers",
+    public ContainerResponse filter(ContainerRequest request,
+            ContainerResponse response) {
+
+        response.getHttpHeaders().add("Access-Control-Allow-Origin", "*");
+        response.getHttpHeaders().add("Access-Control-Allow-Headers",
                 "origin, content-type, accept, authorization");
-        responseContext.getHeaders().add(
-                "Access-Control-Allow-Methods",
+        response.getHttpHeaders().add("Access-Control-Allow-Credentials", "true");
+        response.getHttpHeaders().add("Access-Control-Allow-Methods",
                 "GET, POST, PUT, DELETE, OPTIONS, HEAD");
+
+        return response;
     }
 
 }
