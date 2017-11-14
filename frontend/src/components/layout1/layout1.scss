@@ -58,3 +58,12 @@ body {
     }
   }
 }
+
+.notification-container {
+  .notification-message {
+    .message {
+      font-size:$tertiary-fsize;
+      line-height:$tertiary-lheight;
+    }
+  }
+}

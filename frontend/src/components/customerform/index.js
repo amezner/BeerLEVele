@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import {post} from '../../lib/client';
+import {NotificationContainer, NotificationManager} from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
 
 import FormRow from '../formrow';
 import Field from '../field';
@@ -38,9 +40,10 @@ class Customerform extends Component {
     console.log(data);
     try {
       const response = await post('customer/savecustomer', data);
-      console.log(response);
+
+      NotificationManager.info('Érkezett válasz');
     } catch (e) {
-      console.log(e.message);
+      NotificationManager.error(e.message, 'Sikertelen mentés!', 30000);
     }
 
 
@@ -77,6 +80,8 @@ class Customerform extends Component {
             </FormRow>
           </form>
         </section>
+
+        <NotificationContainer />
       </div>
     );
   }
