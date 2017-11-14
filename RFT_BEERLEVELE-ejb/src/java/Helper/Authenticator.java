@@ -85,7 +85,7 @@ public class Authenticator {
         return false;
     }
 
-    public void logout(String authToken) throws GeneralSecurityException {
+    public String logout(String authToken) throws GeneralSecurityException {
 
         if (authorizationTokensStorage.containsKey(authToken)) {
 
@@ -94,7 +94,7 @@ public class Authenticator {
              * and will be made invalid.
              */
             authorizationTokensStorage.remove(authToken);
-            return;
+            return "Successful logout!";
 
         }
 

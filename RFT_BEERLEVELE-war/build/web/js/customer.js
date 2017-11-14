@@ -1,4 +1,4 @@
-/*
+/* 
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -7,9 +7,8 @@ var token;
 
 $(document).ready(function () {
     var token;
-    $("#submit").click(function () {
+    $("#add_customer").click(function () {
         $.ajax({
-
             url: 'resources/customer/savecustomer',
             type: 'POST',
             headers: {'authToken': token},
@@ -25,16 +24,35 @@ $(document).ready(function () {
             $('#ajaxGetUserServletResponse').text(responseText);
         })
     });
- /*   $("#getall").click(function () {
 
-        console.log("asdasd");
-       $.get('resources/customer/getallcustomer', {
-
+    $("#add_stock").click(function () {
+        $.ajax({
+            url: 'resources/stock/savestock',
+            type: 'POST',
+            headers: {'authToken': token},
+            data: {
+                name: $("#stockname").val(),
+                description: $("#stockdescription").val(),
+                purchaseprice: $("#purchaseprice").val(),
+                sellingprice: $("#sellingprice").val(),
+                onstockquantity: $("#onstockquantity").val(),
+                type: $("#type").val(),
+            }
         }, function (responseText) {
             $('#ajaxGetUserServletResponse').text(responseText);
         })
     });
-*/
+
+    /*   $("#getall").click(function () {
+     
+     console.log("asdasd");
+     $.get('resources/customer/getallcustomer', {
+     
+     }, function (responseText) {
+     $('#ajaxGetUserServletResponse').text(responseText);
+     })
+     });
+     */
     $("#deletecustomer").click(function () {
         $.ajax({
             url: 'resources/customer/deletecustomer/' + $("#azonosito").val(),
@@ -42,7 +60,6 @@ $(document).ready(function () {
             headers: {
                 'authToken': token
             },
-
             success: function (responseText) {
                 $('#ajaxGetUserServletResponse').text(responseText);
             }}
@@ -55,30 +72,36 @@ $(document).ready(function () {
             url: 'resources/authentication/login',
             data: {username: $('#username').val(), password: $('#password').val()},
             contentType: "application/json; charset=UTF-8",
-            
-
             complete: function (responseText) {
                 token = responseText.responseText;
             },
         });
     }
     );
+    
+    $("#logout").click(function () {
+        $.ajax({
+            url: 'resources/authentication/logout',
+            type: 'POST',
+            headers: {'authToken': token}
+        }, function (responseText) {
+            $('#ajaxGetUserServletResponse').text(responseText);
+        });
+    });
+    $("#getall").click(
+            function () {
+                var request = $.ajax({
+                    url: 'resources/customer/getallcustomer',
+                });
 
- $("#getall").click(
-function () {
-    var request = $.ajax({
-      url: 'resources/customer/getallcustomer',
-    });
-  
-    request.done(function(resp) {
-      console.log(resp);
-    });
-  
-    request.fail(function(jqXHR, textStatus) {
-      console.log("Request failed: " + textStatus);
-    });
-});
+                request.done(function (resp) {
+                    console.log(resp);
+                });
 
+                request.fail(function (jqXHR, textStatus) {
+                    console.log("Request failed: " + textStatus);
+                });
+            });
 
 }
 );
