@@ -8,6 +8,8 @@ package Facades;
 import Entities.Stock;
 import Interfaces.FacadeInterface;
 import java.util.List;
+import javax.ejb.LocalBean;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.slf4j.Logger;
@@ -17,6 +19,9 @@ import org.slf4j.LoggerFactory;
  *
  * @author danida
  */
+
+@LocalBean
+@Stateless
 public class StockFacade implements FacadeInterface<Stock> {
 
     @PersistenceContext(name = "RFT_BEERLEVELE-ejbPU")

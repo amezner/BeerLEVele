@@ -28,6 +28,7 @@ import javax.ws.rs.QueryParam;
  */
 @Stateless
 @LocalBean
+@Path("stock")
 public class StockController {
 
     @EJB
@@ -66,7 +67,7 @@ public class StockController {
 
     @Path("getstock")
     @GET
-    public void getCustomer(@HeaderParam("authToken") String authToken, @QueryParam("id") int id) throws Exception {
+    public void getStock(@HeaderParam("authToken") String authToken, @QueryParam("id") int id) throws Exception {
         authorizator.checkAuthorization(authToken, "operator");
 
         stockLogic.findStockById(id);
