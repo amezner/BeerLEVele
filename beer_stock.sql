@@ -4,7 +4,7 @@ SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
-create table user (
+CREATE TABLE user (
 		`ID` INT NOT NULL AUTO_INCREMENT,
 		`name` VARCHAR(20),
 		`role` VARCHAR(20),
@@ -12,7 +12,7 @@ create table user (
 		PRIMARY KEY (ID)
 );
 
-create table stock (
+CREATE TABLE stock (
 		`ID` INT NOT NULL AUTO_INCREMENT,
 		`name` VARCHAR(20),
 		`description` VARCHAR(255),
@@ -23,7 +23,7 @@ create table stock (
 		PRIMARY KEY (ID)
 );
 
-create table customer(
+CREATE TABLE customer (
 		`ID` INT NOT NULL AUTO_INCREMENT,
 		`name` VARCHAR(100),
 		`address` VARCHAR(200),
@@ -34,21 +34,21 @@ create table customer(
 		PRIMARY KEY (ID)
 );
 
-create table invoice(
-		`invoicenumber` int NOT NULL AUTO_INCREMENT,
-		`date` DATETIME,
-		`discount` INT,
-		`customer_id` INT,
-		`name` VARCHAR(100),
-		`address` VARCHAR(200),
-		`email` VARCHAR(100),
-		`phone` VARCHAR(20),
-		`loyaltycard` BIT(1),
-		FOREIGN KEY (`customer_id`) REFERENCES `customer`(`ID`),
-		PRIMARY KEY (`invoicenumber`)
+CREATE TABLE invoice (
+	`invoicenumber` int NOT NULL AUTO_INCREMENT,
+	`date` DATETIME,
+	`discount` INT,
+	`customer_id` INT,
+	`name` VARCHAR(100),
+	`address` VARCHAR(200),
+	`email` VARCHAR(100),
+	`phone` VARCHAR(20),
+	`loyaltycard` BIT(1),
+	FOREIGN KEY (`customer_id`) REFERENCES `customer`(`ID`),
+	PRIMARY KEY (`invoicenumber`)
 );
 
-create table invoicedproducts (
+CREATE TABLE invoicedproducts (
 	`invoicenumber` INT,
 	`stockid` INT,
 	`name` VARCHAR(20),
@@ -61,16 +61,14 @@ create table invoicedproducts (
 	FOREIGN KEY (`invoicenumber`) REFERENCES `invoice`(`invoicenumber`)
 );
 
-create table order (
-ID  int NOT NULL AUTO_INCREMENT, 
-uid VARCHAR(100), 
-stock_id int, 
-quantity int, 
-foreign key (stock_id) references stock(ID),
-primary key (ID));
-
+CREATE TABLE order1 (
+	`ID` INT NOT NULL AUTO_INCREMENT, 
+	`uid` VARCHAR(20), 
+	`stock_id` INT, 
+	`quantity` INT, 
+	FOREIGN KEY (`stock_id`) REFERENCES `stock`(`ID`),
+	PRIMARY KEY (`ID`)
+);
+	
 SET FOREIGN_KEY_CHECKS=1;
 COMMIT;
-
-
-

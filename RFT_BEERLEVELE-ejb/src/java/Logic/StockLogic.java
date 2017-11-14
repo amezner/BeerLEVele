@@ -8,6 +8,8 @@ package Logic;
 import Entities.Stock;
 import Facades.StockFacade;
 import java.util.List;
+import javax.annotation.ManagedBean;
+import javax.ejb.Stateless;
 import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +18,10 @@ import org.slf4j.LoggerFactory;
  *
  * @author danida
  */
+
+@ManagedBean
+@Stateless
+
 public class StockLogic {
          
     @Inject

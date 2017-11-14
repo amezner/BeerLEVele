@@ -4,14 +4,16 @@
         <servlet-name>ServletAdaptor</servlet-name>
         <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
         <init-param>
-            <param-name>com.sun.jersey.config.property.packages</param-name>
-            <param-value>Controller</param-value>
+            <param-name>com.sun.jersey.spi.container.ContainerResponseFilters</param-name>
+            <param-value>com.sun.jersey.api.container.filter.LoggingFilter;Controller.CORSFiler</param-value>
         </init-param>
-        <load-on-startup>1</load-on-startup>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>ServletAdaptor</servlet-name>
-        <url-pattern>/resources/*</url-pattern>
+
+    
+    <load-on-startup>1</load-on-startup>    
+    </servlet>    
+    <servlet-mapping>        
+        <servlet-name>ServletAdaptor</servlet-name>        
+        <url-pattern>/resources/*</url-pattern>    
     </servlet-mapping>
 
     <session-config>

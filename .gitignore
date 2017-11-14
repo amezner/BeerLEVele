@@ -10,6 +10,7 @@
 /RFT_BEERLEVELE-war/dist/
 /RFT_BEERLEVELE-ejb/build/
 /RFT_BEERLEVELE-war/build/
+build.xml
 **/build.xml
 my-datavolume/
 data/

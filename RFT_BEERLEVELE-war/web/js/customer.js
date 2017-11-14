@@ -7,7 +7,7 @@ var token;
 
 $(document).ready(function () {
     var token;
-    $("#submit").click(function () {
+    $("#add_customer").click(function () {
         $.ajax({
             url: 'resources/customer/savecustomer',
             type: 'POST',
@@ -24,6 +24,25 @@ $(document).ready(function () {
             $('#ajaxGetUserServletResponse').text(responseText);
         })
     });
+
+    $("#add_stock").click(function () {
+        $.ajax({
+            url: 'resources/stock/savestock',
+            type: 'POST',
+            headers: {'authToken': token},
+            data: {
+                name: $("#stockname").val(),
+                description: $("#stockdescription").val(),
+                purchaseprice: $("#purchaseprice").val(),
+                sellingprice: $("#sellingprice").val(),
+                onstockquantity: $("#onstockquantity").val(),
+                type: $("#type").val(),
+            }
+        }, function (responseText) {
+            $('#ajaxGetUserServletResponse').text(responseText);
+        })
+    });
+
     /*   $("#getall").click(function () {
      
      console.log("asdasd");

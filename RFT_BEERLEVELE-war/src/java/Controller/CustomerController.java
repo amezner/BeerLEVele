@@ -69,7 +69,6 @@ public class CustomerController {
         authorizator.checkAuthorization(authToken, "operator");
        
         customerLogic.findCustomerById(id);
-
     }
 
 }
