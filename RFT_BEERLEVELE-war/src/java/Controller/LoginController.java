@@ -40,7 +40,7 @@ public class LoginController {
     @Path("logout")
     @POST
     @Produces("application/json")
-    public void login(@HeaderParam("authToken") String token) throws LoginException, GeneralSecurityException {
+    public void logout(@HeaderParam("authToken") String token) throws LoginException, GeneralSecurityException {
         authenticator.logout(token);
 
     }

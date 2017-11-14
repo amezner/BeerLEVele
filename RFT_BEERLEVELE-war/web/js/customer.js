@@ -78,7 +78,16 @@ $(document).ready(function () {
         });
     }
     );
-
+    
+    $("#logout").click(function () {
+        $.ajax({
+            url: 'resources/authentication/logout',
+            type: 'POST',
+            headers: {'authToken': token}
+        }, function (responseText) {
+            $('#ajaxGetUserServletResponse').text(responseText);
+        });
+    });
     $("#getall").click(
             function () {
                 var request = $.ajax({
