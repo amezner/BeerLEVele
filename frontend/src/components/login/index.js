@@ -10,7 +10,6 @@ import {withRouter} from 'react-router-dom';
 
 import './login.css';
 
-
 class Login extends Component {
   constructor(props) {
     super(props);
@@ -33,21 +32,19 @@ class Login extends Component {
   }
 
   render() {
-    return (
-      <div className="login-content">
-        <form onSubmit={this.handleSubmit}>
-          <FormRow>
-            <Field ref="username" placeholder="felhasználónév"  />
-          </FormRow>
-          <FormRow>
-            <Field ref="password" type="password" placeholder="jelszó"/>
-          </FormRow>
-          <FormRow>
-            <Button text="belépés" type="submit" />
-          </FormRow>
-        </form>
-      </div>
-    );
+    return (<div className="login-content">
+      <form onSubmit={this.handleSubmit}>
+        <FormRow>
+          <Field ref="username" placeholder="felhasználónév"/>
+        </FormRow>
+        <FormRow>
+          <Field ref="password" type="password" placeholder="jelszó"/>
+        </FormRow>
+        <FormRow>
+          <Button text="belépés" type="submit"/>
+        </FormRow>
+      </form>
+    </div>);
   }
 }
 

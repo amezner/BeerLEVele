@@ -43,7 +43,7 @@ class Customerform extends Component {
 
       NotificationManager.info('Érkezett válasz');
     } catch (e) {
-      NotificationManager.error(e.message, 'Sikertelen mentés!', 30000);
+      NotificationManager.error(e.message, 'Sikertelen mentés!', 3000);
     }
 
 
@@ -53,7 +53,7 @@ class Customerform extends Component {
     const { discountOptions } = this.props;
 
     return (
-      <div className="customer-form content-width">
+      <div className="customer-form content-width thin">
         <section className="content-section">
           <h1>Vásárló hozzáadása</h1>
           <form onSubmit={this.handleSubmit}>
