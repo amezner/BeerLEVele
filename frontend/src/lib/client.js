@@ -10,6 +10,10 @@ const addHeaders = options => {
   if (!result.headers)
     result.headers = {};
 
+  if (sessionStorage.getItem('authToken')) {
+    result.headers.authToken = sessionStorage.authToken;
+  }
+
   return result;
 }
 

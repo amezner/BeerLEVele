@@ -1,8 +1,11 @@
 import React, {Component} from 'react';
-import {get} from '../../lib/client';
+import {post} from '../../lib/client';
 import FormRow from '../formrow';
 import Field from '../field';
 import Button from '../button';
+
+import {NotificationContainer, NotificationManager} from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
 
 import AuthStore from '../../stores/authorization';
 import {observer} from 'mobx-react';
@@ -15,24 +18,36 @@ class Login extends Component {
     super(props);
 
     this.handleSubmit = this.handleSubmit.bind(this);
-
   }
 
   async handleSubmit(e) {
     e.preventDefault();
     const {username, password} = this.refs;
 
-    // const resp = await get('/cica.json', {
-    //   username: username.value,
-    //   password: password.value
-    // });
+    try {
+      const resp = await post('authentication/login', {
+        username: username.value,
+        password: password.value
+      });
 
-    AuthStore.setIsLoggedIn(true);
-    this.props.history.push(AuthStore.oldUrl);
+      console.log(resp);
+      NotificationManager.info('visszatért');
+
+      AuthStore.setIsLoggedIn(true);
+      sessionStorage.setItem('authToken', resp);
+      this.props.history.push(AuthStore.oldUrl);
+
+
+    } catch (e) {
+      NotificationManager.error(e.message, 'Sikeretelen belépés!', 3000);
+    }
+
+
   }
 
   render() {
-    return (<div className="login-content">
+    return (
+    <div className="login-content">
       <form onSubmit={this.handleSubmit}>
         <FormRow>
           <Field ref="username" placeholder="felhasználónév"/>
@@ -44,6 +59,7 @@ class Login extends Component {
           <Button text="belépés" type="submit"/>
         </FormRow>
       </form>
+      <NotificationContainer />
     </div>);
   }
 }
