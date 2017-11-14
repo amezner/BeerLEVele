@@ -31,7 +31,7 @@ import javax.ws.rs.QueryParam;
 @Path("customer")
 
 public class CustomerController {
-
+        
     @EJB
     private CustomerLogic customerLogic;
     @EJB
