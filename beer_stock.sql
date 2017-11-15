@@ -10,7 +10,7 @@ CREATE TABLE user (
 		`role` VARCHAR(20),
 		`password` VARCHAR(20),
 		PRIMARY KEY (ID)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE stock (
 		`ID` INT NOT NULL AUTO_INCREMENT,
@@ -21,7 +21,7 @@ CREATE TABLE stock (
 		`onstockquantity` INT,
 		`type` VARCHAR(20),
 		PRIMARY KEY (ID)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE customer (
 		`ID` INT NOT NULL AUTO_INCREMENT,
@@ -32,7 +32,7 @@ CREATE TABLE customer (
 		`loyaltycard` BIT(1),
 		`discount` INT,
 		PRIMARY KEY (ID)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE invoice (
 	`invoicenumber` int NOT NULL AUTO_INCREMENT,
@@ -46,7 +46,7 @@ CREATE TABLE invoice (
 	`loyaltycard` BIT(1),
 	FOREIGN KEY (`customer_id`) REFERENCES `customer`(`ID`),
 	PRIMARY KEY (`invoicenumber`)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE invoicedproducts (
 	`invoicenumber` INT,
@@ -59,16 +59,16 @@ CREATE TABLE invoicedproducts (
 	`soldsubtotal` DOUBLE PRECISION,
 	FOREIGN KEY (`stockid`) REFERENCES `stock`(`ID`),
 	FOREIGN KEY (`invoicenumber`) REFERENCES `invoice`(`invoicenumber`)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE order1 (
-	`ID` INT NOT NULL AUTO_INCREMENT, 
-	`uid` VARCHAR(20), 
-	`stock_id` INT, 
-	`quantity` INT, 
+	`ID` INT NOT NULL AUTO_INCREMENT,
+	`uid` VARCHAR(20),
+	`stock_id` INT,
+	`quantity` INT,
 	FOREIGN KEY (`stock_id`) REFERENCES `stock`(`ID`),
 	PRIMARY KEY (`ID`)
-);
-	
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 SET FOREIGN_KEY_CHECKS=1;
 COMMIT;
