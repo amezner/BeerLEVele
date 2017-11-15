@@ -95,6 +95,18 @@ $(document).ready(function () {
             $('#ajaxGetUserServletResponse').text(responseText);
         });
     });
+    
+    $("#getcart").click(function () {
+
+        $.ajax({
+            url: 'resources/order/getcart',
+            type: 'GET',
+            contentType: "application/json; charset=UTF-8",
+            headers: {'authToken': token},
+        }, function (responseText) {
+            $('#ajaxGetUserServletResponse').text(responseText);
+        })
+    });
     /*   $("#getall").click(
      function () {
      var request = $.ajax({

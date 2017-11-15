@@ -6,6 +6,7 @@
 package Controller;
 
 import Entities.Order1;
+import Helper.Authenticator;
 import Helper.Authorizator;
 import Logic.Order1Logic;
 import java.util.List;
@@ -37,14 +38,14 @@ public class Order1Controller {
     @EJB
     private Authorizator authorizator;
 
-    @Path("findall")
+    @Path("getcart")
     @GET
     @Produces("application/json")
     @Consumes(MediaType.APPLICATION_JSON)
-
     public List<Order1> getAllFromCart(@HeaderParam("authToken") String authToken) throws Exception {
-        authorizator.checkAuthorization(authToken, "customer");
-        return order1logic.findAll(authToken);
+        authorizator.checkAuthorization(authToken, "admin");
+        System.out.println(Authenticator.getAuthorizationTokensStorage().get(authToken));
+        return order1logic.findAll(Authenticator.getAuthorizationTokensStorage().get(authToken));
     }
 
     @Path("putinthecart")
@@ -53,7 +54,7 @@ public class Order1Controller {
     @Consumes(MediaType.APPLICATION_JSON)
 
     public void putStockInCart(@HeaderParam("authToken") String authToken, @FormParam("stock_id") int stock_id, @FormParam("quantity") int quantity) throws Exception {
-        authorizator.checkAuthorization(authToken, "customer");
+        authorizator.checkAuthorization(authToken, "admin");
         order1logic.insertInTheCart(authToken, stock_id, quantity);
     }
 
@@ -63,7 +64,7 @@ public class Order1Controller {
     @Consumes(MediaType.APPLICATION_JSON)
 
     public void deleteFromCart(@HeaderParam("authToken") String authToken, @PathParam("id") int id) throws Exception {
-        authorizator.checkAuthorization(authToken, "customer");
+        authorizator.checkAuthorization(authToken, "admin");
         order1logic.deleteOrder1(id);
 
     }
