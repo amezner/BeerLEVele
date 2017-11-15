@@ -5,6 +5,7 @@
  */
 package Controller;
 
+import Facades.CustomerFacade;
 import Helper.Authenticator;
 import java.security.GeneralSecurityException;
 import javax.ejb.EJB;
@@ -18,6 +19,8 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -37,7 +40,8 @@ public class LoginController {
     @Produces("application/json")
     @Consumes(MediaType.APPLICATION_JSON)
     public String login(@FormParam("username") String username, @FormParam("password") String password) throws LoginException {
-
+ Logger logger = LoggerFactory.getLogger(LoginController.class);
+        logger.debug("User is trying to login Username: "+username+"\nPassword: "+password+"\n");
         String token = authenticator.login(username, password);
         return token;
 

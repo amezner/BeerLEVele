@@ -18,6 +18,8 @@ import javax.ejb.Stateless;
 import javax.faces.bean.ManagedBean;
 import javax.inject.Inject;
 import javax.security.auth.login.LoginException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @ManagedBean
 @Stateless
@@ -44,6 +46,10 @@ public class Authenticator {
     }
 
     public String login(String username, String password) throws LoginException {
+        
+        Logger logger = LoggerFactory.getLogger(Authenticator.class);
+        logger.debug("Authenticator is checking the details of the user");
+        
         String storedPassword = userfacade.findByUsername(username).getPassword();
 /*        for (String value : authorizationTokensStorage.values()) {
             if (value.toLowerCase().equals(username.toLowerCase())) {

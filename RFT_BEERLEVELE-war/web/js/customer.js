@@ -78,6 +78,7 @@ $(document).ready(function () {
             data: {username: $('#username').val(), password: $('#password').val()},
             contentType: "application/json; charset=UTF-8",
             complete: function (responseText) {
+                console.log(responseText);
                 token = responseText.responseText;
                 console.log(token);
             },
