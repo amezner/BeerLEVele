@@ -28,12 +28,12 @@ class Login extends Component {
         username: username.value,
         password: password.value,
       });
-
-      console.log(resp);
+      
+      // console.log(resp);
       NotificationManager.info('visszatért');
 
       AuthStore.setIsLoggedIn(true);
-      sessionStorage.setItem('authToken', resp);
+      sessionStorage.setItem('authToken', resp.authToken);
       this.props.history.push(AuthStore.oldUrl);
 
 
