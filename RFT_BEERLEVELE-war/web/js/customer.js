@@ -79,7 +79,7 @@ $(document).ready(function () {
             contentType: "application/json; charset=UTF-8",
             complete: function (responseText) {
                 console.log(responseText);
-                token = responseText.responseText;
+                token = responseText.responseJSON[1];
                 console.log(token);
             },
         });
