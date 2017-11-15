@@ -66,20 +66,18 @@ public class CustomerController {
     @DELETE
     @Consumes(MediaType.APPLICATION_JSON)
 
-    public void save(@HeaderParam("authToken") String authToken, @PathParam("id") Integer id) throws Exception {
+    public void delete(@HeaderParam("authToken") String authToken, @PathParam("id") Integer id) throws Exception {
         authorizator.checkAuthorization(authToken, "admin");
         customerLogic.deleteCustomerById(id);
-
     }
 
     @Path("getcustomer")
     @GET
     @Consumes(MediaType.APPLICATION_JSON)
 
-    public void getCustomer(@HeaderParam("authToken") String authToken, @QueryParam("id") int id) throws Exception {
+    public Customer getCustomer(@HeaderParam("authToken") String authToken, @QueryParam("id") int id) throws Exception {
         authorizator.checkAuthorization(authToken, "operator");
-
-        customerLogic.findCustomerById(id);
+        return customerLogic.findCustomerById(id);
     }
 
 }

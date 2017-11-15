@@ -64,9 +64,8 @@ public class StockController {
 
     @Path("deletestock/{id}")
     @DELETE
-    public void save(@HeaderParam("authToken") String authToken, @PathParam("id") Integer id) throws Exception {
+    public void delete(@HeaderParam("authToken") String authToken, @PathParam("id") Integer id) throws Exception {
         authorizator.checkAuthorization(authToken, "admin");
-
         stockLogic.deleteStockById(id);
 
     }
@@ -76,10 +75,8 @@ public class StockController {
     @Produces("application/json")
     @Consumes(MediaType.APPLICATION_JSON)
 
-    public void getStock(@HeaderParam("authToken") String authToken, @QueryParam("id") int id) throws Exception {
+    public Stock getStock(@HeaderParam("authToken") String authToken, @QueryParam("id") int id) throws Exception {
         authorizator.checkAuthorization(authToken, "operator");
-
-        stockLogic.findStockById(id);
-
+        return stockLogic.findStockById(id);
     }
 }
