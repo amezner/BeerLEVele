@@ -43,7 +43,7 @@ const methodFactory = (method, bodyAllowed = true) => {
         headers: {
           ...defaultOptions.headers,
           ...options.headers,
-          'Content-Type': 'application/json;charset=utf-8'
+          'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
         },
         cache: 'no-store',
         body: JSON.stringify(body)
