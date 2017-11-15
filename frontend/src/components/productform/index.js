@@ -3,7 +3,7 @@ import FormRow from '../formrow';
 import Field from '../field';
 import Button from '../button';
 import {post} from '../../lib/client';
-import {NotificationContainer, NotificationManager} from 'react-notifications';
+import {NotificationManager} from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
 
 class Productform extends Component {
@@ -66,7 +66,6 @@ class Productform extends Component {
             </FormRow>
           </form>
         </section>
-        <NotificationContainer />
       </div>
     );
   }

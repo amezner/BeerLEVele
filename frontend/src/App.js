@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import './global.css';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import {observer} from 'mobx-react';
+import {NotificationContainer} from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
 
 import LoginPage from './components/login';
 import Layout1 from './components/layout1';
@@ -25,6 +27,8 @@ class App extends Component {
             </Layout1>
           </Protected>
           <Route path="/login" component={LoginPage} />
+
+          <NotificationContainer />
         </div>
       </Router>
     );

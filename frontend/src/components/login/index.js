@@ -4,8 +4,7 @@ import FormRow from '../formrow';
 import Field from '../field';
 import Button from '../button';
 
-import {NotificationContainer, NotificationManager} from 'react-notifications';
-import 'react-notifications/lib/notifications.css';
+import {NotificationManager} from 'react-notifications';
 
 import AuthStore from '../../stores/authorization';
 import {observer} from 'mobx-react';
@@ -27,7 +26,7 @@ class Login extends Component {
     try {
       const resp = await post('authentication/login', {
         username: username.value,
-        password: password.value
+        password: password.value,
       });
 
       console.log(resp);
@@ -59,7 +58,6 @@ class Login extends Component {
           <Button text="belépés" type="submit"/>
         </FormRow>
       </form>
-      <NotificationContainer />
     </div>);
   }
 }

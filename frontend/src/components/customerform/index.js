@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {post} from '../../lib/client';
-import {NotificationContainer, NotificationManager} from 'react-notifications';
+import {NotificationManager} from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
 
 import FormRow from '../formrow';
@@ -80,8 +80,6 @@ class Customerform extends Component {
             </FormRow>
           </form>
         </section>
-
-        <NotificationContainer />
       </div>
     );
   }
