@@ -11,6 +11,7 @@ $(document).ready(function () {
         $.ajax({
             url: 'resources/customer/savecustomer',
             type: 'POST',
+            contentType: "application/json; charset=UTF-8",
             headers: {'authToken': token},
             data: {
                 name: $("#name").val(),
@@ -29,6 +30,7 @@ $(document).ready(function () {
         $.ajax({
             url: 'resources/stock/savestock',
             type: 'POST',
+            contentType: "application/json; charset=UTF-8",
             headers: {'authToken': token},
             data: {
                 name: $("#stockname").val(),
@@ -43,20 +45,23 @@ $(document).ready(function () {
         })
     });
 
-    /*   $("#getall").click(function () {
-     
-     console.log("asdasd");
-     $.get('resources/customer/getallcustomer', {
-     
-     }, function (responseText) {
-     $('#ajaxGetUserServletResponse').text(responseText);
-     })
-     });
-     */
+    $("#getall").click(function () {
+
+        $.ajax({
+            url: 'resources/customer/getallcustomer',
+            type: 'GET',
+            contentType: "application/json; charset=UTF-8",
+            headers: {'authToken': token},
+        }, function (responseText) {
+            $('#ajaxGetUserServletResponse').text(responseText);
+        })
+    });
+
     $("#deletecustomer").click(function () {
         $.ajax({
             url: 'resources/customer/deletecustomer/' + $("#azonosito").val(),
             type: 'DELETE',
+            contentType: "application/json; charset=UTF-8",
             headers: {
                 'authToken': token
             },
@@ -74,11 +79,12 @@ $(document).ready(function () {
             contentType: "application/json; charset=UTF-8",
             complete: function (responseText) {
                 token = responseText.responseText;
+                console.log(token);
             },
         });
     }
     );
-    
+
     $("#logout").click(function () {
         $.ajax({
             url: 'resources/authentication/logout',
@@ -88,20 +94,20 @@ $(document).ready(function () {
             $('#ajaxGetUserServletResponse').text(responseText);
         });
     });
-    $("#getall").click(
-            function () {
-                var request = $.ajax({
-                    url: 'resources/customer/getallcustomer',
-                });
-
-                request.done(function (resp) {
-                    console.log(resp);
-                });
-
-                request.fail(function (jqXHR, textStatus) {
-                    console.log("Request failed: " + textStatus);
-                });
-            });
-
+    /*   $("#getall").click(
+     function () {
+     var request = $.ajax({
+     url: 'resources/customer/getallcustomer',
+     });
+     
+     request.done(function (resp) {
+     console.log(resp);
+     });
+     
+     request.fail(function (jqXHR, textStatus) {
+     console.log("Request failed: " + textStatus);
+     });
+     });
+     */
 }
 );

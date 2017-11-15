@@ -12,6 +12,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
@@ -21,6 +22,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.MediaType;
 
 /**
  *
@@ -38,7 +40,9 @@ public class StockController {
 
     @Path("savestock")
     @POST
-    @Produces("text/plain")
+    @Produces("application/json")
+    @Consumes(MediaType.APPLICATION_JSON)
+
     public void saveStock(@HeaderParam("authToken") String authToken, @FormParam("name") String name, @FormParam("description") String description, @FormParam("purchaseprice") Double purchaseprice, @FormParam("sellingprice") Double sellingprice, @FormParam("onstockquantity") int onstockquantity, @FormParam("type") String type) throws Exception {
         authorizator.checkAuthorization(authToken, "admin");
 
@@ -49,6 +53,8 @@ public class StockController {
     @Path("getallstock")
     @GET
     @Produces("application/json")
+    @Consumes(MediaType.APPLICATION_JSON)
+
     public List<Stock> getAll(@HeaderParam("authToken") String authToken) throws Exception {
         authorizator.checkAuthorization(authToken, "customer");
 
@@ -67,6 +73,9 @@ public class StockController {
 
     @Path("getstock")
     @GET
+    @Produces("application/json")
+    @Consumes(MediaType.APPLICATION_JSON)
+
     public void getStock(@HeaderParam("authToken") String authToken, @QueryParam("id") int id) throws Exception {
         authorizator.checkAuthorization(authToken, "operator");
 

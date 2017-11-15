@@ -12,6 +12,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -21,6 +22,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.MediaType;
 
 /**
  *
@@ -31,7 +33,7 @@ import javax.ws.rs.QueryParam;
 @Path("customer")
 
 public class CustomerController {
-        
+
     @EJB
     private CustomerLogic customerLogic;
     @EJB
@@ -39,7 +41,9 @@ public class CustomerController {
 
     @Path("savecustomer")
     @POST
-    @Produces("text/plain")
+    @Produces("application/json")
+    @Consumes(MediaType.APPLICATION_JSON)
+
     public void saveCustomer(@HeaderParam("authToken") String authToken, @FormParam("name") String name, @FormParam("address") String address, @FormParam("email") String email, @FormParam("phone") String phone, @FormParam("loyalty") boolean loyaltycard, @FormParam("discount") int discount) throws Exception {
         authorizator.checkAuthorization(authToken, "admin");
         customerLogic.insertCustomer(name, address, email, phone, loyaltycard, discount);
@@ -49,7 +53,10 @@ public class CustomerController {
     @Path("getallcustomer")
     @GET
     @Produces("application/json")
+    @Consumes(MediaType.APPLICATION_JSON)
+
     public List<Customer> getAll(@HeaderParam("authToken") String authToken) throws Exception {
+        System.out.println(authToken);
         authorizator.checkAuthorization(authToken, "customer");
         return customerLogic.findAllCustomer();
 
@@ -57,7 +64,9 @@ public class CustomerController {
 
     @Path("deletecustomer/{id}")
     @DELETE
-    public void save(@HeaderParam("authToken") String authToken,@PathParam("id") Integer id) throws Exception {
+    @Consumes(MediaType.APPLICATION_JSON)
+
+    public void save(@HeaderParam("authToken") String authToken, @PathParam("id") Integer id) throws Exception {
         authorizator.checkAuthorization(authToken, "admin");
         customerLogic.deleteCustomerById(id);
 
@@ -65,9 +74,11 @@ public class CustomerController {
 
     @Path("getcustomer")
     @GET
-    public void getCustomer(@HeaderParam("authToken") String authToken,@QueryParam("id") int id) throws Exception {
+    @Consumes(MediaType.APPLICATION_JSON)
+
+    public void getCustomer(@HeaderParam("authToken") String authToken, @QueryParam("id") int id) throws Exception {
         authorizator.checkAuthorization(authToken, "operator");
-       
+
         customerLogic.findCustomerById(id);
     }
 

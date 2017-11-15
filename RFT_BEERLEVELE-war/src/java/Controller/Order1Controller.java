@@ -12,6 +12,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
@@ -20,6 +21,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 
 /**
  *
@@ -38,6 +40,8 @@ public class Order1Controller {
     @Path("findall")
     @GET
     @Produces("application/json")
+    @Consumes(MediaType.APPLICATION_JSON)
+
     public List<Order1> getAllFromCart(@HeaderParam("authToken") String authToken) throws Exception {
         authorizator.checkAuthorization(authToken, "customer");
         return order1logic.findAll(authToken);
@@ -46,18 +50,22 @@ public class Order1Controller {
     @Path("putinthecart")
     @POST
     @Produces("application/json")
+    @Consumes(MediaType.APPLICATION_JSON)
 
     public void putStockInCart(@HeaderParam("authToken") String authToken, @FormParam("stock_id") int stock_id, @FormParam("quantity") int quantity) throws Exception {
         authorizator.checkAuthorization(authToken, "customer");
-        order1logic.insertInTheCart(authToken,stock_id, quantity);
+        order1logic.insertInTheCart(authToken, stock_id, quantity);
     }
-    
+
     @Path("deleteitemfromcart/{id}")
     @DELETE
-    public void deleteFromCart(@HeaderParam("authToken") String authToken,@PathParam("id") int id) throws Exception {
+    @Produces("application/json")
+    @Consumes(MediaType.APPLICATION_JSON)
+
+    public void deleteFromCart(@HeaderParam("authToken") String authToken, @PathParam("id") int id) throws Exception {
         authorizator.checkAuthorization(authToken, "customer");
         order1logic.deleteOrder1(id);
-        
+
     }
 
 }

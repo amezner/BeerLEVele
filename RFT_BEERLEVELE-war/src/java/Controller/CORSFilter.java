@@ -5,12 +5,9 @@
  */
 package Controller;
 
-import java.io.IOException;
 import com.sun.jersey.spi.container.ContainerRequest;
 import com.sun.jersey.spi.container.ContainerResponse;
 import com.sun.jersey.spi.container.ContainerResponseFilter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *

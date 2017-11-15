@@ -60,7 +60,8 @@ public class Authorizator {
         if (Authenticator.getAuthorizationTokensStorage().containsKey(authToken)) {
             String username = Authenticator.getAuthorizationTokensStorage().get(authToken);
             User user = userfacade.findByUsername(username);
-            
+            System.out.println(roles.get(user.getRole().toLowerCase()));
+            System.out.println(roles.get(requirement));
             if(roles.get(user.getRole().toLowerCase()) >= roles.get(requirement)){
                 return true;
             }
