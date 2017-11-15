@@ -11,7 +11,7 @@ $(document).ready(function () {
         $.ajax({
             url: 'resources/customer/savecustomer',
             type: 'POST',
-            contentType: "application/json; charset=UTF-8",
+            contentType: "application/json",
             headers: {'authToken': token},
             data: {
                 name: $("#name").val(),

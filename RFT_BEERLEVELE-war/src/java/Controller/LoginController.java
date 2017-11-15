@@ -39,11 +39,14 @@ public class LoginController {
     @POST
     @Produces("application/json")
     @Consumes(MediaType.APPLICATION_JSON)
-    public String login(@FormParam("username") String username, @FormParam("password") String password) throws LoginException {
+    public String[] login(@FormParam("username") String username, @FormParam("password") String password) throws LoginException {
  Logger logger = LoggerFactory.getLogger(LoginController.class);
         logger.debug("User is trying to login Username: "+username+"\nPassword: "+password+"\n");
         String token = authenticator.login(username, password);
-        return token;
+        String[] tok = new String[2];
+        tok[0] = username;
+        tok[1] = token;
+        return tok;
 
     }
 
