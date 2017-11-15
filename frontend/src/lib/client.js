@@ -37,7 +37,6 @@ const methodFactory = (method, bodyAllowed = true) => {
     return (path, body, options = {
       headers: {}
     }) => {
-      const searchParams = new URLSearchParams(body);
       options = addHeaders(options)
       return attachHandlers(fetch(join(BASE_URL, path), {
         ...defaultOptions,
@@ -45,7 +44,7 @@ const methodFactory = (method, bodyAllowed = true) => {
         headers: {
           ...defaultOptions.headers,
           ...options.headers,
-          'Content-Type': 'application/x-form-urlencoded'
+          'Content-Type': 'application/json;charset=utf-8'
         },
         cache: 'no-store',
         body: JSON.stringify(body)
