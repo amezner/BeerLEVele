@@ -12,6 +12,8 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import javax.security.auth.login.LoginException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -52,11 +54,15 @@ public class UserFacade implements FacadeInterface<User> {
         logger.debug("Listing all the users");
         return em.createNamedQuery("User.findAll").getResultList();
     }
-    public User findByUsername(String username){
+    public User findByUsername(String username) throws LoginException{
         Logger logger = LoggerFactory.getLogger(UserFacade.class);
         logger.debug("Finding user by username");
-        return (User)em.createNamedQuery("User.findByName").setParameter("name", username).getResultList().get(0);
-                
+        Query query = em.createNamedQuery("User.findByName").setParameter("name", username);
+        List result = query.getResultList();
+        if (!result.isEmpty())
+            return (User)em.createNamedQuery("User.findByName").setParameter("name", username).getResultList().get(0);
+        else
+            throw new LoginException("User does not exist!");
         
     }
 

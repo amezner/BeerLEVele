@@ -37,10 +37,10 @@ public class LoginController {
 
     @Path("login")
     @POST
-    @Produces("application/json")
+    @Produces({MediaType.APPLICATION_JSON})
     @Consumes(MediaType.APPLICATION_JSON)
     public String[] login(@FormParam("username") String username, @FormParam("password") String password) throws LoginException {
- Logger logger = LoggerFactory.getLogger(LoginController.class);
+        Logger logger = LoggerFactory.getLogger(LoginController.class);
         logger.debug("User is trying to login Username: "+username+"\nPassword: "+password+"\n");
         String token = authenticator.login(username, password);
         String[] tok = new String[2];
@@ -55,8 +55,8 @@ public class LoginController {
     @Produces("application/json")
     @Consumes(MediaType.APPLICATION_JSON)
 
-    public void logout(@HeaderParam("authToken") String token) throws GeneralSecurityException {
-        authenticator.logout(token);
+    public String logout(@HeaderParam("authToken") String token) throws GeneralSecurityException {
+        return authenticator.logout(token);
 
     }
 }
