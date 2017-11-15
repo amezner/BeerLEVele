@@ -45,12 +45,13 @@ public class Authenticator {
 
     public String login(String username, String password) throws LoginException {
         String storedPassword = userfacade.findByUsername(username).getPassword();
-        for (String value : authorizationTokensStorage.values()) {
+/*        for (String value : authorizationTokensStorage.values()) {
             if (value.toLowerCase().equals(username.toLowerCase())) {
-               throw new LoginException("This user already logged in!!!");
+                    String authToken = UUID.randomUUID().toString();
+            authorizationTokensStorage.put(authToken, username.toLowerCase());
             }
         }
-
+*/
         if (storedPassword != null && storedPassword.equals(password)) {
 
             /**
