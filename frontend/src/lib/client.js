@@ -37,7 +37,8 @@ const methodFactory = (method, bodyAllowed = true) => {
     return (path, body, options = {
       headers: {}
     }) => {
-      options = addHeaders(options)
+      options = addHeaders(options);
+      const searchParams = new URLSearchParams(body);
       return attachHandlers(fetch(join(BASE_URL, path), {
         ...defaultOptions,
         ...options,
@@ -47,7 +48,7 @@ const methodFactory = (method, bodyAllowed = true) => {
           'Content-Type': 'application/json;charset=utf-8'
         },
         cache: 'no-store',
-        body: JSON.stringify(body)
+        body: searchParams.toString()
       }));
     }
   }
