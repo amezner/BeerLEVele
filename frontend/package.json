@@ -12,8 +12,7 @@
     "react-notifications": "^1.4.3",
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.0.14",
-    "url-join": "^2.0.2",
-    "url-search-params": "^0.10.0"
+    "url-join": "^2.0.2"
   },
   "scripts": {
     "build-css": "node-sass-chokidar src/ -o src/",
