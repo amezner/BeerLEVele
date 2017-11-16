@@ -72,14 +72,17 @@ $(document).ready(function () {
     });
 
     $("#authenticate").click(function () {
+        var JSONObject = {};
+        console.log(JSONObject);
         $.ajax({
             type: 'POST',
             url: 'resources/authentication/login',
-            data: {username: $('#username').val(), password: $('#password').val()},
-            contentType: "application/json; charset=UTF-8",
+            dataType: "json",
+            contentType: "application/json",
+            data: JSON.stringify({username: $('#username').val(), password: $('#password').val()}),
             complete: function (responseText) {
                 console.log(responseText);
-                token = responseText.responseJSON[1];
+                token = responseText.responseJSON.token;
                 console.log(token);
             },
         });
@@ -95,7 +98,7 @@ $(document).ready(function () {
             $('#ajaxGetUserServletResponse').text(responseText);
         });
     });
-    
+
     $("#getcart").click(function () {
 
         $.ajax({

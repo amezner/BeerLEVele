@@ -57,8 +57,8 @@ public class UserFacade implements FacadeInterface<User> {
     public User findByUsername(String username) throws LoginException{
         Logger logger = LoggerFactory.getLogger(UserFacade.class);
         logger.debug("Finding user by username");
-        Query query = em.createNamedQuery("User.findByName").setParameter("name", username);
-        List result = query.getResultList();
+        
+        List result = em.createNamedQuery("User.findByName").setParameter("name", username).getResultList();
         if (!result.isEmpty())
             return (User)em.createNamedQuery("User.findByName").setParameter("name", username).getResultList().get(0);
         else

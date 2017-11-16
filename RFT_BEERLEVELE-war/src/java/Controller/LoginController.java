@@ -5,9 +5,10 @@
  */
 package Controller;
 
-import Facades.CustomerFacade;
 import Helper.Authenticator;
 import java.security.GeneralSecurityException;
+import java.util.HashMap;
+import java.util.Map;
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
@@ -37,17 +38,17 @@ public class LoginController {
 
     @Path("login")
     @POST
-    @Produces({MediaType.APPLICATION_JSON})
+    @Produces({"application/json"})
     @Consumes(MediaType.APPLICATION_JSON)
-    public String[] login(@FormParam("username") String username, @FormParam("password") String password) throws LoginException {
+    public Map<String, String> login(Map <String,String> map) throws LoginException {
         Logger logger = LoggerFactory.getLogger(LoginController.class);
-        logger.debug("User is trying to login Username: "+username+"\nPassword: "+password+"\n");
-        String token = authenticator.login(username, password);
-        String[] tok = new String[2];
-        tok[0] = username;
-        tok[1] = token;
+        logger.debug("User is trying to login Username: " + map.get("username") + "\nPassword: " + map.get("password") + "\n");
+        System.out.println(map);
+        String token = authenticator.login(map.get("username"), map.get("password"));
+        Map<String, String> tok = new HashMap<String, String>();
+        tok.put("username", map.get("username"));
+        tok.put("token", token);
         return tok;
-
     }
 
     @Path("logout")
