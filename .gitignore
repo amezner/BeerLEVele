@@ -3,6 +3,7 @@
 /data/
 /nbproject/
 !/dist/*.ear
+!dist/*.ear
 /build/
 /RFT_BEERLEVELE-ejb/nbproject/
 /RFT_BEERLEVELE-war/nbproject/

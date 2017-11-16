@@ -1,5 +1,4 @@
 import join from 'url-join';
-import URLSearchParams from 'url-search-params';
 
 const BASE_URL = 'http://localhost:8080/RFT_BEERLEVELE-war/resources/';
 
@@ -38,7 +37,6 @@ const methodFactory = (method, bodyAllowed = true) => {
       headers: {}
     }) => {
       options = addHeaders(options);
-      const searchParams = new URLSearchParams(body);
       return attachHandlers(fetch(join(BASE_URL, path), {
         ...defaultOptions,
         ...options,
@@ -48,7 +46,7 @@ const methodFactory = (method, bodyAllowed = true) => {
           'Content-Type': 'application/json;charset=utf-8'
         },
         cache: 'no-store',
-        body: searchParams.toString()
+        body: JSON.stringify(body)
       }));
     }
   }
