@@ -17,6 +17,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -45,7 +46,7 @@ public class Customer implements Serializable {
     @Size(max = 200)
     @Column(name = "address")
     private String address;
-    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
+    @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     @Size(max = 100)
     @Column(name = "email")
     private String email;
@@ -141,8 +142,10 @@ public class Customer implements Serializable {
 
     @Override
     public String toString() {
-        return "Entities.Customer[ id=" + id + " ]";
+        return "Customer{" + "name=" + name + ", address=" + address + ", email=" + email + ", phone=" + phone + ", id=" + id + ", loyaltycard=" + loyaltycard + ", discount=" + discount + ", invoiceCollection=" + invoiceCollection + '}';
     }
+
+   
 
     public String getName() {
         return name;

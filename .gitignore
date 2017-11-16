@@ -2,7 +2,6 @@
 /lib/
 /data/
 /nbproject/
-/dist/
 !/dist/*.ear
 /build/
 /RFT_BEERLEVELE-ejb/nbproject/

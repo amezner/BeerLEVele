@@ -11,16 +11,17 @@ $(document).ready(function () {
         $.ajax({
             url: 'resources/customer/savecustomer',
             type: 'POST',
-            contentType: "application/json",
             headers: {'authToken': token},
-            data: {
+            dataType: "json",
+            contentType: "application/json",
+            data: JSON.stringify({
                 name: $("#name").val(),
                 address: $("#address").val(),
                 email: $("#email").val(),
                 phone: $("#phone").val(),
                 loyalty: $("#loyalty").is(":checked"),
                 discount: $("#discount").val()
-            }
+            }),
         }, function (responseText) {
             $('#ajaxGetUserServletResponse').text(responseText);
         })
@@ -30,16 +31,17 @@ $(document).ready(function () {
         $.ajax({
             url: 'resources/stock/savestock',
             type: 'POST',
-            contentType: "application/json; charset=UTF-8",
             headers: {'authToken': token},
-            data: {
+            dataType: "json",
+            contentType: "application/json",
+            data: JSON.stringify({
                 name: $("#stockname").val(),
                 description: $("#stockdescription").val(),
                 purchaseprice: $("#purchaseprice").val(),
                 sellingprice: $("#sellingprice").val(),
                 onstockquantity: $("#onstockquantity").val(),
                 type: $("#type").val(),
-            }
+            }),
         }, function (responseText) {
             $('#ajaxGetUserServletResponse').text(responseText);
         })
@@ -50,8 +52,8 @@ $(document).ready(function () {
         $.ajax({
             url: 'resources/customer/getallcustomer',
             type: 'GET',
-            contentType: "application/json; charset=UTF-8",
-            headers: {'authToken': token},
+            dataType: "json",
+            contentType: "application/json", headers: {'authToken': token},
         }, function (responseText) {
             $('#ajaxGetUserServletResponse').text(responseText);
         })
@@ -61,7 +63,8 @@ $(document).ready(function () {
         $.ajax({
             url: 'resources/customer/deletecustomer/' + $("#azonosito").val(),
             type: 'DELETE',
-            contentType: "application/json; charset=UTF-8",
+            dataType: "json",
+            contentType: "application/json",
             headers: {
                 'authToken': token
             },
@@ -72,8 +75,6 @@ $(document).ready(function () {
     });
 
     $("#authenticate").click(function () {
-        var JSONObject = {};
-        console.log(JSONObject);
         $.ajax({
             type: 'POST',
             url: 'resources/authentication/login',
@@ -81,9 +82,7 @@ $(document).ready(function () {
             contentType: "application/json",
             data: JSON.stringify({username: $('#username').val(), password: $('#password').val()}),
             complete: function (responseText) {
-                console.log(responseText);
                 token = responseText.responseJSON.token;
-                console.log(token);
             },
         });
     }
@@ -93,6 +92,8 @@ $(document).ready(function () {
         $.ajax({
             url: 'resources/authentication/logout',
             type: 'POST',
+            dataType: "json",
+            contentType: "application/json",
             headers: {'authToken': token}
         }, function (responseText) {
             $('#ajaxGetUserServletResponse').text(responseText);
@@ -104,12 +105,29 @@ $(document).ready(function () {
         $.ajax({
             url: 'resources/order/getcart',
             type: 'GET',
-            contentType: "application/json; charset=UTF-8",
+            dataType: "json",
+            contentType: "application/json", 
             headers: {'authToken': token},
         }, function (responseText) {
             $('#ajaxGetUserServletResponse').text(responseText);
         })
     });
+    
+    $("#customeridbtn").click(function () {
+
+        $.ajax({
+            url: 'resources/customer/getcustomer/'+  $("#customerid").val(),
+            type: 'GET',
+            dataType: "json",
+            contentType: "application/json", 
+            headers: {'authToken': token},
+        }, function (responseText) {
+            $('#ajaxGetUserServletResponse').text(responseText);
+        })
+    });
+    
+    
+    
     /*   $("#getall").click(
      function () {
      var request = $.ajax({

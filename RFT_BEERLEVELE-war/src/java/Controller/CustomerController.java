@@ -8,7 +8,9 @@ package Controller;
 import Logic.CustomerLogic;
 import Entities.Customer;
 import Helper.Authorizator;
-import java.util.List;
+import Helper.DataObjectMapper;
+import java.util.HashMap;
+import java.util.Map;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
@@ -17,12 +19,9 @@ import javax.ws.rs.DELETE;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
 import javax.ws.rs.PathParam;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
 
 /**
@@ -45,9 +44,10 @@ public class CustomerController {
     @Produces("application/json")
     @Consumes(MediaType.APPLICATION_JSON)
 
-    public void saveCustomer(@HeaderParam("authToken") String authToken, @FormParam("name") String name, @FormParam("address") String address, @FormParam("email") String email, @FormParam("phone") String phone, @FormParam("loyalty") boolean loyaltycard, @FormParam("discount") int discount) throws Exception {
+    public void saveCustomer(@HeaderParam("authToken") String authToken, Map<String, String> map) throws Exception {
         authorizator.checkAuthorization(authToken, "admin");
-        customerLogic.insertCustomer(name, address, email, phone, loyaltycard, discount);
+
+        customerLogic.insertCustomer(map.get("name"), map.get("address"), map.get("email"), map.get("phone"), Boolean.parseBoolean(map.get("loyaltycard")), new Integer(map.get("discount")));
 
     }
 
@@ -56,10 +56,13 @@ public class CustomerController {
     @Produces("application/json")
     @Consumes(MediaType.APPLICATION_JSON)
 
-    public List<Customer> getAll(@HeaderParam("authToken") String authToken) throws Exception {
-        System.out.println(authToken);
+    public Map getAll(@HeaderParam("authToken") String authToken) throws Exception {
+
         authorizator.checkAuthorization(authToken, "customer");
-        return customerLogic.findAllCustomer();
+        Map ret = new HashMap<>();
+        DataObjectMapper<Customer> o = new DataObjectMapper<>(customerLogic.findAllCustomer());
+      
+        return o.getMap();
 
     }
 
@@ -72,13 +75,14 @@ public class CustomerController {
         customerLogic.deleteCustomerById(id);
     }
 
-    @Path("getcustomer")
+    @Path("getcustomer/{id}")
     @GET
     @Consumes(MediaType.APPLICATION_JSON)
 
-    public Customer getCustomer(@HeaderParam("authToken") String authToken, @QueryParam("id") int id) throws Exception {
+    public Map getCustomer(@HeaderParam("authToken") String authToken, @PathParam("id") Integer id) throws Exception {
         authorizator.checkAuthorization(authToken, "operator");
-        return customerLogic.findCustomerById(id);
+       DataObjectMapper<Customer> o = new DataObjectMapper<> ( customerLogic.findCustomerById(id));
+        return o.getMap();
     }
 
 }
