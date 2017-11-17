@@ -41,9 +41,10 @@ class Customerform extends Component {
     try {
       const response = await post('customer/savecustomer', data);
 
-      NotificationManager.info('Érkezett válasz');
+      NotificationManager.success('', 'Sikeres mentés!', 3000);
     } catch (e) {
-      NotificationManager.error(e.message, 'Sikertelen mentés!', 3000);
+      const message = e.message != null ? e.message : 'Ismeretlen hiba';
+      NotificationManager.error(message, 'Sikertelen mentés!', 3000);
     }
 
 

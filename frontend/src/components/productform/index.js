@@ -30,10 +30,10 @@ class Productform extends Component {
     try {
 
       const resp = await post('stock/savestock', data);
-      NotificationManager.info('Mentés');
-      console.log('vissza');
+      NotificationManager.success('', 'Sikeres mentés!', 3000);
     } catch (e) {
-      NotificationManager.error(e.message, 'Sikertelen mentés!', 3000);
+      const message = e.message != null ? e.message : 'Ismeretlen hiba';
+      NotificationManager.error(message, 'Sikertelen mentés!', 3000);
     }
   }
 
