@@ -1,3 +1,4 @@
+
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import {observer} from 'mobx-react';
@@ -55,7 +56,7 @@ class MainMenu extends Component {
             Termékek
             <ul className="submenu">
               <li className="menu-item submenu-item">
-                Termékek listája
+                <Link to="/productlist">Termékek listája</Link>
               </li>
               <li className="menu-item submenu-item">
                 <Link to="productform">Termék rögzítése</Link>

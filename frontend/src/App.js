@@ -12,6 +12,7 @@ import CustomerForm from './components/customerform';
 import Protected from './components/protected';
 import AuthStore from './stores/authorization';
 import CustomerList from './components/customerlist';
+import ProductList from './components/productlist';
 
 class App extends Component {
   render() {
@@ -22,6 +23,7 @@ class App extends Component {
             <Layout1>
               <Route exact path="/" component={CustomerForm} />
               <Route path="/productform" component={ProductForm} />
+              <Route path="/productlist" component={ProductList} />
               <Route path="/customerform" component={CustomerForm} />
               <Route path="/customerlist" component={CustomerList} />
             </Layout1>
