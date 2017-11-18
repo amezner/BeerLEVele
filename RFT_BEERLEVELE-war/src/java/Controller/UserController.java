@@ -5,10 +5,10 @@
  */
 package Controller;
 
-import Entities.Stock;
+import Entities.User;
 import Helper.Authorizator;
 import Helper.DataObjectMapper;
-import Logic.StockLogic;
+import Logic.UserLogic;
 import java.util.Map;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -29,59 +29,59 @@ import javax.ws.rs.core.MediaType;
  */
 @Stateless
 @LocalBean
-@Path("stock")
-public class StockController {
+@Path("user")
+public class UserController {
 
     @EJB
-    private StockLogic stockLogic;
+    private UserLogic userLogic;
     @EJB
     private Authorizator authorizator;
 
-    @Path("savestock")
+    @Path("saveuser")
     @POST
     @Produces("application/json")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void saveStock(@HeaderParam("authToken") String authToken, Map<String, String> map) throws Exception {
+    public void saveUser(@HeaderParam("authToken") String authToken, Map<String, String> map) throws Exception {
 
         authorizator.checkAuthorization(authToken, "admin");
 
-        stockLogic.insertStock(map.get("name"), map.get("description"), map.get("type"), new Double(map.get("alcoholcontent")), new Double(map.get("bottlesize")), new Double(map.get("purcahaseprice")), new Double(map.get("sellingprice")), new Integer(map.get("onstockquantity")));
+        userLogic.insertUser(map.get("name"), map.get("role"), map.get("password"));
 
     }
 
-    @Path("getallstock")
+    @Path("getalluser")
     @GET
     @Produces("application/json")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Map<Integer, Stock> getAll(@HeaderParam("authToken") String authToken) throws Exception {
+    public Map<Integer, User> getAll(@HeaderParam("authToken") String authToken) throws Exception {
 
-        authorizator.checkAuthorization(authToken, "customer");
+        authorizator.checkAuthorization(authToken, "admin");
         
-        DataObjectMapper<Stock> o = new DataObjectMapper<>(stockLogic.findAllStock());
+        DataObjectMapper<User> o = new DataObjectMapper<>(userLogic.findAllUser());
       
         return o.getMap();
 
     }
 
-    @Path("deletestock/{id}")
+    @Path("deleteuser/{id}")
     @DELETE
     public void delete(@HeaderParam("authToken") String authToken, @PathParam("id") Integer id) throws Exception {
         
         authorizator.checkAuthorization(authToken, "admin");
         
-        stockLogic.deleteStockById(id);
+        userLogic.deleteUserById(id);
 
     }
 
-    @Path("getstock/{id}")
+    @Path("getuser/{id}")
     @GET
     @Produces("application/json")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Map getStock(@HeaderParam("authToken") String authToken, @PathParam("id") Integer id) throws Exception {
+    public Map getUser(@HeaderParam("authToken") String authToken, @PathParam("id") Integer id) throws Exception {
         
-        authorizator.checkAuthorization(authToken, "operator");
+        authorizator.checkAuthorization(authToken, "admin");
         
-        DataObjectMapper<Stock> o = new DataObjectMapper<>(stockLogic.findStockById(id));
+        DataObjectMapper<User> o = new DataObjectMapper<>(userLogic.findUserById(id));
         
         return o.getMap();
     

@@ -24,8 +24,9 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author root
+ * @author danida, mezner
  */
+
 @Entity
 @Table(name = "customer")
 @XmlRootElement
@@ -43,15 +44,22 @@ public class Customer implements Serializable {
     @Size(max = 100)
     @Column(name = "name")
     private String name;
+    @Size(max = 50)
+    @Column(name = "country")
+    private String country;
+    @Size(max=50)
+    @Column(name = "city")
+    private String city;
     @Size(max = 200)
     @Column(name = "address")
     private String address;
-    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
-    @Size(max=100)//if the field contains email address consider using this annotation to enforce field validation
+    @Size(max = 15)
+    @Column(name = "postalcode")
+    private String postalcode;
+    @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
+    @Size(max = 100)
     @Column(name = "email")
     private String email;
-    // @Pattern(regexp="^\\(?(\\d{3})\\)?[- ]?(\\d{3})[- ]?(\\d{4})$", message="Invalid phone/fax format, should be as xxx-xxx-xxxx")//if the field contains phone or fax number consider using this annotation to enforce field validation
-    // @Pattern(regexp="^\\(?(\\d{3})\\)?[- ]?(\\d{3})[- ]?(\\d{4})$", message="Invalid phone/fax format, should be as xxx-xxx-xxxx")//if the field contains phone or fax number consider using this annotation to enforce field validation
     @Size(max = 20)
     @Column(name = "phone")
     private String phone;
@@ -76,9 +84,12 @@ public class Customer implements Serializable {
         this.id = id;
     }
 
-    public Customer(String name, String address, String email, String phone, Boolean loyaltycard, Integer discount) {
+    public Customer(String name, String country, String city, String address, String postalcode, String email, String phone, Boolean loyaltycard, Integer discount) {
         this.name = name;
+        this.country = country;
+        this.city = city;
         this.address = address;
+        this.postalcode = postalcode;
         this.email = email;
         this.phone = phone;
         this.loyaltycard = loyaltycard;
@@ -143,10 +154,8 @@ public class Customer implements Serializable {
 
     @Override
     public String toString() {
-        return "Customer{" + "name=" + name + ", address=" + address + ", email=" + email + ", phone=" + phone + ", id=" + id + ", loyaltycard=" + loyaltycard + ", discount=" + discount + ", invoiceCollection=" + invoiceCollection + '}';
+        return "Customer{" + "name=" + name + ", country=" + country + ", city=" + city + ", address=" + address + ", postalcode=" + postalcode + ", email=" + email + ", phone=" + phone + ", id=" + id + ", loyaltycard=" + loyaltycard + ", discount=" + discount + ", invoiceCollection=" + invoiceCollection + '}';
     }
-
-   
 
     public String getName() {
         return name;
@@ -156,12 +165,36 @@ public class Customer implements Serializable {
         this.name = name;
     }
 
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
     public String getAddress() {
         return address;
     }
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getPostalcode() {
+        return postalcode;
+    }
+
+    public void setPostalcode(String postalcode) {
+        this.postalcode = postalcode;
     }
 
     public String getEmail() {

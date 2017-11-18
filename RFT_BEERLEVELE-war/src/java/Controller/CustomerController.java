@@ -47,7 +47,7 @@ public class CustomerController {
 
         authorizator.checkAuthorization(authToken, "admin");
 
-        customerLogic.insertCustomer(map.get("name"), map.get("address"), map.get("email"), map.get("phone"), Boolean.parseBoolean(map.get("loyaltycard")), new Integer(map.get("discount")));
+        customerLogic.insertCustomer(map.get("name"), map.get("country"), map.get("city"), map.get("address"), map.get("postalcode"), map.get("email"), map.get("phone"), Boolean.parseBoolean(map.get("loyaltycard")), new Integer(map.get("discount")));
 
     }
 

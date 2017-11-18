@@ -12,7 +12,6 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import javax.security.auth.login.LoginException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,24 +29,24 @@ public class UserFacade implements FacadeInterface<User> {
     EntityManager em;
 
     @Override
-    public void create(User t) {
+    public void create(User user) {
         Logger logger = LoggerFactory.getLogger(UserFacade.class);
-        logger.debug("Creating user");
-        em.persist(t);
+        logger.debug("Create user, ID : ", user.getId());
+        em.persist(user);
     }
 
     @Override
-    public void remove(User t) {
+    public void remove(User user) {
         Logger logger = LoggerFactory.getLogger(UserFacade.class);
-        logger.debug("Remove user");
-        em.remove(t);
+        logger.debug("Remove user, ID : ", user.getId());
+        em.remove(user);
     }
 
     @Override
-    public void edit(User t) {
+    public void edit(User user) {
         Logger logger = LoggerFactory.getLogger(UserFacade.class);
-        logger.debug("Editting user");
-        em.merge(t);
+        logger.debug("Edit user, ID : ", user.getId());
+        em.merge(user);
     }
     public List<User> findAll(){
         Logger logger = LoggerFactory.getLogger(UserFacade.class);
@@ -64,6 +63,13 @@ public class UserFacade implements FacadeInterface<User> {
         else
             throw new LoginException("User does not exist!");
         
+    }
+    
+    public User findUserById(Integer id) {
+        Logger logger = LoggerFactory.getLogger(UserFacade.class);
+        logger.debug("findUserbyId");
+        return (User) em.createNamedQuery("User.findUserById").setParameter("id", id).getResultList().get(0);
+
     }
 
 }
