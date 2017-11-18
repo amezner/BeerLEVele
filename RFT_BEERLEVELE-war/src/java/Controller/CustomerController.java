@@ -43,8 +43,8 @@ public class CustomerController {
     @POST
     @Produces("application/json")
     @Consumes(MediaType.APPLICATION_JSON)
-
     public void saveCustomer(@HeaderParam("authToken") String authToken, Map<String, String> map) throws Exception {
+
         authorizator.checkAuthorization(authToken, "admin");
 
         customerLogic.insertCustomer(map.get("name"), map.get("address"), map.get("email"), map.get("phone"), Boolean.parseBoolean(map.get("loyaltycard")), new Integer(map.get("discount")));
@@ -55,10 +55,10 @@ public class CustomerController {
     @GET
     @Produces("application/json")
     @Consumes(MediaType.APPLICATION_JSON)
-
     public Map getAll(@HeaderParam("authToken") String authToken) throws Exception {
 
         authorizator.checkAuthorization(authToken, "customer");
+
         Map ret = new HashMap<>();
         DataObjectMapper<Customer> o = new DataObjectMapper<>(customerLogic.findAllCustomer());
       
@@ -69,20 +69,25 @@ public class CustomerController {
     @Path("deletecustomer/{id}")
     @DELETE
     @Consumes(MediaType.APPLICATION_JSON)
-
     public void delete(@HeaderParam("authToken") String authToken, @PathParam("id") Integer id) throws Exception {
+        
         authorizator.checkAuthorization(authToken, "admin");
+        
         customerLogic.deleteCustomerById(id);
+    
     }
 
     @Path("getcustomer/{id}")
     @GET
     @Consumes(MediaType.APPLICATION_JSON)
-
     public Map getCustomer(@HeaderParam("authToken") String authToken, @PathParam("id") Integer id) throws Exception {
+        
         authorizator.checkAuthorization(authToken, "operator");
-       DataObjectMapper<Customer> o = new DataObjectMapper<> ( customerLogic.findCustomerById(id));
+        
+        DataObjectMapper<Customer> o = new DataObjectMapper<> ( customerLogic.findCustomerById(id));
+        
         return o.getMap();
+        
     }
 
 }

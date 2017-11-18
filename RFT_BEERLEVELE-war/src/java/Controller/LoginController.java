@@ -37,22 +37,25 @@ public class LoginController {
     @Produces({"application/json"})
     @Consumes(MediaType.APPLICATION_JSON)
     public Map<String, String> login(Map <String,String> map) throws LoginException {
+        
         String token = authenticator.login(map.get("username"), map.get("password"));
         Map<String, String> tok = new HashMap<String, String>();
         tok.put("username", map.get("username"));
         tok.put("token", token);
         return tok;
+        
     }
 
     @Path("logout")
     @POST
     @Produces("application/json")
     @Consumes(MediaType.APPLICATION_JSON)
-
     public Map<String, String> logout(Map <String,String> map) throws GeneralSecurityException {
-          authenticator.logout(map.get("authtoken"));
-          Map<String, String> tok = new HashMap<>();
+        
+        authenticator.logout(map.get("authtoken"));
+        Map<String, String> tok = new HashMap<>();
         tok.put("message", "Logout was successful");
         return tok;
+    
     }
 }

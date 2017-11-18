@@ -51,10 +51,10 @@ public class InvoiceFacade implements FacadeInterface<Invoice>{
         return em.createNamedQuery("Invoice.findAll").getResultList();
     }
 
-    public List<Invoice> findByInvoicenumber(String invoicenumber) {
+    public Invoice findByInvoicenumber(int invoicenumber) {
         Logger logger = LoggerFactory.getLogger(InvoiceFacade.class);
         logger.debug("findInvoicebyInvoicenumber");
-        return em.createNamedQuery("Invoice.findByInvoicenumber").setParameter("invoicenumber", invoicenumber).getResultList();
+        return (Invoice) em.createNamedQuery("Invoice.findByInvoicenumber").setParameter("invoicenumber", invoicenumber).getResultList().get(0);
     }
 
     public List<Invoice> findInvoiceByDate(Date date) {

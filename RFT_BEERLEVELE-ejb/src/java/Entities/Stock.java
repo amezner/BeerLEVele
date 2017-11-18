@@ -17,6 +17,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -39,26 +41,29 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Stock.findByType", query = "SELECT s FROM Stock s WHERE s.type = :type")})
 public class Stock implements Serializable {
 
-    @OneToMany(mappedBy = "stockId")
-    private Collection<Order1> order1Collection;
-
-    
-
-    @Size(max = 20)
+    @Size(max = 100)
     @Column(name = "name")
     private String name;
-    @Size(max = 255)
+    @Size(max = 1000)
     @Column(name = "description")
     private String description;
+    @Size(max = 20)
+    @Column(name = "type")
+    private String type;
+    @Max(value=30)  @Min(value=0)
+    @Column(name = "alcoholcontent")
+    private Double alcoholcontent;
+    @Column(name = "bottlesize")
+    private Double bottlesize;
+    @OneToMany(mappedBy = "stockid")
+    private Collection<Invoicedproducts> invoicedproductsCollection;
+    @OneToMany(mappedBy = "stockId")
+    private Collection<Order1> order1Collection;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "purchaseprice")
     private Double purchaseprice;
     @Column(name = "sellingprice")
     private Double sellingprice;
-    @Size(max = 20)
-    @Column(name = "type")
-    private String type;
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -127,21 +132,6 @@ public class Stock implements Serializable {
         return "Entities.Stock[ id=" + id + " ]";
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
 
     public Double getPurchaseprice() {
         return purchaseprice;
@@ -159,13 +149,6 @@ public class Stock implements Serializable {
         this.sellingprice = sellingprice;
     }
 
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
 
  
 
@@ -176,6 +159,55 @@ public class Stock implements Serializable {
 
     public void setOrder1Collection(Collection<Order1> order1Collection) {
         this.order1Collection = order1Collection;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public Double getAlcoholcontent() {
+        return alcoholcontent;
+    }
+
+    public void setAlcoholcontent(Double alcoholcontent) {
+        this.alcoholcontent = alcoholcontent;
+    }
+
+    public Double getBottlesize() {
+        return bottlesize;
+    }
+
+    public void setBottlesize(Double bottlesize) {
+        this.bottlesize = bottlesize;
+    }
+
+    @XmlTransient
+    public Collection<Invoicedproducts> getInvoicedproductsCollection() {
+        return invoicedproductsCollection;
+    }
+
+    public void setInvoicedproductsCollection(Collection<Invoicedproducts> invoicedproductsCollection) {
+        this.invoicedproductsCollection = invoicedproductsCollection;
     }
     
 }

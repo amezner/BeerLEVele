@@ -34,15 +34,16 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Order1.findByQuantity", query = "SELECT o FROM Order1 o WHERE o.quantity = :quantity")})
 public class Order1 implements Serializable {
 
+    @Size(max = 20)
+    @Column(name = "uid")
+    private String uid;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "ID")
     private Integer id;
-    @Size(max = 100)
-    @Column(name = "uid")
-    private String uid;
     @Column(name = "quantity")
     private Integer quantity;
     @JoinColumn(name = "stock_id", referencedColumnName = "ID")
@@ -69,13 +70,6 @@ public class Order1 implements Serializable {
         this.id = id;
     }
 
-    public String getUid() {
-        return uid;
-    }
-
-    public void setUid(String uid) {
-        this.uid = uid;
-    }
 
     public Integer getQuantity() {
         return quantity;
@@ -116,6 +110,14 @@ public class Order1 implements Serializable {
     @Override
     public String toString() {
         return "Entities.Order1[ id=" + id + " ]";
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
     }
     
 }

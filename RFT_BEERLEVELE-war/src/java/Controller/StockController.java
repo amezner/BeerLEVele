@@ -41,8 +41,8 @@ public class StockController {
     @POST
     @Produces("application/json")
     @Consumes(MediaType.APPLICATION_JSON)
-
     public void saveStock(@HeaderParam("authToken") String authToken, Map<String, String> map) throws Exception {
+
         authorizator.checkAuthorization(authToken, "admin");
 
         stockLogic.insertStock(map.get("name"), map.get("description"), new Double(map.get("purcahaseprice")), new Double(map.get("sellingprice")), new Integer(map.get("onstockquantity")), map.get("type"));
@@ -53,10 +53,11 @@ public class StockController {
     @GET
     @Produces("application/json")
     @Consumes(MediaType.APPLICATION_JSON)
-
     public Map<Integer, Stock> getAll(@HeaderParam("authToken") String authToken) throws Exception {
+
         authorizator.checkAuthorization(authToken, "customer");
-       DataObjectMapper<Stock> o = new DataObjectMapper<>(stockLogic.findAllStock());
+        
+        DataObjectMapper<Stock> o = new DataObjectMapper<>(stockLogic.findAllStock());
       
         return o.getMap();
 
@@ -65,7 +66,9 @@ public class StockController {
     @Path("deletestock/{id}")
     @DELETE
     public void delete(@HeaderParam("authToken") String authToken, @PathParam("id") Integer id) throws Exception {
+        
         authorizator.checkAuthorization(authToken, "admin");
+        
         stockLogic.deleteStockById(id);
 
     }
@@ -74,10 +77,13 @@ public class StockController {
     @GET
     @Produces("application/json")
     @Consumes(MediaType.APPLICATION_JSON)
-
     public Map getStock(@HeaderParam("authToken") String authToken, @PathParam("id") Integer id) throws Exception {
+        
         authorizator.checkAuthorization(authToken, "operator");
+        
         DataObjectMapper<Stock> o = new DataObjectMapper<>(stockLogic.findStockById(id));
+        
         return o.getMap();
+    
     }
 }

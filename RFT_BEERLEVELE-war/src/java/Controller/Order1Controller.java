@@ -42,20 +42,21 @@ public class Order1Controller {
     @Produces("application/json")
     @Consumes(MediaType.APPLICATION_JSON)
     public Map getAllFromCart(@HeaderParam("authToken") String authToken) throws Exception {
+        
         authorizator.checkAuthorization(authToken, "admin");
         DataObjectMapper<Order1> o = new DataObjectMapper<>(order1logic.findAll(authToken));
 
         return o.getMap();
+
     }
 
     @Path("putinthecart")
     @POST
     @Produces("application/json")
     @Consumes(MediaType.APPLICATION_JSON)
-
     public void putStockInCart(@HeaderParam("authToken") String authToken, Map<String, String> map) throws Exception {
+        
         authorizator.checkAuthorization(authToken, "admin");
-
         order1logic.insertInTheCart(authToken, new Integer(map.get("stock_id")), new Integer(map.get("quantity")));
 
     }
@@ -64,8 +65,8 @@ public class Order1Controller {
     @DELETE
     @Produces("application/json")
     @Consumes(MediaType.APPLICATION_JSON)
-
     public void deleteFromCart(@HeaderParam("authToken") String authToken, @PathParam("id") int id) throws Exception {
+
         authorizator.checkAuthorization(authToken, "admin");
         order1logic.deleteOrder1(id);
 

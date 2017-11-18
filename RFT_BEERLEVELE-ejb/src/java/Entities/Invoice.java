@@ -6,6 +6,7 @@
 package Entities;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -17,11 +18,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -51,6 +54,8 @@ public class Invoice implements Serializable {
     @Size(max = 20)
     @Column(name = "phone")
     private String phone;
+    @OneToMany(mappedBy = "invoicenumber")
+    private Collection<Invoicedproducts> invoicedproductsCollection;
     @Column(name = "loyaltycard")
     private Boolean loyaltycard;
 
@@ -132,6 +137,12 @@ public class Invoice implements Serializable {
     public String toString() {
         return "Entities.Invoice[ invoicenumber=" + invoicenumber + " ]";
     }
+    public Boolean getLoyaltycard() {
+        return loyaltycard;
+    }
+    public void setLoyaltycard(Boolean loyaltycard) {
+        this.loyaltycard = loyaltycard;
+    }
 
     public String getName() {
         return name;
@@ -165,12 +176,13 @@ public class Invoice implements Serializable {
         this.phone = phone;
     }
 
-    public Boolean getLoyaltycard() {
-        return loyaltycard;
+    @XmlTransient
+    public Collection<Invoicedproducts> getInvoicedproductsCollection() {
+        return invoicedproductsCollection;
     }
 
-    public void setLoyaltycard(Boolean loyaltycard) {
-        this.loyaltycard = loyaltycard;
+    public void setInvoicedproductsCollection(Collection<Invoicedproducts> invoicedproductsCollection) {
+        this.invoicedproductsCollection = invoicedproductsCollection;
     }
     
 }
