@@ -19,6 +19,7 @@ import javax.ws.rs.ext.ExceptionMapper;
 public class ArrayOutOfExceptionMapper implements ExceptionMapper<ArrayIndexOutOfBoundsException>{
   @Context
     private HttpHeaders headers;
+  @Override
     public Response toResponse(ArrayIndexOutOfBoundsException e) {
         return Response.status(400).entity(e.getMessage()).type(headers.getMediaType()).build();
     }

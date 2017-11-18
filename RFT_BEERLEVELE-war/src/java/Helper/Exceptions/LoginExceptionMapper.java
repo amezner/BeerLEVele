@@ -22,6 +22,7 @@ public class LoginExceptionMapper implements ExceptionMapper<LoginException> {
     @Context
     private HttpHeaders headers;
 
+    @Override
     public Response toResponse(LoginException exception) {
         return Response.status(403).entity(exception.getMessage()).type(headers.getMediaType()).build();
     }
