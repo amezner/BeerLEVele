@@ -17,8 +17,10 @@ import javax.inject.Inject;
  *
  * @author dnovak
  */
+
 @ManagedBean
 @Stateless
+
 public class Order1Logic {
 
     @Inject

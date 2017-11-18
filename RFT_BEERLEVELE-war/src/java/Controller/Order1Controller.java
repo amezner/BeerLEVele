@@ -7,14 +7,14 @@ package Controller;
 
 import Entities.Order1;
 import Helper.Authorizator;
+import Helper.DataObjectMapper;
 import Logic.Order1Logic;
-import java.util.List;
+import java.util.Map;
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
-import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
@@ -37,33 +37,37 @@ public class Order1Controller {
     @EJB
     private Authorizator authorizator;
 
-    @Path("findall")
+    @Path("getcart")
     @GET
     @Produces("application/json")
     @Consumes(MediaType.APPLICATION_JSON)
+    public Map getAllFromCart(@HeaderParam("authToken") String authToken) throws Exception {
+        
+        authorizator.checkAuthorization(authToken, "admin");
+        DataObjectMapper<Order1> o = new DataObjectMapper<>(order1logic.findAll(authToken));
 
-    public List<Order1> getAllFromCart(@HeaderParam("authToken") String authToken) throws Exception {
-        authorizator.checkAuthorization(authToken, "customer");
-        return order1logic.findAll(authToken);
+        return o.getMap();
+
     }
 
     @Path("putinthecart")
     @POST
     @Produces("application/json")
     @Consumes(MediaType.APPLICATION_JSON)
+    public void putStockInCart(@HeaderParam("authToken") String authToken, Map<String, String> map) throws Exception {
+        
+        authorizator.checkAuthorization(authToken, "admin");
+        order1logic.insertInTheCart(authToken, new Integer(map.get("stock_id")), new Integer(map.get("quantity")));
 
-    public void putStockInCart(@HeaderParam("authToken") String authToken, @FormParam("stock_id") int stock_id, @FormParam("quantity") int quantity) throws Exception {
-        authorizator.checkAuthorization(authToken, "customer");
-        order1logic.insertInTheCart(authToken, stock_id, quantity);
     }
 
     @Path("deleteitemfromcart/{id}")
     @DELETE
     @Produces("application/json")
     @Consumes(MediaType.APPLICATION_JSON)
-
     public void deleteFromCart(@HeaderParam("authToken") String authToken, @PathParam("id") int id) throws Exception {
-        authorizator.checkAuthorization(authToken, "customer");
+
+        authorizator.checkAuthorization(authToken, "admin");
         order1logic.deleteOrder1(id);
 
     }

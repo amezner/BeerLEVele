@@ -7,9 +7,7 @@ class CustomerList extends Component {
     super(props);
 
     try {
-      const resp = get('customer/getcustomer', {
-        id: 1
-      });
+
     } catch (e) {
       NotificationManager.error(e.message);
     }

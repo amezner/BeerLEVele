@@ -19,12 +19,19 @@ import javax.ws.rs.ext.Provider;
 @Provider
 
 public class DefaultExceptionMapper implements ExceptionMapper<Exception> {
-    @Context
-    private HttpHeaders headers;
-    
+
+    public static class Error {
+
+        public String cause;
+        public String message;
+    }
+
     @Override
     public Response toResponse(Exception e) {
-        return Response.status(400).entity(e.getMessage()).type(headers.getMediaType()).build();
+         LoginExceptionMapper.Error error = new LoginExceptionMapper.Error();
+        error.cause = "failure";
+        error.message = e.getMessage();
+        return Response.status(400).entity(error).build();
     }
-    
+
 }

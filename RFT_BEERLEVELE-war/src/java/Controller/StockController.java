@@ -7,21 +7,20 @@ package Controller;
 
 import Entities.Stock;
 import Helper.Authorizator;
+import Helper.DataObjectMapper;
 import Logic.StockLogic;
-import java.util.List;
+import java.util.Map;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
-import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 /**
@@ -42,11 +41,11 @@ public class StockController {
     @POST
     @Produces("application/json")
     @Consumes(MediaType.APPLICATION_JSON)
+    public void saveStock(@HeaderParam("authToken") String authToken, Map<String, String> map) throws Exception {
 
-    public void saveStock(@HeaderParam("authToken") String authToken, @FormParam("name") String name, @FormParam("description") String description, @FormParam("purchaseprice") Double purchaseprice, @FormParam("sellingprice") Double sellingprice, @FormParam("onstockquantity") int onstockquantity, @FormParam("type") String type) throws Exception {
         authorizator.checkAuthorization(authToken, "admin");
 
-        stockLogic.insertStock(name, description, purchaseprice, sellingprice, onstockquantity, type);
+        stockLogic.insertStock(map.get("name"), map.get("description"), new Double(map.get("purcahaseprice")), new Double(map.get("sellingprice")), new Integer(map.get("onstockquantity")), map.get("type"));
 
     }
 
@@ -54,32 +53,37 @@ public class StockController {
     @GET
     @Produces("application/json")
     @Consumes(MediaType.APPLICATION_JSON)
+    public Map<Integer, Stock> getAll(@HeaderParam("authToken") String authToken) throws Exception {
 
-    public List<Stock> getAll(@HeaderParam("authToken") String authToken) throws Exception {
         authorizator.checkAuthorization(authToken, "customer");
-
-        return stockLogic.findAllStock();
+        
+        DataObjectMapper<Stock> o = new DataObjectMapper<>(stockLogic.findAllStock());
+      
+        return o.getMap();
 
     }
 
     @Path("deletestock/{id}")
     @DELETE
-    public void save(@HeaderParam("authToken") String authToken, @PathParam("id") Integer id) throws Exception {
+    public void delete(@HeaderParam("authToken") String authToken, @PathParam("id") Integer id) throws Exception {
+        
         authorizator.checkAuthorization(authToken, "admin");
-
+        
         stockLogic.deleteStockById(id);
 
     }
 
-    @Path("getstock")
+    @Path("getstock/{id}")
     @GET
     @Produces("application/json")
     @Consumes(MediaType.APPLICATION_JSON)
-
-    public void getStock(@HeaderParam("authToken") String authToken, @QueryParam("id") int id) throws Exception {
+    public Map getStock(@HeaderParam("authToken") String authToken, @PathParam("id") Integer id) throws Exception {
+        
         authorizator.checkAuthorization(authToken, "operator");
-
-        stockLogic.findStockById(id);
-
+        
+        DataObjectMapper<Stock> o = new DataObjectMapper<>(stockLogic.findStockById(id));
+        
+        return o.getMap();
+    
     }
 }

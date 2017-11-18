@@ -28,17 +28,19 @@ class Login extends Component {
         username: username.value,
         password: password.value,
       });
-      
-      // console.log(resp);
-      NotificationManager.info('visszatért');
 
-      AuthStore.setIsLoggedIn(true);
-      sessionStorage.setItem('authToken', resp.authToken);
-      this.props.history.push(AuthStore.oldUrl);
-
-
+      if (typeof resp.token != 'undefined') {
+        NotificationManager.info('Jó munkát kívánok!', 'Szia '+resp.username);
+        AuthStore.setIsLoggedIn(true);
+        sessionStorage.setItem('authToken', resp.token);
+        this.props.history.push(AuthStore.oldUrl);
+      } else if (typeof resp.message != 'undefined'){
+        NotificationManager.error(resp.message, 'Sikertelen belépés!', 3000);
+      } else {
+        NotificationManager.error('Ismeretlen hiba', 'Sikertelen belépés!', 3000);
+      }
     } catch (e) {
-      NotificationManager.error(e.message, 'Sikeretelen belépés!', 3000);
+      NotificationManager.error(e.message, 'Sikertelen belépés!', 3000);
     }
 
 

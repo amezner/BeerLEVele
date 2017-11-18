@@ -6,9 +6,8 @@
 package Helper.Exceptions;
 
 import javax.security.auth.login.LoginException;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
@@ -19,11 +18,21 @@ import javax.ws.rs.ext.Provider;
 @Provider
 public class LoginExceptionMapper implements ExceptionMapper<LoginException> {
 
-    @Context
-    private HttpHeaders headers;
+    public static class Error {
 
+<<<<<<< HEAD
+=======
+        public String cause;
+        public String message;
+    }
+
+>>>>>>> e7551925c391ee9a7ed35eff50911bf62eb11eb8
     @Override
     public Response toResponse(LoginException exception) {
-        return Response.status(403).entity(exception.getMessage()).type(headers.getMediaType()).build();
+        Error error = new Error();
+        error.cause = "login-failure";
+        error.message = exception.getMessage();
+        return Response.status(Status.BAD_REQUEST).entity(error).build();
     }
+
 }

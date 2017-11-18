@@ -55,6 +55,7 @@ public class CustomerLogic {
         return facade.findAll();
 
     }
+
     public Customer findCustomerById(int id){
         return facade.findById(id);
     }

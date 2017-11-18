@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {post} from '../../lib/client';
 import {NotificationManager} from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
+import {withRouter} from 'react-router-dom';
 
 import FormRow from '../formrow';
 import Field from '../field';
@@ -37,13 +38,15 @@ class Customerform extends Component {
       phone: phone.value,
       discount: 0
     };
-    console.log(data);
+
     try {
       const response = await post('customer/savecustomer', data);
 
-      NotificationManager.info('Érkezett válasz');
+      NotificationManager.success('', 'Sikeres mentés!', 3000);
+      this.props.history.push('/customerlist');
     } catch (e) {
-      NotificationManager.error(e.message, 'Sikertelen mentés!', 3000);
+      const message = e.message != null ? e.message : 'Ismeretlen hiba';
+      NotificationManager.error(message, 'Sikertelen mentés!', 3000);
     }
 
 
@@ -85,4 +88,4 @@ class Customerform extends Component {
   }
 }
 
-export default Customerform;
+export default withRouter(Customerform);

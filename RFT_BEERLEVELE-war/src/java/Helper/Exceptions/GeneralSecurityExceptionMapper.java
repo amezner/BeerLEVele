@@ -20,11 +20,17 @@ import javax.ws.rs.ext.Provider;
 @Provider
 public class GeneralSecurityExceptionMapper implements ExceptionMapper<GeneralSecurityException> {
 
-    @Context
-    private HttpHeaders headers;
+    public static class Error {
+
+        public String cause;
+        public String message;
+    }
 
     @Override
     public Response toResponse(GeneralSecurityException e) {
-        return Response.status(403).entity(e.getMessage()).type(headers.getMediaType()).build();
+         LoginExceptionMapper.Error error = new LoginExceptionMapper.Error();
+        error.cause = "authorization-failure";
+        error.message = e.getMessage();
+        return Response.status(401).entity(error).build();
     }
 }

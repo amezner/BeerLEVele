@@ -5,6 +5,7 @@ import Button from '../button';
 import {post} from '../../lib/client';
 import {NotificationManager} from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
+import {withRouter} from 'react-router-dom';
 
 class Productform extends Component {
   constructor(props) {
@@ -21,19 +22,18 @@ class Productform extends Component {
       name: name.value,
       description: description.value,
       type: type.value,
-      purchaseprice: purchaseprice.value,
+      purcahaseprice: purchaseprice.value,
       sellingprice: sellingprice.value,
       onstockquantity:onstockquantity.value
     }
 
-    console.log(data);
     try {
-
       const resp = await post('stock/savestock', data);
-      NotificationManager.info('Mentés');
-      console.log('vissza');
+      NotificationManager.success('', 'Sikeres mentés!', 3000);
+      this.props.history.push('/productlist');
     } catch (e) {
-      NotificationManager.error(e.message, 'Sikertelen mentés!', 3000);
+      const message = e.message != null ? e.message : 'Ismeretlen hiba';
+      NotificationManager.error(message, 'Sikertelen mentés!', 3000);
     }
   }
 
@@ -71,4 +71,4 @@ class Productform extends Component {
   }
 }
 
-export default Productform;
+export default withRouter(Productform);

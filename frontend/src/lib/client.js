@@ -1,5 +1,4 @@
 import join from 'url-join';
-import URLSearchParams from 'url-search-params';
 
 const BASE_URL = 'http://localhost:8080/RFT_BEERLEVELE-war/resources/';
 
@@ -37,7 +36,7 @@ const methodFactory = (method, bodyAllowed = true) => {
     return (path, body, options = {
       headers: {}
     }) => {
-      options = addHeaders(options)
+      options = addHeaders(options);
       return attachHandlers(fetch(join(BASE_URL, path), {
         ...defaultOptions,
         ...options,

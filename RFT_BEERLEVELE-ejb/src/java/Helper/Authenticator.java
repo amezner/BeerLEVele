@@ -50,7 +50,7 @@ public class Authenticator {
         Logger logger = LoggerFactory.getLogger(Authenticator.class);
         logger.debug("Authenticator is checking the details of the user");
         
-        String storedPassword = userfacade.findByUsername(username).getPassword();
+        
 /*        for (String value : authorizationTokensStorage.values()) {
             if (value.toLowerCase().equals(username.toLowerCase())) {
                     String authToken = UUID.randomUUID().toString();
@@ -58,18 +58,22 @@ public class Authenticator {
             }
         }
 */
-        if (storedPassword != null && storedPassword.equals(password)) {
+        if (userfacade.findByUsername(username)
+                .getPassword() != null) {
 
-            /**
-             * Once all params are matched, the authToken will be generated and
-             * will be stored in the authorizationTokensStorage. The authToken
-             * will be needed for every REST API invocation and is only valid
-             * within the login session
-             */
-            String authToken = UUID.randomUUID().toString();
-            authorizationTokensStorage.put(authToken, username.toLowerCase());
-
-            return authToken;
+            if (userfacade.findByUsername(username).getPassword().equals(password)) {
+                /**
+                 * Once all params are matched, the authToken will be generated and
+                 * will be stored in the authorizationTokensStorage. The authToken
+                 * will be needed for every REST API invocation and is only valid
+                 * within the login session
+                 */
+                String authToken = UUID.randomUUID().toString();
+                authorizationTokensStorage.put(authToken, username.toLowerCase());
+                
+                return authToken;
+            } else
+                throw new LoginException("Incorrect password!");
         }
 
         throw new LoginException("Don't Come Here Again!");
