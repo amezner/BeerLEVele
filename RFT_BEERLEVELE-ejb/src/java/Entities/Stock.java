@@ -54,10 +54,10 @@ public class Stock implements Serializable {
     private Double alcoholcontent;
     @Column(name = "bottlesize")
     private Double bottlesize;
-    @OneToMany(mappedBy = "stockid")
-    private Collection<Invoicedproducts> invoicedproductsCollection;
-    @OneToMany(mappedBy = "stockId")
-    private Collection<Order1> order1Collection;
+//    @OneToMany(mappedBy = "stockid")
+//    private Collection<Invoicedproducts> invoicedproductsCollection;
+//    @OneToMany(mappedBy = "stockId")
+//    private Collection<Order1> order1Collection;
     @Column(name = "purchaseprice")
     private Double purchaseprice;
     @Column(name = "sellingprice")
@@ -150,14 +150,14 @@ public class Stock implements Serializable {
         this.sellingprice = sellingprice;
     }
 
-    @XmlTransient
-    public Collection<Order1> getOrder1Collection() {
-        return order1Collection;
-    }
-
-    public void setOrder1Collection(Collection<Order1> order1Collection) {
-        this.order1Collection = order1Collection;
-    }
+//    @XmlTransient
+//    public Collection<Order1> getOrder1Collection() {
+//        return order1Collection;
+//    }
+//
+//    public void setOrder1Collection(Collection<Order1> order1Collection) {
+//        this.order1Collection = order1Collection;
+//    }
 
 
     public Double getBottlesize() {
@@ -168,14 +168,14 @@ public class Stock implements Serializable {
         this.bottlesize = bottlesize;
     }
 
-    @XmlTransient
-    public Collection<Invoicedproducts> getInvoicedproductsCollection() {
-        return invoicedproductsCollection;
-    }
-
-    public void setInvoicedproductsCollection(Collection<Invoicedproducts> invoicedproductsCollection) {
-        this.invoicedproductsCollection = invoicedproductsCollection;
-    }
+//    @XmlTransient
+//    public Collection<Invoicedproducts> getInvoicedproductsCollection() {
+//        return invoicedproductsCollection;
+//    }
+//
+//    public void setInvoicedproductsCollection(Collection<Invoicedproducts> invoicedproductsCollection) {
+//        this.invoicedproductsCollection = invoicedproductsCollection;
+//    }
 
     public String getName() {
         return name;

@@ -16,15 +16,18 @@ $(document).ready(function () {
             contentType: "application/json",
             data: JSON.stringify({
                 name: $("#name").val(),
+                country: $("#country").val(),
+                city: $("#city").val(),
                 address: $("#address").val(),
+                postalcode: $("#postalcode").val(),
                 email: $("#email").val(),
                 phone: $("#phone").val(),
                 loyalty: $("#loyalty").is(":checked"),
                 discount: $("#discount").val()
-            }),
+            })
         }, function (responseText) {
             $('#ajaxGetUserServletResponse').text(responseText);
-        })
+        });
     });
 
     $("#add_stock").click(function () {
@@ -37,14 +40,16 @@ $(document).ready(function () {
             data: JSON.stringify({
                 name: $("#stockname").val(),
                 description: $("#stockdescription").val(),
+                type: $("#type").val(),
+                alcoholcontent: $("#alcoholcontent").val(),
+                bottlesize: $("#bottlesize").val(),
                 purchaseprice: $("#purchaseprice").val(),
                 sellingprice: $("#sellingprice").val(),
-                onstockquantity: $("#onstockquantity").val(),
-                type: $("#type").val(),
-            }),
+                onstockquantity: $("#onstockquantity").val()
+            })
         }, function (responseText) {
             $('#ajaxGetUserServletResponse').text(responseText);
-        })
+        });
     });
 
     $("#getall").click(function () {

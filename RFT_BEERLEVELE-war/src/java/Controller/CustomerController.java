@@ -57,7 +57,7 @@ public class CustomerController {
     @Consumes(MediaType.APPLICATION_JSON)
     public Map getAll(@HeaderParam("authToken") String authToken) throws Exception {
 
-        authorizator.checkAuthorization(authToken, "customer");
+        authorizator.checkAuthorization(authToken, "operator");
 
         Map ret = new HashMap<>();
         DataObjectMapper<Customer> o = new DataObjectMapper<>(customerLogic.findAllCustomer());

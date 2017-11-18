@@ -45,7 +45,9 @@ public class StockController {
 
         authorizator.checkAuthorization(authToken, "admin");
 
-        stockLogic.insertStock(map.get("name"), map.get("description"), map.get("type"), new Double(map.get("alcoholcontent")), new Double(map.get("bottlesize")), new Double(map.get("purcahaseprice")), new Double(map.get("sellingprice")), new Integer(map.get("onstockquantity")));
+
+        stockLogic.insertStock(map.get("name"), map.get("description"), map.get("type"), 5.2, 0.33, 450.0, 520.0, new Integer(map.get("onstockquantity")));
+//        stockLogic.insertStock(map.get("name"), map.get("description"), map.get("type"), new Double(map.get("alcoholcontent")), new Double(map.get("bottlesize")), new Double(map.get("purcahaseprice")), new Double(map.get("sellingprice")), new Integer(map.get("onstockquantity")));
 
     }
 
@@ -53,9 +55,9 @@ public class StockController {
     @GET
     @Produces("application/json")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Map<Integer, Stock> getAll(@HeaderParam("authToken") String authToken) throws Exception {
+    public Map getAll(@HeaderParam("authToken") String authToken) throws Exception {
 
-        authorizator.checkAuthorization(authToken, "customer");
+        authorizator.checkAuthorization(authToken, "operator");
         
         DataObjectMapper<Stock> o = new DataObjectMapper<>(stockLogic.findAllStock());
       

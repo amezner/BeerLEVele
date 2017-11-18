@@ -53,7 +53,7 @@ public class UserController {
     @GET
     @Produces("application/json")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Map<Integer, User> getAll(@HeaderParam("authToken") String authToken) throws Exception {
+    public Map getAll(@HeaderParam("authToken") String authToken) throws Exception {
 
         authorizator.checkAuthorization(authToken, "admin");
         
