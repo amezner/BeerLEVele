@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 192.168.2.3
--- Generation Time: Nov 18, 2017 at 08:03 PM
+-- Generation Time: Nov 19, 2017 at 10:49 PM
 -- Server version: 5.6.38
 -- PHP Version: 7.1.9
 
@@ -39,7 +39,7 @@ CREATE TABLE `customer` (
   `phone` varchar(20) CHARACTER SET utf8 COLLATE utf8_hungarian_ci DEFAULT NULL,
   `loyaltycard` bit(1) DEFAULT NULL,
   `discount` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `customer`
@@ -116,7 +116,7 @@ CREATE TABLE `invoice` (
   `phone` varchar(20) CHARACTER SET utf8 COLLATE utf8_hungarian_ci DEFAULT NULL,
   `loyaltycard` bit(1) DEFAULT NULL,
   `discount` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `invoice`
@@ -143,7 +143,7 @@ CREATE TABLE `invoicedproducts` (
   `soldprice` double DEFAULT NULL,
   `soldquantity` int(11) DEFAULT NULL,
   `soldsubtotal` double DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `invoicedproducts`
@@ -161,24 +161,28 @@ INSERT INTO `invoicedproducts` (`ID`, `invoicenumber`, `stockid`, `name`, `type`
 
 CREATE TABLE `order1` (
   `ID` int(11) NOT NULL,
-  `uid` varchar(20) CHARACTER SET utf8 COLLATE utf8_hungarian_ci DEFAULT NULL,
+  `uid` int(11) DEFAULT NULL,
   `stock_id` int(11) DEFAULT NULL,
   `quantity` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `order1`
 --
 
 INSERT INTO `order1` (`ID`, `uid`, `stock_id`, `quantity`) VALUES
-(1, 'Akos', 1, 10),
-(2, 'Akos', 2, 20),
-(3, 'Dani', 3, 30),
-(4, 'Dani', 29, 30),
-(5, 'Dani', 12, 10),
-(6, 'Misi', 10, 50),
-(7, 'Misi', 5, 20),
-(8, 'Misi', 19, 100);
+(1, 1, 1, 10),
+(2, 1, 2, 20),
+(3, 2, 3, 30),
+(4, 2, 29, 30),
+(5, 2, 12, 10),
+(6, 3, 10, 50),
+(7, 3, 5, 20),
+(8, 3, 19, 100),
+(18, 1, 20, 200),
+(19, 2, 30, 30),
+(20, 3, 40, 400),
+(21, 1, 40, 40);
 
 -- --------------------------------------------------------
 
@@ -196,7 +200,7 @@ CREATE TABLE `stock` (
   `purchaseprice` double DEFAULT NULL,
   `sellingprice` double DEFAULT NULL,
   `onstockquantity` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `stock`
@@ -265,7 +269,7 @@ CREATE TABLE `user` (
   `name` varchar(20) CHARACTER SET utf8 COLLATE utf8_hungarian_ci DEFAULT NULL,
   `role` varchar(20) CHARACTER SET utf8 COLLATE utf8_hungarian_ci DEFAULT NULL,
   `password` varchar(20) CHARACTER SET utf8 COLLATE utf8_hungarian_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `user`
@@ -308,7 +312,8 @@ ALTER TABLE `invoicedproducts`
 --
 ALTER TABLE `order1`
   ADD PRIMARY KEY (`ID`),
-  ADD KEY `stock_id` (`stock_id`);
+  ADD KEY `stock_id` (`stock_id`),
+  ADD KEY `uid` (`uid`);
 
 --
 -- Indexes for table `stock`
@@ -348,13 +353,13 @@ ALTER TABLE `invoicedproducts`
 -- AUTO_INCREMENT for table `order1`
 --
 ALTER TABLE `order1`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `stock`
 --
 ALTER TABLE `stock`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
 
 --
 -- AUTO_INCREMENT for table `user`
