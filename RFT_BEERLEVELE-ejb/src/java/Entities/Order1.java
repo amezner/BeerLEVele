@@ -28,10 +28,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "order1")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Order1.findAll", query = "SELECT o FROM Order1 o"),
-    @NamedQuery(name = "Order1.findById", query = "SELECT o FROM Order1 o WHERE o.id = :id"),
-    @NamedQuery(name = "Order1.findByUid", query = "SELECT o FROM Order1 o WHERE o.uid = :uid"),
-    @NamedQuery(name = "Order1.findByQuantity", query = "SELECT o FROM Order1 o WHERE o.quantity = :quantity")})
+    @NamedQuery(name = "Order1.findInCart", query = "SELECT o FROM Order1 o WHERE o.uid = :uid AND o.stockId = :stock_id"),
+    @NamedQuery(name = "Order1.findCartByUid", query = "SELECT o FROM Order1 o WHERE o.uid = :uid"),
+})
 public class Order1 implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -41,7 +40,6 @@ public class Order1 implements Serializable {
     @Column(name = "ID")
     private Integer id;
 
-    @Size(max = 20)
     @Column(name = "uid")
     private Integer uid;
 

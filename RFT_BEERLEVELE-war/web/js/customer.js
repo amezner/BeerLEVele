@@ -90,6 +90,35 @@ $(document).ready(function () {
             $('#ajaxGetUserServletResponse').text(responseText);
         })
     });
+    
+     $("#addtocart").click(function () {
+        $.ajax({
+            url: 'resources/order/putinthecart',
+            type: 'POST',
+            headers: {'authToken': token},
+            dataType: "json",
+            contentType: "application/json",
+            data: JSON.stringify({
+                stock_id: $("#stockidtocart").val(),
+                quantity: $("#stockquantitytocart").val()
+            })
+        }, function (responseText) {
+            $('#ajaxGetUserServletResponse').text(responseText);
+        });
+    });
+
+     $("#deletefromcart").click(function () {
+        $.ajax({
+            url: 'resources/order/deleteitemfromcart/'+  $("#stockidtocart").val(),
+            type: 'DELETE',
+            headers: {'authToken': token},
+            dataType: "json",
+            contentType: "application/json",
+            success: function (responseText) {
+                $('#ajaxGetUserServletResponse').text(responseText);
+            }}
+        )
+    });
 
     $("#getcustomer").click(function () {
         $.ajax({
@@ -109,9 +138,7 @@ $(document).ready(function () {
             type: 'DELETE',
             dataType: "json",
             contentType: "application/json",
-            headers: {
-                'authToken': token
-            },
+            headers: {'authToken': token},
             success: function (responseText) {
                 $('#ajaxGetUserServletResponse').text(responseText);
             }}

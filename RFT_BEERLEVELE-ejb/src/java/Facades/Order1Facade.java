@@ -30,41 +30,34 @@ public class Order1Facade implements FacadeInterface<Order1> {
     @Override
     public void create(Order1 t) {
         Logger logger = LoggerFactory.getLogger(Order1Facade.class);
-        logger.debug("Create cart");
+        logger.debug("Create cart, ID : ", t.getId());
         em.persist(t);
     }
 
     @Override
     public void remove(Order1 t) {
         Logger logger = LoggerFactory.getLogger(Order1Facade.class);
-        logger.debug("Remove cart");
+        logger.debug("Remove cart, ID : ", t.getId(),", StockID : ",t.getStockId());
         em.remove(t);
     }
 
     @Override
     public void edit(Order1 t) {
         Logger logger = LoggerFactory.getLogger(Order1Facade.class);
-        logger.debug("Editting cart");
+        logger.debug("Editting cart, ID : ", t.getId(),", StockID : ",t.getStockId());
         em.merge(t);
     }
 
-    public List<Order1> findAll() {
-        Logger logger = LoggerFactory.getLogger(Order1Facade.class);
-        logger.debug("Find all carts");
-        return em.createNamedQuery("Order1.findAll").getResultList();
-    }
-
-    public Order1 findById(int Id) {
-        Logger logger = LoggerFactory.getLogger(Order1Facade.class);
-        logger.debug("Find a cart");
-        return (Order1) em.createNamedQuery("Order1.findById").setParameter("id", Id).getResultList().get(0);
-    }
-
-    public List<Order1> findByUid (Integer uid){
+    public List<Order1> findCartByUid (Integer uid){
         Logger logger = LoggerFactory.getLogger(Order1Facade.class);
         logger.debug("Find a cart by UID");
-        return em.createNamedQuery("Order1.findByUid").setParameter("uid", uid).getResultList();
+        return em.createNamedQuery("Order1.findCartByUid").setParameter("uid", uid).getResultList();
+    }
+
+    public List<Order1> findInCart (Integer uid, Integer stock_id){
+        Logger logger = LoggerFactory.getLogger(Order1Facade.class);
+        logger.debug("Find a stock item in UID's cart");
+        return em.createNamedQuery("Order1.findInCart").setParameter("uid", uid).setParameter("stock_id", stock_id).getResultList();
     }
     
-
 }
