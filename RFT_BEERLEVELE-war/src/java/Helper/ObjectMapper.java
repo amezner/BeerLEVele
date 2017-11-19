@@ -15,6 +15,7 @@ import java.util.Map;
  */
 public abstract class ObjectMapper <T> {
     
+    
     private Map<Integer,T> map= new HashMap<>();
     
     
@@ -31,6 +32,9 @@ public abstract class ObjectMapper <T> {
 
     public Map<Integer, T> getMap() {
         return map;
+    }
+     public T getEntry() {
+        return map.get(1);
     }
     
 }

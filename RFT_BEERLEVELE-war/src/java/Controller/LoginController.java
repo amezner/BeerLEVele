@@ -34,7 +34,7 @@ public class LoginController {
 
     @Path("login")
     @POST
-    @Produces({"application/json"})
+    @Produces("application/json")
     @Consumes(MediaType.APPLICATION_JSON)
     public Map<String, String> login(Map <String,String> map) throws LoginException {
         
