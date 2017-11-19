@@ -47,7 +47,7 @@ public class CustomerController {
 
         authorizator.checkAuthorization(authToken, "admin");
 
-        customerLogic.insertCustomer(map.get("name"), map.get("address"), map.get("email"), map.get("phone"), Boolean.parseBoolean(map.get("loyaltycard")), new Integer(map.get("discount")));
+        customerLogic.insertCustomer(map.get("name"), map.get("country"), map.get("city"), map.get("address"), map.get("postalcode"), map.get("email"), map.get("phone"), Boolean.parseBoolean(map.get("loyaltycard")), new Integer(map.get("discount")));
 
     }
 
@@ -57,9 +57,9 @@ public class CustomerController {
     @Consumes(MediaType.APPLICATION_JSON)
     public Map getAll(@HeaderParam("authToken") String authToken) throws Exception {
 
-        authorizator.checkAuthorization(authToken, "customer");
+        authorizator.checkAuthorization(authToken, "operator");
 
-        Map ret = new HashMap<>();
+//        Map ret = new HashMap<>();
         DataObjectMapper<Customer> o = new DataObjectMapper<>(customerLogic.findAllCustomer());
       
         return o.getMap();

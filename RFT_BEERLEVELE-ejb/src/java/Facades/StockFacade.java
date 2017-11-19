@@ -28,20 +28,24 @@ public class StockFacade implements FacadeInterface<Stock> {
     EntityManager em;
 
     @Override
-    public void create(Stock cu) {
+    public void create(Stock stock) {
         Logger logger = LoggerFactory.getLogger(StockFacade.class);
-        logger.debug("Persist stock");
-        em.persist(cu);
+        logger.debug("Create stock, ID : ", stock.getId());
+        em.persist(stock);
     }
 
     @Override
-    public void remove(Stock t) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void remove(Stock stock) {
+        Logger logger = LoggerFactory.getLogger(StockFacade.class);
+        logger.debug("Remove stock, ID : ", stock.getId());
+        em.remove(stock);    
     }
 
     @Override
-    public void edit(Stock t) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void edit(Stock stock) {
+        Logger logger = LoggerFactory.getLogger(StockFacade.class);
+        logger.debug("Edit stock, ID : ", stock.getId());
+        em.merge(stock);
     }
 
     public List<Stock> findAll() {

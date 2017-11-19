@@ -40,7 +40,8 @@ class Login extends Component {
         NotificationManager.error('Ismeretlen hiba', 'Sikertelen belépés!', 3000);
       }
     } catch (e) {
-      NotificationManager.error(e.message, 'Sikertelen belépés!', 3000);
+      const error = e.message ? e.message : 'Ismeretlen hiba!';
+      NotificationManager.error(error, 'Sikertelen belépés!', 3000);
     }
 
 

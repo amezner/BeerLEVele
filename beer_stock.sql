@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 192.168.2.3
--- Generation Time: Nov 17, 2017 at 11:18 PM
+-- Generation Time: Nov 18, 2017 at 08:03 PM
 -- Server version: 5.6.38
 -- PHP Version: 7.1.9
 
@@ -31,48 +31,71 @@ SET time_zone = "+00:00";
 CREATE TABLE `customer` (
   `ID` int(11) NOT NULL,
   `name` varchar(100) CHARACTER SET utf8 COLLATE utf8_hungarian_ci DEFAULT NULL,
+  `country` varchar(50) CHARACTER SET utf8 COLLATE utf8_hungarian_ci DEFAULT NULL,
+  `city` varchar(50) CHARACTER SET utf8 COLLATE utf8_hungarian_ci DEFAULT NULL,
   `address` varchar(200) CHARACTER SET utf8 COLLATE utf8_hungarian_ci DEFAULT NULL,
+  `postalcode` varchar(15) CHARACTER SET utf8 COLLATE utf8_hungarian_ci DEFAULT NULL,
   `email` varchar(100) CHARACTER SET utf8 COLLATE utf8_hungarian_ci DEFAULT NULL,
   `phone` varchar(20) CHARACTER SET utf8 COLLATE utf8_hungarian_ci DEFAULT NULL,
   `loyaltycard` bit(1) DEFAULT NULL,
   `discount` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `customer`
 --
 
-INSERT INTO `customer` (`ID`, `name`, `address`, `email`, `phone`, `loyaltycard`, `discount`) VALUES
-(1, 'Reichel-Heidenreich', '76 Bonner Plaza', 'hbroek0@gmpg.org', '+33-160-251-2852', b'1', 3),
-(2, 'King Inc', '151 Tomscot Point', 'emcgrae1@seesaa.net', '+86-504-139-8224', b'1', 14),
-(3, 'Gottlieb Group', '7 Dahle Junction', 'dluthwood2@admin.ch', '+53-589-568-1516', b'1', 14),
-(4, 'Effertz-Fritsch', '5 Northridge Junction', 'dcomello3@mozilla.org', '+63-400-539-4209', b'1', 4),
-(5, 'Kreiger Inc', '763 Loftsgordon Junction', 'lbreem4@is.gd', '+34-418-301-7774', b'0', 0),
-(6, 'Miller-Schaden', '0971 Vidon Circle', 'kabrashkov5@fc2.com', '+81-246-880-1881', b'1', 11),
-(7, 'Raynor-Bergnaum', '8 Stone Corner Avenue', 'cdoswell6@fastcompany.com', '+1-612-498-8531', b'0', 0),
-(8, 'Sanford and Sons', '054 Manufacturers Junction', 'ajoannic7@europa.eu', '+380-302-774-8592', b'1', 1),
-(9, 'Watsica Group', '7 Granby Street', 'gferryman8@freewebs.com', '+252-332-872-3187', b'1', 1),
-(10, 'Russel Group', '936 Mcguire Point', 'fsleigh9@newyorker.com', '+86-403-833-0527', b'0', 0),
-(11, 'Brakus-Koepp', '96285 Artisan Hill', 'ravissa@eventbrite.com', '+359-401-280-5468', b'0', 0),
-(12, 'Rosenbaum-Schmeler', '513 Melrose Parkway', 'lmatejab@dyndns.org', '+55-811-394-4621', b'1', 5),
-(13, 'Howe, Quitzon and Rempel', '141 Northridge Alley', 'ncaneoc@networkadvertising.org', '+254-559-975-0496', b'1', 9),
-(14, 'Kuhlman, Trantow and Brakus', '24967 Old Gate Crossing', 'kpengelleyd@sourceforge.net', '+86-990-961-1974', b'0', 0),
-(15, 'Marquardt-Schultz', '4 Hagan Trail', 'jjohle@sakura.ne.jp', '+351-964-532-2610', b'1', 3),
-(16, 'Borer-Ebert', '14 Hooker Alley', 'abowryf@symantec.com', '+502-540-742-7186', b'1', 12),
-(17, 'Leannon, O\'Conner and Boyle', '2201 Drewry Lane', 'phylandg@aol.com', '+46-876-694-4352', b'1', 9),
-(18, 'Monahan, Botsford and Wuckert', '6 Waxwing Park', 'liletth@unicef.org', '+86-328-705-4231', b'0', 0),
-(19, 'Kris-Shields', '8797 Harbort Alley', 'acorbyni@amazonaws.com', '+86-831-285-9330', b'1', 15),
-(20, 'Berge-Raynor', '1016 Main Point', 'ebaressj@businesswire.com', '+679-909-129-8089', b'1', 9),
-(21, 'Stroman Inc', '72136 Vidon Avenue', 'phaddacksk@wikia.com', '+7-953-929-1468', b'1', 14),
-(22, 'Emard-Crona', '40 Hayes Trail', 'etendahll@japanpost.jp', '+62-598-545-4433', b'0', 0),
-(23, 'Rowe Inc', '2116 Kingsford Crossing', 'gbordism@cam.ac.uk', '+374-835-534-4242', b'0', 0),
-(24, 'Dooley-Boehm', '99 Susan Avenue', 'mfilppettin@example.com', '+263-371-456-0525', b'0', 0),
-(25, 'Herman-Hudson', '97 East Circle', 'adoodyo@bloglovin.com', '+689-137-643-1946', b'1', 11),
-(26, 'Roob, Treutel and Kub', '93527 Emmet Center', 'alanslyp@ca.gov', '+963-739-279-0445', b'0', 0),
-(27, 'Goldner, Tromp and Daniel', '15737 Packers Park', 'wbonettq@unc.edu', '+54-570-835-7799', b'0', 0),
-(28, 'Ryan-Cormier', '11 Westport Junction', 'sockendonr@freewebs.com', '+66-863-250-9724', b'0', 0),
-(29, 'Hagenes-Emard', '8 Cardinal Court', 'tstrovers@miibeian.gov.cn', '+86-871-170-3393', b'1', 8),
-(30, 'Herman, Kutch and Feeney', '526 Bellgrove Avenue', 'aangelot@aboutads.info', '+30-481-236-1988', b'1', 11);
+INSERT INTO `customer` (`ID`, `name`, `country`, `city`, `address`, `postalcode`, `email`, `phone`, `loyaltycard`, `discount`) VALUES
+(1, 'Reichel-Heidenreich', 'Uruguay', 'Pando Canelones', '76 Bonner Plaza', '11600', 'hbroek0@gmpg.org', '+33-160-251-2852', b'1', 3),
+(2, 'Waelchi Group', 'France', 'Paris 19', '2 Cascade Crossing', '75954 CEDEX 19', 'aosheils1@jiathis.com', '+33-284-962-2516', b'0', 0),
+(3, 'Stracke-Purdy', 'Czech Republic', 'Žebrák', '79 Anniversary Road', '263 01', 'vbaudic2@msu.edu', '+420-949-991-3365', b'1', 12),
+(4, 'Padberg-Hettinger', 'United States', 'Saint Joseph', '328 8th Hill', '64504', 'freye3@seesaa.net', '+1-816-334-7124', b'1', 2),
+(5, 'Rice, Mann and Cronin', 'United States', 'Tulsa', '25 Lerdahl Place', '74116', 'qdoyley4@businessinsider.com', '+1-918-987-3233', b'1', 6),
+(6, 'Bins, Herzog and Roberts', 'Czech Republic', 'Vilémov', '59 Johnson Point', '783 22', 'efoot5@geocities.com', '+420-778-200-2729', b'1', 10),
+(7, 'Mante, Roberts and Pfannerstill', 'United States', 'San Francisco', '6 Nova Court', '94154', 'agoulstone6@tinypic.com', '+1-415-312-6637', b'0', 0),
+(8, 'Stoltenberg-Dibbert', 'United Kingdom', 'East End', '00 Lakewood Gardens Court', 'BH21', 'gdiggles7@mediafire.com', '+44-835-167-4875', b'1', 12),
+(9, 'Dach LLC', 'Czech Republic', 'Třešť', '58901 Gina Trail', '589 01', 'dmughal8@gizmodo.com', '+420-723-493-6264', b'0', 0),
+(10, 'Cassin-Von', 'Czech Republic', 'Holoubkov', '4112 Dahle Lane', '338 01', 'cmiddis9@youku.com', '+420-133-944-7049', b'0', 0),
+(11, 'Schmitt-Gerlach', 'United States', 'Tallahassee', '80 Annamark Center', '32309', 'rrourkea@archive.org', '+1-850-124-5356', b'0', 0),
+(12, 'Fahey, Considine and Hintz', 'United States', 'Huntsville', '088 Ruskin Street', '35805', 'abadamb@craigslist.org', '+1-256-328-5507', b'0', 0),
+(13, 'Bernhard, Kovacek and Ratke', 'France', 'Angers', '91345 Kennedy Road', '49010 CEDEX 01', 'tiddendenc@oaic.gov.au', '+33-632-786-8402', b'0', 0),
+(14, 'Reynolds, Yost and Harber', 'Czech Republic', 'Zbůch', '38 Marquette Trail', '330 22', 'cstenetd@seesaa.net', '+420-323-320-0666', b'0', 0),
+(15, 'Gutmann-Ritchie', 'Czech Republic', 'Dolní Cerekev', '659 Elgar Trail', '588 45', 'lsmye@zdnet.com', '+420-212-533-5301', b'1', 3),
+(16, 'Leuschke Group', 'United States', 'Gatesville', '24 Basil Place', '76598', 'mpearlef@amazon.co.uk', '+1-254-468-6972', b'1', 4),
+(17, 'Barton, Bartell and Ebert', 'United States', 'North Little Rock', '49960 Jana Road', '72118', 'blockieg@amazon.de', '+1-501-557-3425', b'1', 6),
+(18, 'Witting Inc', 'France', 'Eaubonne', '64234 Randy Plaza', '95604 CEDEX', 'mcarnellh@goo.ne.jp', '+33-865-756-3685', b'1', 8),
+(19, 'Nienow-Hane', 'Czech Republic', 'Hostomice', '15 Comanche Place', '417 52', 'goliphanti@hostgator.com', '+420-179-227-8578', b'1', 8),
+(20, 'Davis LLC', 'France', 'La Gacilly', '88 Lotheville Point', '56209 CEDEX', 'jbatstonej@bing.com', '+33-838-442-3917', b'1', 2),
+(21, 'Wehner-Lesch', 'Czech Republic', 'Hodkovice nad Mohelkou', '6 Amoth Circle', '463 42', 'ebinnionk@alexa.com', '+420-986-429-0021', b'0', 0),
+(22, 'Daniel, Stamm and Kreiger', 'Czech Republic', 'Prostřední Bečva', '555 Oneill Terrace', '756 56', 'kmccreal@cisco.com', '+420-279-649-2219', b'1', 5),
+(23, 'Von, Wehner and Shields', 'France', 'La Rochelle', '256 Amoth Avenue', '17004 CEDEX 1', 'sroscriggm@bing.com', '+33-738-330-6585', b'0', 0),
+(24, 'Grimes, Corkery and Graham', 'Czech Republic', 'Červená Voda', '5 Eliot Junction', '561 61', 'sboycen@abc.net.au', '+420-273-507-7677', b'0', 0),
+(25, 'Wiegand-Stamm', 'Czech Republic', 'Staré Křečany', '942 Clove Avenue', '407 61', 'agonzaleso@auda.org.au', '+420-296-233-6897', b'1', 2),
+(26, 'Borer and Sons', 'United States', 'Waco', '2235 Bowman Way', '76711', 'cthoroldp@naver.com', '+1-254-777-5761', b'1', 3),
+(27, 'Crona Group', 'France', 'Marne-la-Vallée', '15441 Johnson Park', '77602 CEDEX 3', 'apetscheltq@slideshare.net', '+33-555-719-8098', b'1', 9),
+(28, 'Cormier, Klocko and Runte', 'Czech Republic', 'Sokolnice', '121 Nancy Road', '664 52', 'escuser@sina.com.cn', '+420-180-898-5171', b'1', 5),
+(29, 'Weber-Heaney', 'France', 'Digne-les-Bains', '50 Sycamore Circle', '04004 CEDEX', 'celvess@nifty.com', '+33-835-597-4022', b'0', 0),
+(30, 'Gutmann and Sons', 'France', 'Metz', '55 Kensington Trail', '57045 CEDEX 01', 'kbengefieldt@microsoft.com', '+33-843-570-8018', b'1', 2),
+(31, 'Koepp, Kovacek and Will', 'Czech Republic', 'Višňové', '2006 Pawling Drive', '671 38', 'ehaisellu@live.com', '+420-994-867-0859', b'0', 0),
+(32, 'Bergnaum-Schimmel', 'France', 'Palaiseau', '20712 Cambridge Street', '91124 CEDEX', 'hstrathernv@eventbrite.com', '+33-235-494-1137', b'1', 12),
+(33, 'Daugherty, Koepp and Ritchie', 'France', 'Creil', '48 Hudson Court', '60109 CEDEX 1', 'mvassallw@eepurl.com', '+33-258-251-4369', b'0', 0),
+(34, 'Mayert, Howe and Gulgowski', 'France', 'Poitiers', '779 Delaware Alley', '86042 CEDEX 9', 'rwillsheex@list-manage.com', '+33-876-419-4863', b'1', 6),
+(35, 'Hermann, Kertzmann and Cruickshank', 'United States', 'Grand Rapids', '9045 Tomscot Crossing', '49560', 'garmitagey@paginegialle.it', '+1-616-559-6299', b'1', 5),
+(36, 'Schmidt, Batz and Pagac', 'Germany', 'München', '99 Ridge Oak Pass', '81373', 'vrundlez@foxnews.com', '+49-651-689-8367', b'1', 10),
+(37, 'Hahn and Sons', 'United Kingdom', 'Walton', '14038 Donald Drive', 'CV35', 'ljubert10@privacy.gov.au', '+44-994-576-8190', b'1', 8),
+(38, 'Rogahn Inc', 'France', 'Clichy', '8974 Burning Wood Crossing', '92613 CEDEX', 'growaszkiewicz11@yahoo.co.jp', '+33-575-197-1287', b'0', 0),
+(39, 'Kreiger LLC', 'Czech Republic', 'Dolní Sloupnice', '64967 Burning Wood Center', '565 53', 'dpoley12@tuttocitta.it', '+420-842-943-2337', b'1', 12),
+(40, 'Gutmann-Rodriguez', 'Czech Republic', 'Přimda', '27303 Merchant Plaza', '348 06', 'lculvey13@harvard.edu', '+420-285-476-5557', b'1', 2),
+(41, 'Hoppe and Sons', 'United States', 'Wilmington', '96373 Main Drive', '28410', 'oleathart14@vk.com', '+1-910-921-5196', b'1', 14),
+(42, 'Crona-Kessler', 'France', 'Massy', '018 Hermina Junction', '91881 CEDEX', 'ptackell15@moonfruit.com', '+33-358-997-4460', b'0', 0),
+(43, 'Sawayn-Schuster', 'France', 'Montpellier', '44 Duke Junction', '34032 CEDEX 1', 'ovinten16@paypal.com', '+33-796-410-0420', b'0', 0),
+(44, 'Hoeger-Toy', 'France', 'Brive-la-Gaillarde', '5 Sachs Pass', '19318 CEDEX', 'abissatt17@moonfruit.com', '+33-808-426-0019', b'0', 0),
+(45, 'Kihn and Sons', 'France', 'Paris 12', '91908 Cottonwood Hill', '75582 CEDEX 12', 'mlist18@hatena.ne.jp', '+33-260-714-3835', b'1', 13),
+(46, 'Labadie Group', 'United States', 'Houston', '654 Corben Way', '77260', 'vingrem19@ustream.tv', '+1-713-803-6853', b'1', 1),
+(47, 'Shanahan-Feest', 'Czech Republic', 'Kamenné Žehrovice', '4 Granby Place', '273 01', 'nnaulty1a@chronoengine.com', '+420-435-477-4736', b'1', 10),
+(48, 'Ryan, Morar and Kshlerin', 'France', 'Istres', '02 Nevada Avenue', '13802 CEDEX', 'arising1b@jigsy.com', '+33-165-617-6689', b'0', 0),
+(49, 'Lubowitz, Okuneva and Crooks', 'Netherlands', 'Delft', '47067 Sycamore Point', '2614', 'csmeed1c@vimeo.com', '+31-486-104-8334', b'1', 6),
+(50, 'Koch-McCullough', 'France', 'Paris 12', '45 Haas Street', '75567 CEDEX 12', 'lcomizzoli1d@globo.com', '+33-363-609-4962', b'0', 0);
 
 -- --------------------------------------------------------
 
@@ -85,19 +108,22 @@ CREATE TABLE `invoice` (
   `date` datetime DEFAULT NULL,
   `customer_id` int(11) DEFAULT NULL,
   `name` varchar(100) CHARACTER SET utf8 COLLATE utf8_hungarian_ci DEFAULT NULL,
+  `country` varchar(50) CHARACTER SET utf8 COLLATE utf8_hungarian_ci DEFAULT NULL,
+  `city` varchar(50) CHARACTER SET utf8 COLLATE utf8_hungarian_ci DEFAULT NULL,
   `address` varchar(200) CHARACTER SET utf8 COLLATE utf8_hungarian_ci DEFAULT NULL,
+  `postalcode` varchar(15) CHARACTER SET utf8 COLLATE utf8_hungarian_ci DEFAULT NULL,
   `email` varchar(100) CHARACTER SET utf8 COLLATE utf8_hungarian_ci DEFAULT NULL,
   `phone` varchar(20) CHARACTER SET utf8 COLLATE utf8_hungarian_ci DEFAULT NULL,
   `loyaltycard` bit(1) DEFAULT NULL,
   `discount` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `invoice`
 --
 
-INSERT INTO `invoice` (`invoicenumber`, `date`, `customer_id`, `name`, `address`, `email`, `phone`, `loyaltycard`, `discount`) VALUES
-(1, '2017-11-15 08:40:30', 2, 'Ez mar nem az az ugyfel, csak tesztelunk!', 'Ez mar nem az a cim, csak tesztelunk!', 'salala@trallala.com', 'ez-sem-az-a-szam', b'1', 5);
+INSERT INTO `invoice` (`invoicenumber`, `date`, `customer_id`, `name`, `country`, `city`, `address`, `postalcode`, `email`, `phone`, `loyaltycard`, `discount`) VALUES
+(1, '2017-11-15 08:40:30', 1, 'Ez mar nem az az ugyfel, csak tesztelunk!', 'Masorszag', 'Rakottfalva', 'Ez mar nem az a cim, csak tesztelunk!', '36000', 'salala@trallala.com', 'ez-sem-az-a-szam', b'1', 5);
 
 -- --------------------------------------------------------
 
@@ -117,7 +143,7 @@ CREATE TABLE `invoicedproducts` (
   `soldprice` double DEFAULT NULL,
   `soldquantity` int(11) DEFAULT NULL,
   `soldsubtotal` double DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `invoicedproducts`
@@ -138,7 +164,7 @@ CREATE TABLE `order1` (
   `uid` varchar(20) CHARACTER SET utf8 COLLATE utf8_hungarian_ci DEFAULT NULL,
   `stock_id` int(11) DEFAULT NULL,
   `quantity` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `order1`
@@ -170,7 +196,7 @@ CREATE TABLE `stock` (
   `purchaseprice` double DEFAULT NULL,
   `sellingprice` double DEFAULT NULL,
   `onstockquantity` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `stock`
@@ -190,7 +216,9 @@ INSERT INTO `stock` (`ID`, `name`, `description`, `type`, `alcoholcontent`, `bot
 (11, 'Augustiner Edelstoff', 'Az igazi bajor \"export\"-láger, melyből egy sosem elég...', 'Lager', 5.6, 0.5, 450, 600, 1000),
 (12, 'Bernard partyhordó (5 liter)', 'A Bernard igazi nagybetűs SöR, egy cseh klasszikus. Színe egészséget, teltséget sugall, egészen mélynek mondanám, és becsukott szemmel rávágnám, hogy ez egy cseh sör!\r\nA cseh sörfesztivál kedvence!', 'Lager', 5, 5, 4800, 6500, 20),
 (13, 'Budweiser The king of beers', 'A világ legnépszerűbb lager söre, mely Magyarországon csak nálunk kapható! Egy korty USA...', 'Lager', 5, 0.33, 400, 600, 1000),
+(14, 'Guiness Draught', 'A Guinness maga írország. A világ egyik legismertebb sörmárkája. Története 1759-ben indult, amikor Arthur Guinness ír serfőző mester évi 45 fontért 9000 évre bérbe vette a St. James Gate’s sörfőzdét. Itt kezdett spontánerjesztésű porter sörének gyártásába, amit folyamatosan fejlesztett, míg létre nem jött a tökéletes stout, a Guinness. A Guinness Extra Stout szuper prémium minőségű sör, amely sötét, rubinvörös színét az erőteljes pörkölésű malátának, finoman kesernyés ízét a magas komlótartalomnak, híresen tömör, krémszerű habját pedig a nitrogénes dúsításnak köszönheti.', 'Stout', 5, 0.33, 300, 500, 1000),
 (15, 'Fóti Zwickl', 'Egy erősen komlózott, zamatos, szűretlen világos lager típusú sör.\r\nTavaszváró sörkülönlegességként mutattuk be, de a nagy érdeklődésre való tekintettel állandó termékeink közé került. A csatosüveg külön élmény!!!', 'Lager', 4.5, 0.5, 350, 500, 400),
+(16, 'Katalin Cárnő', 'Elegáns, feltűnő, a világ a lábai előtt hever és lehetetlen nem észrevenni, ha belép a szobába. Szeretők versenyeznek a kegyeiért, figyelmet és hatalmat követel. Ilyen egy született uralkodó. Nagy Katalin regnálását nevezik Oroszország aranykorának. Ez a sör olyan, mintha még nem ért volna véget a birodalmi pompa.', 'Stout', 8.1, 0.33, 500, 940, 300),
 (17, 'Keserű Méz', 'Intenzíven komlózott, szűretlen világos sör, a legnépszerűbb Fóti sör. 2012. júliustól palacban is forgalmazzuk. Átmeneti sör a lager, és az IPA között, csatos üvegben.\r\n\r\nA Kisüzemi Sörfőzdék Egyesülete VIII. Nemzetközi Sörversenyén 2012-ben az első helyezést érte el a világos sörök, 11 Balling feletti kategóriában.', 'Lager', 6, 0.5, 450, 600, 1000),
 (18, 'Löwenbrau Oktoberfestbier', 'Az igazi müncheni \"helles\", mely könnyed, frissítő ízzel kápráztat el, minden üvegnél. Csak a müncheni az igazi!!!', 'Lager', 6, 0.5, 500, 800, 1000),
 (19, 'Puntigamer', 'Osztrák világos sör', 'Lager', 5, 0.5, 300, 350, 1000),
@@ -216,7 +244,15 @@ INSERT INTO `stock` (`ID`, `name`, `description`, `type`, `alcoholcontent`, `bot
 (39, 'Franziskaner Hefe Weissbier', 'A pohárba kitöltve rögtön látszódik rajta, hogy szűretlen, ugyanis a fény csak átszűrődni tud rajta, kimondottan \"búzasörösen zavaros\". Habja szép kemény, a pohár síkjából is kilépett a kitöltés során. (Ehhez a művelethez az üveg hátulján segédlet is található: Először a sör nagy részét óvatosan ki kell tölteni a korsóba, majd pedig az üveg alján kicsit hagyni, ezt jól felkeverni és egy határozott mozdulattal rátölteni a korsóban lévő sörre. Ettől belekerül az üveg aljára esetlegesen lerakódott sörélesztő, és így lesz teljes a megálmodott összkép). Illatát és ízét tekintve felsőkategóriás búzasörnek mondom, amely kellemetlen utóíztől teljesen mentes, és rendkívül jól csúszik.', 'Bűzasör', 5, 0.5, 300, 500, 100),
 (40, 'Weihenstephaner Hefeweissbier', 'Klasszikus bajor, szűretlen búzasör', 'Bűzasör', 5.4, 0.5, 400, 600, 1000),
 (41, 'Delirium Red', 'Kedvenc rózsaszín elefántunk leette a meggyfa teljes termését, ezért a Delirium sör már meggyes változatban is megtalálható, ami Red névre hallgat. Szerencsére igazi különleges meglepetésben lesz részünk. A Delirium Red készítése során az első osztályú Delirium Tremens friss főztjét természetes meggylével keverik össze, azután hónapokon át érlelik meggyágyon. Ennek hozománya a Delirium Red gyümölcsös sör eredeti, karakteres ízvilága, továbbá a csodás gyümölcsíz egyedi, üdítő harmóniájának egyvelege. Markáns és erőteljes gyümölcssör, mélyvörös színben pompázva. A Delirium Red belga sör csapolt változatban is fogyasztható!', 'Ale', 8.5, 0.33, 700, 1200, 8000),
-(42, 'Hoegaarden Rosée (Málnás búzasör specialitás)', 'Belga gyümölcs-búzasör.', 'Bűzasör', 3, 0.2, 600, 900, 100);
+(42, 'Hoegaarden Rosée (Málnás búzasör specialitás)', 'Belga gyümölcs-búzasör.', 'Bűzasör', 3, 0.2, 600, 900, 100),
+(43, 'Primátor 24 fekete sör', 'Sörünkröl nem csak a 24%-os jelzés árulhat el sokat...Már amikor kitöltjük, az üvegböl való elökerülés is sokat sejtető. Olajosan, nehezen hömpölyögve terjed bele poharába, nem hatalmasra növö, de finom bézs habot fejlesztve. Illatából ez eröt sugárzó gyümölcsös melaszosság egyböl kitünik, mely az idö tovahaldtával egyre csak fejlödik. Szilva és karamel, pörkölt gabonás jegyek bukkannak fel, nehezen oldódó, vaskos illatként hömpölyögve. A korty érzékelése az illat megtestesült folytatása. Itt is tapasztaljuk a sürü, olajos testet, a melaszosan édes erősséget. Ehhez társul a megatonnányi pörkölt zamat, az enyhe rumos karakter,a szilvás gyümölcsösség. Desszertekhez kiváló igazi nagyformátumú sör, aki viszont az édesebb söröket nem kedvelei, kerülje el!\r\nA cseh sörfesztivál kedvence!', 'Stout', 10.4, 0.5, 420, 539, 300),
+(44, 'Sötét Bunkó IPA', 'Az üvegből tiszta, koromfekete sör bújik elő, pöffeszkedő, tömör, bézs habot fejlesztve. A pohárból csak úgy árad a Citra komló jellegzetes gyantás aromája, az embernek olyan érzése van, mintha egy kiadós eső után baktatna egy ösvényen a végtelen fenyőerdőben, ha pedig ez nem adná meg kellően az alaphangot, előbújik még a Simcoe és a Cascade szárazabb, zöldfüves, korianderzöldes, citrusos illata is. Amúgy az aroma nagyon hasonló a Legenda Black Light IPA-jához, csak vadítóbb, orrbavágóbb, a szó legjobb értelmében. A kortyérzet szerethetően virtuóz, egy jól kivehető test mellett fel-feltűnik egy gyenge csokoládé és édeskés karamellíz, majd viharszerűen törnek be az amerikai komlók, egymás után tűnik fel a citrus, a gyanta, a vágott fű, ahogy az egy jó fekete IPA-tól várható is. A szájban erőteljesebb keserűséget hagy hátra, élesebb, nyelvháti dominanciával, a fenyőgyantás karakter pedig hosszú percekre kellemesen befesti a szájpadot.', 'IPA', 6.5, 0.33, 400, 650, 600),
+(45, 'Pardubicky Porter', 'Sürü, mélyvörös-rubin sörünk egy drapp bézs habszivacs felöl osztja ránk porteres jellegét. Már illatában is olajosság érezhetö, pörkölt maláták és étcsokoládék aromája igéz. A sör teste sürü és szerteágazó, teljesen betelíti szánkat, ízeivel beteríti ízlelöbimbóinkat. Édeskésen gyümölcsös, szilvás és fügés, ami mellett egy igen érdekes fermentált tealeveles vonulat fejlödik ki. A pörkölt gabonás alapokon finoman eloszlatott csokoládés és kávés zamatok vonulnak, némi vaniliás lekerekítéssel gömbölyüvé téve a sör markáns utóízét.', 'Stout', 8, 0.5, 450, 650, 150),
+(46, 'Crew Roundhouse Kick (Imperial Stout)', 'Bajor, újhullámos kézműves imperial stout. Magyarországon csak nálunk kapható!!!', 'Stout', 9.2, 0.33, 790, 1200, 500),
+(47, 'Stone Americano Stout', 'coffee imperial stout\r\nSzármazási hely:  USA', 'Stout', 8.7, 0.355, 970, 1300, 150),
+(48, 'Brewdog Nanny State', 'Származási hely: Skócia\r\nAlkoholmentes-alacsony alkoholtartalmú ale', 'Ale', 0.5, 0.33, 500, 810, 70),
+(49, 'Büble Urbayrisch Dunkel', 'Az Allgäuer Büble Bier Barna változata az Urbayrisch Dunkel nevet viseli, és egy 5.3%-os, bajor sört jelöl. A csatos üveges ital dús habbal került ki a palackól, ám ez pár perccel a napvilágra kerülése után eltűnt. A sör íze leginkább semleges, nyoma sincs az oly\' sok barna sörre jellemző kávés-édes vonalnak, helyette szolid visszafogottságú malátásságot lehet felfedezni a kortyok végén.', 'Bak', 5.3, 0.5, 500, 700, 560),
+(50, 'Wychwood Black Wych', 'Nemes anyagokból készült, mert hiába száraz és keserű, élvezet inni. A grapefruittól kezdve, csoki, kávé és az erdei bogyókig bezárólag mindenféle íz jelen van benne. Lesznek akik hiányolni fogják belőle a nagy testet, de szerintem ez így jó, ahogy van, hiba lenne változtatni rajta. ', 'Bak', 5, 0.5, 400, 670, 80);
 
 -- --------------------------------------------------------
 
@@ -229,7 +265,7 @@ CREATE TABLE `user` (
   `name` varchar(20) CHARACTER SET utf8 COLLATE utf8_hungarian_ci DEFAULT NULL,
   `role` varchar(20) CHARACTER SET utf8 COLLATE utf8_hungarian_ci DEFAULT NULL,
   `password` varchar(20) CHARACTER SET utf8 COLLATE utf8_hungarian_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `user`
@@ -294,13 +330,13 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `customer`
 --
 ALTER TABLE `customer`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
 
 --
 -- AUTO_INCREMENT for table `invoice`
 --
 ALTER TABLE `invoice`
-  MODIFY `invoicenumber` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `invoicenumber` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `invoicedproducts`
@@ -318,7 +354,7 @@ ALTER TABLE `order1`
 -- AUTO_INCREMENT for table `stock`
 --
 ALTER TABLE `stock`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 
 --
 -- AUTO_INCREMENT for table `user`

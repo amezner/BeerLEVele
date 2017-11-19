@@ -30,7 +30,7 @@ public class CustomerFacade implements FacadeInterface<Customer> {
 
     public void create(Customer cu) {
         Logger logger = LoggerFactory.getLogger(CustomerFacade.class);
-        logger.debug("Persist customer");
+        logger.debug("Create customer, ID : ", cu.getId());
         em.persist(cu);
     }
 
@@ -38,7 +38,7 @@ public class CustomerFacade implements FacadeInterface<Customer> {
 
     public void remove(Customer cu) {
         Logger logger = LoggerFactory.getLogger(CustomerFacade.class);
-        logger.debug("Remove customer");
+        logger.debug("Remove customer, ID : ", cu.getId());
         em.remove(cu);
     }
 
@@ -46,7 +46,7 @@ public class CustomerFacade implements FacadeInterface<Customer> {
 
     public void edit(Customer cu) {
         Logger logger = LoggerFactory.getLogger(CustomerFacade.class);
-        logger.debug("Editting customer");
+        logger.debug("Edit customer, ID : ", cu.getId());
         em.merge(cu);
     }
 

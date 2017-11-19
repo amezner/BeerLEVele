@@ -50,16 +50,14 @@ public class Stock implements Serializable {
     @Size(max = 20)
     @Column(name = "type")
     private String type;
-    @Max(value=30)  @Min(value=0)
-    @Column(name = "alcoholcontent")
+    @Column(name="alcoholcontent")    
     private Double alcoholcontent;
     @Column(name = "bottlesize")
     private Double bottlesize;
-    @OneToMany(mappedBy = "stockid")
-    private Collection<Invoicedproducts> invoicedproductsCollection;
-    @OneToMany(mappedBy = "stockId")
-    private Collection<Order1> order1Collection;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+//    @OneToMany(mappedBy = "stockid")
+//    private Collection<Invoicedproducts> invoicedproductsCollection;
+//    @OneToMany(mappedBy = "stockId")
+//    private Collection<Order1> order1Collection;
     @Column(name = "purchaseprice")
     private Double purchaseprice;
     @Column(name = "sellingprice")
@@ -76,13 +74,16 @@ public class Stock implements Serializable {
     public Stock() {
     }
 
-    public Stock(String name, String description, Double purchaseprice, Double sellingprice, Integer onstockquantity, String type) {
+    public Stock(String name, String description, String type, Double alcoholcontent, Double bottlesize, Double purchaseprice, Double sellingprice, Integer onstockquantity) {
         this.name = name;
         this.description = description;
+        this.type = type;
+        this.alcoholcontent = alcoholcontent;
+        this.bottlesize = bottlesize;
         this.purchaseprice = purchaseprice;
         this.sellingprice = sellingprice;
         this.onstockquantity = onstockquantity;
-        this.type = type;
+
     }
 
     public Stock(Integer id) {
@@ -149,17 +150,32 @@ public class Stock implements Serializable {
         this.sellingprice = sellingprice;
     }
 
+//    @XmlTransient
+//    public Collection<Order1> getOrder1Collection() {
+//        return order1Collection;
+//    }
+//
+//    public void setOrder1Collection(Collection<Order1> order1Collection) {
+//        this.order1Collection = order1Collection;
+//    }
 
- 
 
-    @XmlTransient
-    public Collection<Order1> getOrder1Collection() {
-        return order1Collection;
+    public Double getBottlesize() {
+        return bottlesize;
     }
 
-    public void setOrder1Collection(Collection<Order1> order1Collection) {
-        this.order1Collection = order1Collection;
+    public void setBottlesize(Double bottlesize) {
+        this.bottlesize = bottlesize;
     }
+
+//    @XmlTransient
+//    public Collection<Invoicedproducts> getInvoicedproductsCollection() {
+//        return invoicedproductsCollection;
+//    }
+//
+//    public void setInvoicedproductsCollection(Collection<Invoicedproducts> invoicedproductsCollection) {
+//        this.invoicedproductsCollection = invoicedproductsCollection;
+//    }
 
     public String getName() {
         return name;
@@ -191,23 +207,6 @@ public class Stock implements Serializable {
 
     public void setAlcoholcontent(Double alcoholcontent) {
         this.alcoholcontent = alcoholcontent;
-    }
-
-    public Double getBottlesize() {
-        return bottlesize;
-    }
-
-    public void setBottlesize(Double bottlesize) {
-        this.bottlesize = bottlesize;
-    }
-
-    @XmlTransient
-    public Collection<Invoicedproducts> getInvoicedproductsCollection() {
-        return invoicedproductsCollection;
-    }
-
-    public void setInvoicedproductsCollection(Collection<Invoicedproducts> invoicedproductsCollection) {
-        this.invoicedproductsCollection = invoicedproductsCollection;
     }
     
 }

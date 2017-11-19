@@ -28,11 +28,32 @@ body {
 }
 
 .form-row {
+  &.half {
+    float:left;
+    width:48%;
+
+    &:nth-of-type(2n+2) {
+      float:right;
+    }
+  }
   margin-bottom: 20px;
 
   &:last-of-type {
     margin-bottom: 0;
   }
+}
+
+.address-row {
+  .zip-row {
+    width:85px;
+    float:left;
+  }
+
+  .city-row {
+    float:right;
+    width:calc(100% - 105px);
+  }
+
 }
 
 .clear {

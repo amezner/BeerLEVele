@@ -27,8 +27,8 @@ public class StockLogic {
     @Inject
     StockFacade facade;
 
-    public void insertStock(String name,String description,Double purchaseprice,Double sellingprice,int onstockquantity,String type) throws Exception {
-        Stock stock = new Stock(name, description, purchaseprice, sellingprice, onstockquantity, type);
+    public void insertStock(String name, String description, String type, Double alcoholcontent, Double bottlesize, Double purchaseprice, Double sellingprice, Integer onstockquantity) throws Exception {
+        Stock stock = new Stock(name, description, type, alcoholcontent, bottlesize, purchaseprice, sellingprice, onstockquantity);
         Logger logger = LoggerFactory.getLogger(StockLogic.class);
         logger.debug("Check, if the stock is persistable");
         if (CheckIfCorrectStock(stock)) {
@@ -58,9 +58,9 @@ public class StockLogic {
     }
 
     private boolean CheckIfCorrectStock(Stock stock) {
-        if (stock.getSellingprice()== null || stock.getDescription() == null || stock.getName()== null || stock.getOnstockquantity() == null || stock.getPurchaseprice() == null || stock.getType()==null) {
-            return false;
-        }
+//        if (stock.getName()== null || stock.getDescription() == null || stock.getType() == null ||stock.getSellingprice()== null || stock.getPurchaseprice() == null || stock.getOnstockquantity() == null ) {
+//            return false;
+//        }
         return true;
 
     }

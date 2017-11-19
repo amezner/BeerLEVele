@@ -22,6 +22,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -43,14 +44,22 @@ public class Invoice implements Serializable {
     @Size(max = 100)
     @Column(name = "name")
     private String name;
+    @Size(max = 50)
+    @Column(name = "country")
+    private String country;
+    @Size(max = 50)
+    @Column(name = "city")
+    private String city;
     @Size(max = 200)
     @Column(name = "address")
     private String address;
-    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
+    @Size(max = 15)
+    @Column(name = "postalcode")
+    private String postalcode;
+    @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     @Size(max = 100)
     @Column(name = "email")
     private String email;
-    // @Pattern(regexp="^\\(?(\\d{3})\\)?[- ]?(\\d{3})[- ]?(\\d{4})$", message="Invalid phone/fax format, should be as xxx-xxx-xxxx")//if the field contains phone or fax number consider using this annotation to enforce field validation
     @Size(max = 20)
     @Column(name = "phone")
     private String phone;
@@ -137,11 +146,19 @@ public class Invoice implements Serializable {
     public String toString() {
         return "Entities.Invoice[ invoicenumber=" + invoicenumber + " ]";
     }
+    
     public Boolean getLoyaltycard() {
         return loyaltycard;
     }
     public void setLoyaltycard(Boolean loyaltycard) {
         this.loyaltycard = loyaltycard;
+    }
+    @XmlTransient
+    public Collection<Invoicedproducts> getInvoicedproductsCollection() {
+        return invoicedproductsCollection;
+    }
+    public void setInvoicedproductsCollection(Collection<Invoicedproducts> invoicedproductsCollection) {
+        this.invoicedproductsCollection = invoicedproductsCollection;
     }
 
     public String getName() {
@@ -152,12 +169,36 @@ public class Invoice implements Serializable {
         this.name = name;
     }
 
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
     public String getAddress() {
         return address;
     }
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getPostalcode() {
+        return postalcode;
+    }
+
+    public void setPostalcode(String postalcode) {
+        this.postalcode = postalcode;
     }
 
     public String getEmail() {
@@ -174,15 +215,6 @@ public class Invoice implements Serializable {
 
     public void setPhone(String phone) {
         this.phone = phone;
-    }
-
-    @XmlTransient
-    public Collection<Invoicedproducts> getInvoicedproductsCollection() {
-        return invoicedproductsCollection;
-    }
-
-    public void setInvoicedproductsCollection(Collection<Invoicedproducts> invoicedproductsCollection) {
-        this.invoicedproductsCollection = invoicedproductsCollection;
     }
     
 }

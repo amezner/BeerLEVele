@@ -3,12 +3,12 @@ import {extendObservable} from 'mobx';
 class Auth {
   constructor() {
     extendObservable(this, {
-      isLoggedIn: !!localStorage.isLoggedIn,
+      isLoggedIn: !!sessionStorage.getItem('isLoggedIn'),
       oldUrl: '/'
     });
   }
   setIsLoggedIn(value) {
-    localStorage.isLoggedIn = value;
+    sessionStorage.setItem('isLoggedIn', value);
     this.isLoggedIn = value;
   }
 }

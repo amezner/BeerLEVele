@@ -41,12 +41,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Invoicedproducts.findBySoldsubtotal", query = "SELECT i FROM Invoicedproducts i WHERE i.soldsubtotal = :soldsubtotal")})
 public class Invoicedproducts implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "ID")
-    private Integer id;
     @Size(max = 20)
     @Column(name = "name")
     private String name;
@@ -61,6 +55,13 @@ public class Invoicedproducts implements Serializable {
     @NotNull
     @Column(name = "bottlesize")
     private double bottlesize;
+
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "ID")
+    private Integer id;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "purchaseprice")
     private Double purchaseprice;
@@ -96,38 +97,6 @@ public class Invoicedproducts implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public double getAlcoholcontent() {
-        return alcoholcontent;
-    }
-
-    public void setAlcoholcontent(double alcoholcontent) {
-        this.alcoholcontent = alcoholcontent;
-    }
-
-    public double getBottlesize() {
-        return bottlesize;
-    }
-
-    public void setBottlesize(double bottlesize) {
-        this.bottlesize = bottlesize;
     }
 
     public Double getPurchaseprice() {
@@ -201,6 +170,38 @@ public class Invoicedproducts implements Serializable {
     @Override
     public String toString() {
         return "Entities.Invoicedproducts[ id=" + id + " ]";
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public double getAlcoholcontent() {
+        return alcoholcontent;
+    }
+
+    public void setAlcoholcontent(double alcoholcontent) {
+        this.alcoholcontent = alcoholcontent;
+    }
+
+    public double getBottlesize() {
+        return bottlesize;
+    }
+
+    public void setBottlesize(double bottlesize) {
+        this.bottlesize = bottlesize;
     }
     
 }
