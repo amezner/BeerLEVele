@@ -77,13 +77,13 @@ public class UserController {
     @GET
     @Produces("application/json")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Map getUser(@HeaderParam("authToken") String authToken, @PathParam("id") Integer id) throws Exception {
+    public User getUser(@HeaderParam("authToken") String authToken, @PathParam("id") Integer id) throws Exception {
         
         authorizator.checkAuthorization(authToken, "admin");
         
         DataObjectMapper<User> o = new DataObjectMapper<>(userLogic.findUserById(id));
         
-        return o.getMap();
+        return (User) o.getEntry();
     
     }
 }
