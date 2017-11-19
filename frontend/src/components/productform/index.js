@@ -16,7 +16,7 @@ class Productform extends Component {
 
   async handleSubmit(e) {
     e.preventDefault();
-    const {name, description, type, purchaseprice, sellingprice, onstockquantity} = this.refs;
+    const {name, description, type, purchaseprice, sellingprice, onstockquantity, alcoholcontent, bottlesize} = this.refs;
 
     const data = {
       name: name.value,
@@ -24,7 +24,9 @@ class Productform extends Component {
       type: type.value,
       purcahaseprice: purchaseprice.value,
       sellingprice: sellingprice.value,
-      onstockquantity:onstockquantity.value
+      onstockquantity:onstockquantity.value,
+      alcoholcontent:alcoholcontent.value,
+      bottlesize:bottlesize.value
     }
 
     try {
@@ -52,12 +54,24 @@ class Productform extends Component {
             <FormRow>
               <Field ref="type" type="text" placeholder="típus" />
             </FormRow>
-            <FormRow>
-              <Field ref="purchaseprice" type="text" placeholder="beszerzési ár" />
-            </FormRow>
-            <FormRow>
-              <Field ref="sellingprice" type="text" placeholder="eladási ár" />
-            </FormRow>
+            <div className="half-content-outer">
+              <FormRow extraClass="half">
+                <Field ref="alcoholcontent" type="text" placeholder="alkoholtartalom" />
+              </FormRow>
+              <FormRow extraClass="half">
+                <Field ref="bottlesize" type="text" placeholder="kiszerelés (literben)" />
+              </FormRow>
+              <div className="clear"></div>
+            </div>
+            <div className="price-row">
+              <FormRow extraClass="half">
+                <Field ref="purchaseprice" type="text" placeholder="beszerzési ár" />
+              </FormRow>
+              <FormRow extraClass="half">
+                <Field ref="sellingprice" type="text" placeholder="eladási ár" />
+              </FormRow>
+              <div className="clear"></div>
+            </div>
             <FormRow>
               <Field ref="onstockquantity" type="text" placeholder="készlet" />
             </FormRow>
