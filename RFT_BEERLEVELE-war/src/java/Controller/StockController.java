@@ -79,13 +79,13 @@ public class StockController {
     @GET
     @Produces("application/json")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Map getStock(@HeaderParam("authToken") String authToken, @PathParam("id") Integer id) throws Exception {
+    public Stock getStock(@HeaderParam("authToken") String authToken, @PathParam("id") Integer id) throws Exception {
         
         authorizator.checkAuthorization(authToken, "operator");
         
         DataObjectMapper<Stock> o = new DataObjectMapper<>(stockLogic.findStockById(id));
         
-        return o.getMap();
+        return (Stock) o.getEntry();
     
     }
 }
