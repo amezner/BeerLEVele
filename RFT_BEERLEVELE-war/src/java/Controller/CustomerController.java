@@ -80,13 +80,13 @@ public class CustomerController {
     @Path("getcustomer/{id}")
     @GET
     @Consumes(MediaType.APPLICATION_JSON)
-    public Map getCustomer(@HeaderParam("authToken") String authToken, @PathParam("id") Integer id) throws Exception {
+    public Customer getCustomer(@HeaderParam("authToken") String authToken, @PathParam("id") Integer id) throws Exception {
         
         authorizator.checkAuthorization(authToken, "operator");
         
         DataObjectMapper<Customer> o = new DataObjectMapper<> ( customerLogic.findCustomerById(id));
         
-        return o.getMap();
+        return(Customer) o.getEntry();
         
     }
 

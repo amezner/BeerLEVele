@@ -20,13 +20,10 @@ public class LoginExceptionMapper implements ExceptionMapper<LoginException> {
 
     public static class Error {
 
-<<<<<<< HEAD
-=======
+
         public String cause;
         public String message;
     }
-
->>>>>>> e7551925c391ee9a7ed35eff50911bf62eb11eb8
     @Override
     public Response toResponse(LoginException exception) {
         Error error = new Error();

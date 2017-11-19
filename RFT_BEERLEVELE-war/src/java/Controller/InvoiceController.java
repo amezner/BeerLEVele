@@ -76,5 +76,5 @@ public class InvoiceController {
 
         invoiceLogic.closeInvoice();
 
-    }
+    }   
 }
