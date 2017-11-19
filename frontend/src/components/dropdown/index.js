@@ -25,11 +25,14 @@ class DropDown extends Component {
     super(props);
 
     this.handleChange = this.handleChange.bind(this);
+
+    this.state = {
+      value: props.value
+    };
   }
 
   handleChange(evt) {
     const value = evt.target.value;
-
     this.setState({value});
   }
 
@@ -43,7 +46,7 @@ class DropDown extends Component {
     return (
 
       <span className="custom-select">
-        <select name={name} id={id}>
+        <select name={name} id={id} onChange={this.handleChange}>
             {
               Object.keys(options).length > 0 ?
                 Object.entries(options).map(([value, label]) => {

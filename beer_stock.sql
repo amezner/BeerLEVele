@@ -39,7 +39,7 @@ CREATE TABLE `customer` (
   `phone` varchar(20) CHARACTER SET utf8 COLLATE utf8_hungarian_ci DEFAULT NULL,
   `loyaltycard` bit(1) DEFAULT NULL,
   `discount` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `customer`
@@ -116,7 +116,7 @@ CREATE TABLE `invoice` (
   `phone` varchar(20) CHARACTER SET utf8 COLLATE utf8_hungarian_ci DEFAULT NULL,
   `loyaltycard` bit(1) DEFAULT NULL,
   `discount` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `invoice`
@@ -143,7 +143,7 @@ CREATE TABLE `invoicedproducts` (
   `soldprice` double DEFAULT NULL,
   `soldquantity` int(11) DEFAULT NULL,
   `soldsubtotal` double DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `invoicedproducts`
@@ -164,7 +164,7 @@ CREATE TABLE `order1` (
   `uid` varchar(20) CHARACTER SET utf8 COLLATE utf8_hungarian_ci DEFAULT NULL,
   `stock_id` int(11) DEFAULT NULL,
   `quantity` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `order1`
@@ -196,7 +196,7 @@ CREATE TABLE `stock` (
   `purchaseprice` double DEFAULT NULL,
   `sellingprice` double DEFAULT NULL,
   `onstockquantity` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `stock`
@@ -265,7 +265,7 @@ CREATE TABLE `user` (
   `name` varchar(20) CHARACTER SET utf8 COLLATE utf8_hungarian_ci DEFAULT NULL,
   `role` varchar(20) CHARACTER SET utf8 COLLATE utf8_hungarian_ci DEFAULT NULL,
   `password` varchar(20) CHARACTER SET utf8 COLLATE utf8_hungarian_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `user`
