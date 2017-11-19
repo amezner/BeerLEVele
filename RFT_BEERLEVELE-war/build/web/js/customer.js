@@ -52,33 +52,6 @@ $(document).ready(function () {
         });
     });
 
-    $("#getall").click(function () {
-
-        $.ajax({
-            url: 'resources/customer/getallcustomer',
-            type: 'GET',
-            dataType: "json",
-            contentType: "application/json", headers: {'authToken': token},
-        }, function (responseText) {
-            $('#ajaxGetUserServletResponse').text(responseText);
-        })
-    });
-
-    $("#deletecustomer").click(function () {
-        $.ajax({
-            url: 'resources/customer/deletecustomer/' + $("#azonosito").val(),
-            type: 'DELETE',
-            dataType: "json",
-            contentType: "application/json",
-            headers: {
-                'authToken': token
-            },
-            success: function (responseText) {
-                $('#ajaxGetUserServletResponse').text(responseText);
-            }}
-        )
-    });
-
     $("#authenticate").click(function () {
         $.ajax({
             type: 'POST',
@@ -117,11 +90,10 @@ $(document).ready(function () {
             $('#ajaxGetUserServletResponse').text(responseText);
         })
     });
-    
-    $("#customeridbtn").click(function () {
 
+    $("#getcustomer").click(function () {
         $.ajax({
-            url: 'resources/customer/getcustomer/'+  $("#customerid").val(),
+            url: 'resources/customer/getcustomer/'+  $("#customeridtoget").val(),
             type: 'GET',
             dataType: "json",
             contentType: "application/json", 
@@ -131,6 +103,72 @@ $(document).ready(function () {
         })
     });
     
+    $("#deletecustomer").click(function () {
+        $.ajax({
+            url: 'resources/customer/deletecustomer/' + $("#customeridtodelete").val(),
+            type: 'DELETE',
+            dataType: "json",
+            contentType: "application/json",
+            headers: {
+                'authToken': token
+            },
+            success: function (responseText) {
+                $('#ajaxGetUserServletResponse').text(responseText);
+            }}
+        )
+    });
+
+    $("#getallcustomer").click(function () {
+
+        $.ajax({
+            url: 'resources/customer/getallcustomer',
+            type: 'GET',
+            dataType: "json",
+            contentType: "application/json", headers: {'authToken': token},
+        }, function (responseText) {
+            $('#ajaxGetUserServletResponse').text(responseText);
+        })
+    });
+    
+    $("#getstock").click(function () {
+        $.ajax({
+            url: 'resources/stock/getstock/'+  $("#stockidtoget").val(),
+            type: 'GET',
+            dataType: "json",
+            contentType: "application/json", 
+            headers: {'authToken': token},
+        }, function (responseText) {
+            $('#ajaxGetUserServletResponse').text(responseText);
+        })
+    });
+    
+    $("#deletestock").click(function () {
+        $.ajax({
+            url: 'resources/stock/deletestock/' + $("#stockidtodelete").val(),
+            type: 'DELETE',
+            dataType: "json",
+            contentType: "application/json",
+            headers: {
+                'authToken': token
+            },
+            success: function (responseText) {
+                $('#ajaxGetUserServletResponse').text(responseText);
+            }}
+        )
+    });
+    
+        $("#getallstock").click(function () {
+
+        $.ajax({
+            url: 'resources/stock/getallstock',
+            type: 'GET',
+            dataType: "json",
+            contentType: "application/json", headers: {'authToken': token},
+        }, function (responseText) {
+            $('#ajaxGetUserServletResponse').text(responseText);
+        })
+    });
+
     
     
     /*   $("#getall").click(
