@@ -41,41 +41,50 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Customer.findByDiscount", query = "SELECT c FROM Customer c WHERE c.discount = :discount")})
 public class Customer implements Serializable {
 
-    @Size(max = 100)
-    @Column(name = "name")
-    private String name;
-    @Size(max = 50)
-    @Column(name = "country")
-    private String country;
-    @Size(max=50)
-    @Column(name = "city")
-    private String city;
-    @Size(max = 200)
-    @Column(name = "address")
-    private String address;
-    @Size(max = 15)
-    @Column(name = "postalcode")
-    private String postalcode;
-    @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
-    @Size(max = 100)
-    @Column(name = "email")
-    private String email;
-    @Size(max = 20)
-    @Column(name = "phone")
-    private String phone;
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "ID")
     private Integer id;
+
+    @Size(max = 100)
+    @Column(name = "name")
+    private String name;
+
+    @Size(max = 50)
+    @Column(name = "country")
+    private String country;
+
+    @Size(max=50)
+    @Column(name = "city")
+    private String city;
+
+    @Size(max = 200)
+    @Column(name = "address")
+    private String address;
+
+    @Size(max = 15)
+    @Column(name = "postalcode")
+    private String postalcode;
+
+    @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
+    @Size(max = 100)
+    @Column(name = "email")
+    private String email;
+
+    @Size(max = 20)
+    @Column(name = "phone")
+    private String phone;
+
     @Column(name = "loyaltycard")
     private Boolean loyaltycard;
+
     @Column(name = "discount")
     private Integer discount;
-    @OneToMany(mappedBy = "customerId")
-    private Collection<Invoice> invoiceCollection;
+
+//    @OneToMany(mappedBy = "customerId")
+//    private Collection<Invoice> invoiceCollection;
 
     public Customer() {
     }
@@ -96,7 +105,6 @@ public class Customer implements Serializable {
         this.discount = discount;
     }
     
-
     public Integer getId() {
         return id;
     }
@@ -104,7 +112,6 @@ public class Customer implements Serializable {
     public void setId(Integer id) {
         this.id = id;
     }
-
 
     public Boolean getLoyaltycard() {
         return loyaltycard;
@@ -122,14 +129,14 @@ public class Customer implements Serializable {
         this.discount = discount;
     }
 
-    @XmlTransient
-    public Collection<Invoice> getInvoiceCollection() {
-        return invoiceCollection;
-    }
-
-    public void setInvoiceCollection(Collection<Invoice> invoiceCollection) {
-        this.invoiceCollection = invoiceCollection;
-    }
+//    @XmlTransient
+//    public Collection<Invoice> getInvoiceCollection() {
+//        return invoiceCollection;
+//    }
+//
+//    public void setInvoiceCollection(Collection<Invoice> invoiceCollection) {
+//        this.invoiceCollection = invoiceCollection;
+//    }
 
     @Override
     public int hashCode() {
@@ -153,7 +160,7 @@ public class Customer implements Serializable {
 
     @Override
     public String toString() {
-        return "Customer{" + "name=" + name + ", country=" + country + ", city=" + city + ", address=" + address + ", postalcode=" + postalcode + ", email=" + email + ", phone=" + phone + ", id=" + id + ", loyaltycard=" + loyaltycard + ", discount=" + discount + ", invoiceCollection=" + invoiceCollection + '}';
+        return "Entities.Customer[ id=" + id + " ]";
     }
 
     public String getName() {

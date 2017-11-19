@@ -34,18 +34,20 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Order1.findByQuantity", query = "SELECT o FROM Order1 o WHERE o.quantity = :quantity")})
 public class Order1 implements Serializable {
 
-    @Size(max = 20)
-    @Column(name = "uid")
-    private String uid;
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "ID")
     private Integer id;
+
+    @Size(max = 20)
+    @Column(name = "uid")
+    private String uid;
+
     @Column(name = "quantity")
     private Integer quantity;
+
     @JoinColumn(name = "stock_id", referencedColumnName = "ID")
     @ManyToOne
     private Stock stockId;
