@@ -33,22 +33,24 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "User.findByRole", query = "SELECT u FROM User u WHERE u.role = :role")})
 public class User implements Serializable {
 
-    @Size(max = 20)
-    @Column(name = "name")
-    private String name;
-    @Size(max = 20)
-    @Column(name = "role")
-    private String role;
-    @Size(max = 20)
-    @Column(name = "password")
-    private String password;
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "ID")
     private Integer id;
+
+    @Size(max = 20)
+    @Column(name = "name")
+    private String name;
+
+    @Size(max = 20)
+    @Column(name = "role")
+    private String role;
+
+    @Size(max = 20)
+    @Column(name = "password")
+    private String password;
 
     public User() {
     }

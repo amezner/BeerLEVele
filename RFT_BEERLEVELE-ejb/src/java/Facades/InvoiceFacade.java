@@ -36,14 +36,13 @@ public class InvoiceFacade implements FacadeInterface<Invoice>{
 
     @Override
     public void remove(Invoice t) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not needed, deleting an invoice is not required.");
     }
 
     @Override
     public void edit(Invoice t) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not needed, invoices are not editable.");
     }
-    
     
     public List<Invoice> findAll() {
         Logger logger = LoggerFactory.getLogger(InvoiceFacade.class);

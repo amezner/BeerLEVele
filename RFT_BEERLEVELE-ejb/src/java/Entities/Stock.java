@@ -41,35 +41,43 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Stock.findByType", query = "SELECT s FROM Stock s WHERE s.type = :type")})
 public class Stock implements Serializable {
 
-    @Size(max = 100)
-    @Column(name = "name")
-    private String name;
-    @Size(max = 1000)
-    @Column(name = "description")
-    private String description;
-    @Size(max = 20)
-    @Column(name = "type")
-    private String type;
-    @Column(name="alcoholcontent")    
-    private Double alcoholcontent;
-    @Column(name = "bottlesize")
-    private Double bottlesize;
-//    @OneToMany(mappedBy = "stockid")
-//    private Collection<Invoicedproducts> invoicedproductsCollection;
-//    @OneToMany(mappedBy = "stockId")
-//    private Collection<Order1> order1Collection;
-    @Column(name = "purchaseprice")
-    private Double purchaseprice;
-    @Column(name = "sellingprice")
-    private Double sellingprice;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "ID")
     private Integer id;
+
+    @Size(max = 100)
+    @Column(name = "name")
+    private String name;
+
+    @Size(max = 1000)
+    @Column(name = "description")
+    private String description;
+
+    @Size(max = 20)
+    @Column(name = "type")
+    private String type;
+
+    @Column(name="alcoholcontent")    
+    private Double alcoholcontent;
+
+    @Column(name = "bottlesize")
+    private Double bottlesize;
+
+    @Column(name = "purchaseprice")
+    private Double purchaseprice;
+
+    @Column(name = "sellingprice")
+    private Double sellingprice;
+
     @Column(name = "onstockquantity")
     private Integer onstockquantity;
+//    @OneToMany(mappedBy = "stockid")
+//    private Collection<Invoicedproducts> invoicedproductsCollection;
+//    @OneToMany(mappedBy = "stockId")
+//    private Collection<Order1> order1Collection;
 
     public Stock() {
     }

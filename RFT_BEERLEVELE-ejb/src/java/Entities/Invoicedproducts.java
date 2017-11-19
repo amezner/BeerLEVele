@@ -41,39 +41,48 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Invoicedproducts.findBySoldsubtotal", query = "SELECT i FROM Invoicedproducts i WHERE i.soldsubtotal = :soldsubtotal")})
 public class Invoicedproducts implements Serializable {
 
-    @Size(max = 20)
-    @Column(name = "name")
-    private String name;
-    @Size(max = 20)
-    @Column(name = "type")
-    private String type;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "alcoholcontent")
-    private double alcoholcontent;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "bottlesize")
-    private double bottlesize;
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "ID")
     private Integer id;
+
+    @Size(max = 20)
+    @Column(name = "name")
+    private String name;
+    
+    @Size(max = 20)
+    @Column(name = "type")
+    private String type;
+    
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "alcoholcontent")
+    private double alcoholcontent;
+    
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "bottlesize")
+    private double bottlesize;
+    
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "purchaseprice")
     private Double purchaseprice;
+    
     @Column(name = "soldprice")
     private Double soldprice;
+    
     @Column(name = "soldquantity")
     private Integer soldquantity;
+    
     @Column(name = "soldsubtotal")
     private Double soldsubtotal;
+    
     @JoinColumn(name = "stockid", referencedColumnName = "ID")
     @ManyToOne
     private Stock stockid;
+    
     @JoinColumn(name = "invoicenumber", referencedColumnName = "invoicenumber")
     @ManyToOne
     private Invoice invoicenumber;

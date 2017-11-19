@@ -41,44 +41,54 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Invoice.findByDiscount", query = "SELECT i FROM Invoice i WHERE i.discount = :discount")})
 public class Invoice implements Serializable {
 
-    @Size(max = 100)
-    @Column(name = "name")
-    private String name;
-    @Size(max = 50)
-    @Column(name = "country")
-    private String country;
-    @Size(max = 50)
-    @Column(name = "city")
-    private String city;
-    @Size(max = 200)
-    @Column(name = "address")
-    private String address;
-    @Size(max = 15)
-    @Column(name = "postalcode")
-    private String postalcode;
-    @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
-    @Size(max = 100)
-    @Column(name = "email")
-    private String email;
-    @Size(max = 20)
-    @Column(name = "phone")
-    private String phone;
-    @OneToMany(mappedBy = "invoicenumber")
-    private Collection<Invoicedproducts> invoicedproductsCollection;
-    @Column(name = "loyaltycard")
-    private Boolean loyaltycard;
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "invoicenumber")
     private Integer invoicenumber;
+
+    @Size(max = 100)
+    @Column(name = "name")
+    private String name;
+
+    @Size(max = 50)
+    @Column(name = "country")
+    private String country;
+
+    @Size(max = 50)
+    @Column(name = "city")
+    private String city;
+
+    @Size(max = 200)
+    @Column(name = "address")
+    private String address;
+
+    @Size(max = 15)
+    @Column(name = "postalcode")
+    private String postalcode;
+
+    @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
+    @Size(max = 100)
+    @Column(name = "email")
+    private String email;
+
+    @Size(max = 20)
+    @Column(name = "phone")
+    private String phone;
+
     @Column(name = "date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
+
     @Column(name = "discount")
     private Integer discount;
+
+    @OneToMany(mappedBy = "invoicenumber")
+    private Collection<Invoicedproducts> invoicedproductsCollection;
+    @Column(name = "loyaltycard")
+    private Boolean loyaltycard;
+
     @JoinColumn(name = "customer_id", referencedColumnName = "ID")
     @ManyToOne
     private Customer customerId;
