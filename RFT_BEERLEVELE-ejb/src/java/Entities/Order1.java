@@ -43,25 +43,27 @@ public class Order1 implements Serializable {
 
     @Size(max = 20)
     @Column(name = "uid")
-    private String uid;
+    private Integer uid;
 
     @Column(name = "quantity")
     private Integer quantity;
 
-    @JoinColumn(name = "stock_id", referencedColumnName = "ID")
-    @ManyToOne
-    private Stock stockId;
+//    @JoinColumn(name = "stock_id", referencedColumnName = "ID")
+//    @ManyToOne
+    @Column(name = "stock_id")
+    private Integer stockId;
 
     public Order1() {
     }
 
-    public Order1(String uid) {
-        this.uid = uid;
-    }
-
-    
     public Order1(Integer id) {
         this.id = id;
+    }
+    
+    public Order1(int uid, int stockId, int quantity) {
+        this.uid = uid;
+        this.stockId = stockId;
+        this.quantity = quantity;
     }
 
     public Integer getId() {
@@ -72,6 +74,21 @@ public class Order1 implements Serializable {
         this.id = id;
     }
 
+    public Integer getUid() {
+        return uid;
+    }
+
+    public void setUid(Integer uid) {
+        this.uid = uid;
+    }
+    
+    public Integer getStockId() {
+        return stockId;
+    }
+
+    public void setStockId(Integer stockId) {
+        this.stockId = stockId;
+    }
 
     public Integer getQuantity() {
         return quantity;
@@ -79,14 +96,6 @@ public class Order1 implements Serializable {
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
-    }
-
-    public Stock getStockId() {
-        return stockId;
-    }
-
-    public void setStockId(Stock stockId) {
-        this.stockId = stockId;
     }
 
     @Override
@@ -114,12 +123,4 @@ public class Order1 implements Serializable {
         return "Entities.Order1[ id=" + id + " ]";
     }
 
-    public String getUid() {
-        return uid;
-    }
-
-    public void setUid(String uid) {
-        this.uid = uid;
-    }
-    
 }

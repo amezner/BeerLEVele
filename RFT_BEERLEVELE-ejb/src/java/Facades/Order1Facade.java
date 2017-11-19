@@ -52,7 +52,6 @@ public class Order1Facade implements FacadeInterface<Order1> {
         Logger logger = LoggerFactory.getLogger(Order1Facade.class);
         logger.debug("Find all carts");
         return em.createNamedQuery("Order1.findAll").getResultList();
-
     }
 
     public Order1 findById(int Id) {
@@ -60,7 +59,8 @@ public class Order1Facade implements FacadeInterface<Order1> {
         logger.debug("Find a cart");
         return (Order1) em.createNamedQuery("Order1.findById").setParameter("id", Id).getResultList().get(0);
     }
-    public List<Order1> findByUid (String uid){
+
+    public List<Order1> findByUid (Integer uid){
         Logger logger = LoggerFactory.getLogger(Order1Facade.class);
         logger.debug("Find a cart by UID");
         return em.createNamedQuery("Order1.findByUid").setParameter("uid", uid).getResultList();

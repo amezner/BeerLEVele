@@ -26,33 +26,28 @@ public class Authorizator {
     @Inject
     UserFacade userfacade;
 
-    
-    
+    private static Authorizator authorizator = null;
+    private  Map<String,Integer> roles= new HashMap<String, Integer>();
    
+    @PostConstruct
+    public void init(){
+        roles.put("admin", 100);
+        roles.put("operator",50);
+        roles.put("customer",1);
 
-        private static Authorizator authorizator = null;
-        private  Map<String,Integer> roles= new HashMap<String, Integer>();
-   
-     @PostConstruct
-     public void init(){
-         roles.put("admin", 100);
-         roles.put("operator",50);
-         roles.put("customer",1);
-     
-     }
-        
-        
-    
-    public Authorizator() {
     }
     
+    public Authorizator() {
 
+    }
+    
     public static Authorizator getInstance() {
         if (authorizator == null) {
             authorizator = new Authorizator();
         }
 
         return authorizator;
+
     }
 
     public  boolean checkAuthorization(String authToken,String requirement) throws Exception {
@@ -63,10 +58,22 @@ public class Authorizator {
             if(roles.get(user.getRole().toLowerCase()) >= roles.get(requirement)){
                 return true;
             }
-
         }
 
         throw new Exception("You are not authorized for this call!");
+
     }
 
+    public Integer getUserID(String authToken) throws Exception {
+
+        if (Authenticator.getAuthorizationTokensStorage().containsKey(authToken)) {
+            String username = Authenticator.getAuthorizationTokensStorage().get(authToken);
+            User user = userfacade.findByUsername(username);
+            return user.getId();
+        }
+
+        throw new Exception("You are not authorized for this call!");
+
+    }
+    
 }

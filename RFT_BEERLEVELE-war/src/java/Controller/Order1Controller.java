@@ -6,6 +6,7 @@
 package Controller;
 
 import Entities.Order1;
+import Helper.Authenticator;
 import Helper.Authorizator;
 import Helper.DataObjectMapper;
 import Logic.Order1Logic;
@@ -36,7 +37,7 @@ public class Order1Controller {
     private Order1Logic order1logic;
     @EJB
     private Authorizator authorizator;
-
+    
     @Path("getcart")
     @GET
     @Produces("application/json")
@@ -44,7 +45,7 @@ public class Order1Controller {
     public Map getAllFromCart(@HeaderParam("authToken") String authToken) throws Exception {
         
         authorizator.checkAuthorization(authToken, "admin");
-        DataObjectMapper<Order1> o = new DataObjectMapper<>(order1logic.findAll(authToken));
+        DataObjectMapper<Order1> o = new DataObjectMapper<>(order1logic.findAll(authorizator.getUserID(authToken)));
 
         return o.getMap();
 
@@ -57,7 +58,7 @@ public class Order1Controller {
     public void putStockInCart(@HeaderParam("authToken") String authToken, Map<String, String> map) throws Exception {
         
         authorizator.checkAuthorization(authToken, "admin");
-        order1logic.insertInTheCart(authToken, new Integer(map.get("stock_id")), new Integer(map.get("quantity")));
+        order1logic.insertInTheCart(authorizator.getUserID(authToken), new Integer(map.get("stock_id")), new Integer(map.get("quantity")));
 
     }
 
