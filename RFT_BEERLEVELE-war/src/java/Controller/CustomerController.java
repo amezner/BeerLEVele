@@ -59,7 +59,7 @@ public class CustomerController {
 
         authorizator.checkAuthorization(authToken, "operator");
 
-        Map ret = new HashMap<>();
+//        Map ret = new HashMap<>();
         DataObjectMapper<Customer> o = new DataObjectMapper<>(customerLogic.findAllCustomer());
       
         return o.getMap();

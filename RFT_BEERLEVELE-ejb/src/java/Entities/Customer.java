@@ -94,7 +94,6 @@ public class Customer implements Serializable {
         this.phone = phone;
         this.loyaltycard = loyaltycard;
         this.discount = discount;
-        this.invoiceCollection = invoiceCollection;
     }
     
 
