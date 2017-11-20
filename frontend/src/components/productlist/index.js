@@ -28,7 +28,8 @@ class Productlist extends Component {
         features: {
           edit: {
             title: 'Módosítás',
-            value: 'productform/{id}'
+            link: '/productform/{id}',
+            icon: 'edit.png'
           }
         }
       }]

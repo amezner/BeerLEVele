@@ -41,6 +41,12 @@ body {
   &:last-of-type {
     margin-bottom: 0;
   }
+
+  label {
+    font-weight:$bold-fweight;
+    margin-bottom:5px;
+    display:inline-block;
+  }
 }
 
 .address-row {
@@ -90,4 +96,19 @@ h2 {
 h3 {
   font-size: 26px;
   line-height: 36px;
+}
+
+a {
+  color:$primary-color;
+  text-decoration:none;
+
+  &:hover {
+    text-decoration:underline;
+  }
+}
+
+@include below-lying-tablet {
+  .content-width {
+    width:92%;
+  }
 }

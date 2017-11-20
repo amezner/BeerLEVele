@@ -67,3 +67,11 @@ body {
     }
   }
 }
+
+@include below-lying-tablet {
+  #wrapper {
+    .content-section {
+      padding:30px;
+    }
+  }
+}

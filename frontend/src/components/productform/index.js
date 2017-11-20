@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import FormRow from '../formrow';
 import Field from '../field';
 import Button from '../button';
-import {post, get} from '../../lib/client';
+import {post, get, put} from '../../lib/client';
 import {NotificationManager} from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
 import {withRouter} from 'react-router-dom';
@@ -33,7 +33,11 @@ class Productform extends Component {
     }
 
     try {
-      const resp = await post('stock/savestock', data);
+      if (this.state.product.id) {
+        const resp = await put('stock/editstock/'+this.state.product.id, data);
+      } else {
+        const resp = await post('stock/savestock', data);
+      }
       NotificationManager.success('', 'Sikeres mentés!', 3000);
       this.props.history.push('/productlist');
     } catch (e) {
@@ -43,10 +47,10 @@ class Productform extends Component {
   }
 
   componentDidMount() {
-    let productId = this.props.match.params.productId;
+    let productId = this.props.match.params.id;
     if (productId) {
       this.loadProduct(productId).then((resp) => {
-        this.setState({'product':Object.values(resp).pop()});
+        this.setState({'product':resp});
       });
     }
   }
@@ -61,40 +65,41 @@ class Productform extends Component {
   }
 
   render() {
+    const {name, description, type, alcoholcontent, bottlesize, purchaseprice, sellingprice, onstockquantity} = this.state.product;
     return (
-      <div className="content-width">
+      <div className="content-width thin">
         <section className="content-section">
-          <h1>Termék hozzáadása</h1>
+          <h1>{!name ? 'Termék hozzáadása' : 'Termék módosítása'}</h1>
           <form onSubmit={this.handleSubmit}>
-            <FormRow>
-              <Field ref="name" type="text" placeholder="termék név" />
+            <FormRow label="Termék név" id="name">
+              <Field ref="name" value={name} type="text" id="name" />
             </FormRow>
-            <FormRow>
-              <Field ref="description" type="text" placeholder="termék leírás" />
+            <FormRow label="Leírás" id="description">
+              <Field ref="description" value={description} type="text" id="description" />
             </FormRow>
-            <FormRow>
-              <Field ref="type" type="text" placeholder="típus" />
+            <FormRow label="Típus" id="type">
+              <Field ref="type" value={type} type="text" id="type" />
             </FormRow>
             <div className="half-content-outer">
-              <FormRow extraClass="half">
-                <Field ref="alcoholcontent" type="text" placeholder="alkoholtartalom" />
+              <FormRow extraClass="half" label="Alkoholfok (%)" id="content">
+                <Field ref="alcoholcontent" value={alcoholcontent} type="text" id="content" />
               </FormRow>
-              <FormRow extraClass="half">
-                <Field ref="bottlesize" type="text" placeholder="kiszerelés (literben)" />
+              <FormRow extraClass="half" label="Kiszerelés (l)" id="size">
+                <Field ref="bottlesize" type="text" value={bottlesize} id="size" />
               </FormRow>
               <div className="clear"></div>
             </div>
             <div className="price-row">
-              <FormRow extraClass="half">
-                <Field ref="purchaseprice" type="text" placeholder="beszerzési ár" />
+              <FormRow extraClass="half" label="Beszerzési ár (Ft)" id="price">
+                <Field ref="purchaseprice" value={purchaseprice} type="text" id="price" />
               </FormRow>
-              <FormRow extraClass="half">
-                <Field ref="sellingprice" type="text" placeholder="eladási ár" />
+              <FormRow extraClass="half" label="Eladási ár (Ft)" id="sell-price">
+                <Field ref="sellingprice" value={sellingprice} type="text" id="sell-price" />
               </FormRow>
               <div className="clear"></div>
             </div>
-            <FormRow>
-              <Field ref="onstockquantity" type="text" placeholder="készlet" />
+            <FormRow label="Készlet (db)" id="quantity">
+              <Field ref="onstockquantity" value={onstockquantity} type="text" id="quantity" />
             </FormRow>
             <FormRow extraClass="button-row">
               <Button text="mentés" type="submit" />

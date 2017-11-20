@@ -7,13 +7,15 @@ class Field extends Component {
   static defaultProps = {
     type: 'text',
     placeholder: '',
-    value: ''
+    value: '',
+    id: ''
   };
 
   static propTypes = {
     type: PropTypes.string,
     placeholder: PropTypes.string,
-    value: PropTypes.string
+    value: PropTypes.any,
+    id: PropTypes.string
   };
 
   constructor(props) {
@@ -26,9 +28,21 @@ class Field extends Component {
     };
   }
 
+  componentWillReceiveProps(nextProps) {
+    const value = nextProps.value;
+    this.setState({value});
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    if (nextState.value == this.state.value) {
+      return false;
+    }
+
+    return true;
+  }
+
   handleChange(evt) {
     const value = evt.target.value;
-
     this.setState({value});
   }
 
@@ -37,10 +51,10 @@ class Field extends Component {
   }
 
   render() {
-    const {type, placeholder} = this.props;
+    const {type, placeholder, id} = this.props;
     const {value} = this.state;
 
-    return (<input type={type} placeholder={placeholder} className="field" value={value} onChange={this.handleChange}/>);
+    return (<input id={id} type={type} placeholder={placeholder} className="field" value={value} onChange={this.handleChange} />);
   }
 }
 

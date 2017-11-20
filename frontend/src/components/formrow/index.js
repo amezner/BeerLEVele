@@ -3,18 +3,24 @@ import PropTypes from 'prop-types';
 
 class Formrow extends Component {
   static defaultProps = {
-    extraClass: ''
+    extraClass: '',
+    id: '',
+    label: '',
   };
 
   static propTypes = {
-    extraClass: PropTypes.string
+    extraClass: PropTypes.string,
+    label: PropTypes.string,
+    id: PropTypes.string
   };
 
   render() {
-    const {extraClass} = this.props;
+    const {extraClass, label, id} = this.props;
     const classNames = extraClass ? 'form-row '+extraClass : 'form-row';
+    const labelObj = label ? <label htmlFor={id}>{label}</label> : null;
     return (
       <div className={classNames}>
+        {labelObj}
         {this.props.children}
       </div>
     );
