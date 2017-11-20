@@ -63,7 +63,10 @@ public class CustomerFacade implements FacadeInterface<Customer> {
     public Customer findById(Integer id) {
         Logger logger = LoggerFactory.getLogger(CustomerFacade.class);
         logger.debug("findCustomerbyId");
-        return (Customer) em.createNamedQuery("Customer.findById").setParameter("id", id).getResultList().get(0);
+        if (em.createNamedQuery("Customer.findById").setParameter("id", id).getResultList().isEmpty())
+            return null;
+        else
+            return (Customer) em.createNamedQuery("Customer.findById").setParameter("id", id).getResultList().get(0);
     }
 
     public List<Customer> findByEmail(String email) {

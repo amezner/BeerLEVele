@@ -9,7 +9,7 @@ import Logic.CustomerLogic;
 import Entities.Customer;
 import Helper.Authorizator;
 import Helper.DataObjectMapper;
-import java.util.HashMap;
+import Helper.Email;
 import java.util.Map;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -38,6 +38,8 @@ public class CustomerController {
     private CustomerLogic customerLogic;
     @EJB
     private Authorizator authorizator;
+    @EJB
+    private Email emailservice;
 
     @Path("savecustomer")
     @POST
@@ -59,9 +61,8 @@ public class CustomerController {
 
         authorizator.checkAuthorization(authToken, "operator");
 
-//        Map ret = new HashMap<>();
         DataObjectMapper<Customer> o = new DataObjectMapper<>(customerLogic.findAllCustomer());
-      
+
         return o.getMap();
 
     }
@@ -70,24 +71,38 @@ public class CustomerController {
     @DELETE
     @Consumes(MediaType.APPLICATION_JSON)
     public void delete(@HeaderParam("authToken") String authToken, @PathParam("id") Integer id) throws Exception {
-        
+
         authorizator.checkAuthorization(authToken, "admin");
-        
+
         customerLogic.deleteCustomerById(id);
-    
+
     }
 
     @Path("getcustomer/{id}")
     @GET
     @Consumes(MediaType.APPLICATION_JSON)
     public Customer getCustomer(@HeaderParam("authToken") String authToken, @PathParam("id") Integer id) throws Exception {
-        
+
         authorizator.checkAuthorization(authToken, "operator");
-        
-        DataObjectMapper<Customer> o = new DataObjectMapper<> ( customerLogic.findCustomerById(id));
-        
-        return(Customer) o.getEntry();
-        
+
+        DataObjectMapper<Customer> o = new DataObjectMapper<>(customerLogic.findCustomerById(id));
+
+        return (Customer) o.getEntry();
+
+    }
+
+    @Path("sendemailto")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void sendEmail(@HeaderParam("authToken") String authToken, Map emaildetails) throws Exception {
+        authorizator.checkAuthorization(authToken, "admin");
+        String from = (String) emaildetails.get("from");
+        String to = (String) emaildetails.get("to");
+        String subject = (String) emaildetails.get("subject");
+        String message = (String) emaildetails.get("message");
+        String password = (String) emaildetails.get("password");
+
+        emailservice.SendMail(from, to, password, subject, message);
     }
 
 }

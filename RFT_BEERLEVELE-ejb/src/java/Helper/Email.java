@@ -4,7 +4,20 @@
  * and open the template in the editor.
  */
 package Helper;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
+import javax.ejb.Stateless;
+import javax.faces.bean.ManagedBean;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -13,85 +26,78 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.servlet.ServletContext;
 
 /**
  *
  * @author danida
  */
+@ManagedBean
+@Stateless
+
 public class Email {
-    
-    private String host;
-    private String port;
+
     private String from;
     private String to;
     private String password;
     private String subject;
+    private Properties props = new Properties();
 
-    public Email(String host, String port, String from, String to, String password, String subject) {
-        this.host = host;
-        this.port = port;
-        this.from = from;
-        this.to = to;
-        this.password = password;
-        this.subject = subject;
+    @PostConstruct
+    public void init() {
+        try {
+            Properties prop = new Properties();
+            OutputStream output = null;
+            
+            output = new FileOutputStream("/WEB-INF/classes/config.properties");
+            prop.setProperty("database", "localhost");
+            prop.setProperty("dbuser", "mkyong");
+            prop.setProperty("dbpassword", "password");
+            prop.store(output, null);
+            try {
+                System.out.println(new File(".").getAbsolutePath());
+                InputStream propertiesInputStream = getClass().getClassLoader().getResourceAsStream("/WEB-INF/classes/email.properties");
+                props.load(propertiesInputStream);
+                
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(Email.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(Email.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+        } catch (IOException ex) {
+            Logger.getLogger(Email.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
-    
-    
-     
-    
+
     public Email() {
+
     }
 
-   
-    
-    public   void SendMail(String msg) {
+    public void SendMail(String from, String to, String password, String subject, String msg) {
+        System.out.println(props.get("mail.smtp.host"));
+        Session session = Session.getDefaultInstance(props,
+                new javax.mail.Authenticator() {
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(from, password);
+            }
+        });
 
-		Properties props = new Properties();
-		props.put("mail.smtp.host", host);
-		props.put("mail.smtp.socketFactory.port", port);
-		props.put("mail.smtp.socketFactory.class",
-				"javax.net.ssl.SSLSocketFactory");
-		props.put("mail.smtp.auth", "true");
-		props.put("mail.smtp.port", port);
+        try {
 
-		Session session = Session.getDefaultInstance(props,
-			new javax.mail.Authenticator() {
-				protected PasswordAuthentication getPasswordAuthentication() {
-					return new PasswordAuthentication(from,password);
-				}
-			});
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(from));
+            message.setRecipients(Message.RecipientType.TO,
+                    InternetAddress.parse(from));
+            message.setSubject(subject);
+            message.setText(msg);
 
-		try {
+            Transport.send(message);
 
-			Message message = new MimeMessage(session);
-			message.setFrom(new InternetAddress(from));
-			message.setRecipients(Message.RecipientType.TO,
-					InternetAddress.parse(from));
-			message.setSubject(subject);
-			message.setText(msg);
-
-			Transport.send(message);
-
-
-		} catch (MessagingException e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-    public String getHost() {
-        return host;
-    }
-
-    public void setHost(String host) {
-        this.host = host;
-    }
-
-    public String getPort() {
-        return port;
-    }
-
-    public void setPort(String port) {
-        this.port = port;
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public String getFrom() {
@@ -126,6 +132,12 @@ public class Email {
         this.subject = subject;
     }
 
+    public Properties getProps() {
+        return props;
+    }
+
+    public void setProps(Properties props) {
+        this.props = props;
+    }
+
 }
-
-

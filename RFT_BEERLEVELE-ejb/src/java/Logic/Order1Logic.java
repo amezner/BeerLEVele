@@ -7,6 +7,7 @@ package Logic;
 
 import Entities.Order1;
 import Facades.Order1Facade;
+import Facades.StockFacade;
 import Helper.Authenticator;
 import java.util.List;
 import javax.annotation.ManagedBean;
@@ -26,7 +27,32 @@ public class Order1Logic {
     @Inject
     Order1Facade facade;
 
+    @Inject
+    StockFacade stockFacade;
+    
     public void insertInTheCart(int uid, int stockID, int quantity) throws Exception {
+
+//        String res = "FALSE";
+//        if (facade.findStockidQuantityIncart(stockID)+quantity-facade.findInCart(uid, stockID).get(0).getQuantity() < stockFacade.findStockById(stockID).getOnstockquantity())
+//            res = "TRUE";
+//              
+//        throw new Exception(
+//                "Result : " + res +
+//                "findInCart: " + facade.findInCart(uid, stockID).get(0).getQuantity().toString() 
+//                + "| Quantity: "+quantity+
+//                "| getOnstockquantity: " + stockFacade.findStockById(stockID).getOnstockquantity().toString() +
+//                "| fubdSticjudQuantityIncart: " + facade.findStockidQuantityIncart(stockID).toString() +
+//                "| SUM: " + ( facade.findStockidQuantityIncart(stockID)
+//                              + quantity 
+//                              - facade.findInCart(uid, stockID).get(0).getQuantity())
+//        );
+
+        if (stockFacade.findStockById(stockID) == null)
+            throw new Exception("StockID does not exist");
+        if (quantity <= 0)
+            throw new Exception("You can't add ZERO or NEGATIVE items to the cart");  
+        if (facade.findStockidQuantityIncart(stockID)+quantity-facade.findInCart(uid, stockID).get(0).getQuantity() > stockFacade.findStockById(stockID).getOnstockquantity())
+            throw new Exception("Not enough stock from this product");
 
         Order1 order = new Order1(uid, stockID, quantity);
         if (facade.findInCart(uid, stockID).isEmpty()) {
@@ -35,6 +61,7 @@ public class Order1Logic {
             order.setId(facade.findInCart(uid, stockID).get(0).getId());
             facade.edit(order);
         }
+
     }
 
     public void deleteOrder(int uid, int stockID) throws Exception {

@@ -61,7 +61,10 @@ public class StockFacade implements FacadeInterface<Stock> {
     public Stock findStockById(Integer id) {
         Logger logger = LoggerFactory.getLogger(StockFacade.class);
         logger.debug("findStockbyId");
-        return (Stock) em.createNamedQuery("Stock.findById").setParameter("id", id).getResultList().get(0);
+        if (em.createNamedQuery("Stock.findById").setParameter("id", id).getResultList().isEmpty())
+            return null;
+        else
+            return (Stock) em.createNamedQuery("Stock.findById").setParameter("id", id).getResultList().get(0);
     }
 
     public List<Stock> findStockByPurchaseprice(Integer purchaseprice) {
