@@ -9,6 +9,7 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.CascadeType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -79,13 +80,14 @@ public class Invoicedproducts implements Serializable {
     @Column(name = "soldsubtotal")
     private Double soldsubtotal;
     
-    @JoinColumn(name = "stockid", referencedColumnName = "ID")
-    @ManyToOne
-    private Stock stockid;
+//    @JoinColumn(name = "stockid", referencedColumnName = "ID")
+//    @ManyToOne
+    @Column(name = "stockid")
+    private int stockid;
     
     @JoinColumn(name = "invoicenumber", referencedColumnName = "invoicenumber")
     @ManyToOne
-    private Invoice invoicenumber;
+    private Invoice invoice;
 
     public Invoicedproducts() {
     }
@@ -140,20 +142,20 @@ public class Invoicedproducts implements Serializable {
         this.soldsubtotal = soldsubtotal;
     }
 
-    public Stock getStockid() {
+    public int getStockid() {
         return stockid;
     }
 
-    public void setStockid(Stock stockid) {
+    public void setStockid(int stockid) {
         this.stockid = stockid;
     }
 
-    public Invoice getInvoicenumber() {
-        return invoicenumber;
+    public Invoice getInvoice() {
+        return invoice;
     }
 
-    public void setInvoicenumber(Invoice invoicenumber) {
-        this.invoicenumber = invoicenumber;
+    public void setInvoice(Invoice invoice) {
+        this.invoice = invoice;
     }
 
     @Override

@@ -80,6 +80,7 @@ public class CustomerController {
 
     @Path("getcustomer/{id}")
     @GET
+    @Produces("application/json")
     @Consumes(MediaType.APPLICATION_JSON)
     public Customer getCustomer(@HeaderParam("authToken") String authToken, @PathParam("id") Integer id) throws Exception {
 

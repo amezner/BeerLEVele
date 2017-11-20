@@ -27,8 +27,6 @@ public class InvoiceFacade implements FacadeInterface<Invoice>{
     @PersistenceContext(name = "RFT_BEERLEVELE-ejbPU")
     EntityManager em;
 
-    
-    
     @Override
     public void create(Invoice t) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -50,23 +48,13 @@ public class InvoiceFacade implements FacadeInterface<Invoice>{
         return em.createNamedQuery("Invoice.findAll").getResultList();
     }
 
-    public Invoice findByInvoicenumber(int invoicenumber) {
+    public Invoice findByInvoicenumber(int invoicenumber) throws Exception {
         Logger logger = LoggerFactory.getLogger(InvoiceFacade.class);
         logger.debug("findInvoicebyInvoicenumber");
-        return (Invoice) em.createNamedQuery("Invoice.findByInvoicenumber").setParameter("invoicenumber", invoicenumber).getResultList().get(0);
+        if (em.createNamedQuery("Invoice.findByInvoicenumber").setParameter("invoicenumber", invoicenumber).getResultList().isEmpty())
+            throw new Exception ("Can not find invoice: " + invoicenumber);
+        else
+            return (Invoice) em.createNamedQuery("Invoice.findByInvoicenumber").setParameter("invoicenumber", invoicenumber).getResultList().get(0);
     }
-
-    public List<Invoice> findInvoiceByDate(Date date) {
-        Logger logger = LoggerFactory.getLogger(InvoiceFacade.class);
-        logger.debug("findInvoiceByDate");
-        return em.createNamedQuery("Invoice.findByDate").setParameter("date", date).getResultList();
-
-    }
-    public List<Invoice> findInvoiceByDiscount(Integer discount){
-        Logger logger = LoggerFactory.getLogger(InvoiceFacade.class);
-        logger.debug("findInvoiceByDiscount");
-        return em.createNamedQuery("Invoice.findByDiscount").setParameter("discount", discount).getResultList();
-    }
-
-   
+ 
 }

@@ -45,8 +45,18 @@ public class StockController {
 
         authorizator.checkAuthorization(authToken, "admin");
 
-        stockLogic.insertStock(map.get("name"), map.get("description"), map.get("type"), 5.2, 0.33, 450.0, 520.0, new Integer(map.get("onstockquantity")));
-//        stockLogic.insertStock(map.get("name"), map.get("description"), map.get("type"), new Double(map.get("alcoholcontent")), new Double(map.get("bottlesize")), new Double(map.get("purcahaseprice")), new Double(map.get("sellingprice")), new Integer(map.get("onstockquantity")));
+        String a = map.get("name");
+        String b = map.get("description");
+        String c = map.get("type");
+        Double d = new Double(map.get("alcoholcontent"));
+        Double e = new Double(map.get("bottlesize"));
+        Double f = new Double(map.get("purchaseprice"));
+        Double g = new Double(map.get("sellingprice"));
+        Integer h = new Integer(map.get("onstockquantity"));
+        stockLogic.insertStock(a, b, c, d, e, f, g, h);
+
+//    faszsetudjahogyezmeeeenemjooooo
+//    stockLogic.insertStock(map.get("name"), map.get("description"), map.get("type"), new Double(map.get("alcoholcontent")), new Double(map.get("bottlesize")), new Double(map.get("purcahaseprice")), new Double(map.get("sellingprice")), new Integer(map.get("onstockquantity")));
 
     }
 

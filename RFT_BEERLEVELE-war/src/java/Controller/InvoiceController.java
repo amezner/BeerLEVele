@@ -40,13 +40,14 @@ public class InvoiceController {
 
     @Path("getinvoice/{id}")
     @GET
+    @Produces("application/json")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Invoice getInvoice(@HeaderParam("authToken") String authToken, @PathParam("invoicenumber") Integer invoicenumber) throws Exception {
+    public Invoice getInvoice(@HeaderParam("authToken") String authToken, @PathParam("id") Integer id) throws Exception {
         
-        authorizator.checkAuthorization(authToken, "finance");
+        authorizator.checkAuthorization(authToken, "admin");
         
-        DataObjectMapper<Invoice> o = new DataObjectMapper<> (invoiceLogic.findInvoiceByInvoicenumber(invoicenumber));
-        
+        DataObjectMapper<Invoice> o = new DataObjectMapper<> (invoiceLogic.findInvoiceByInvoicenumber(id));
+
         return (Invoice) o.getEntry();
         
     }

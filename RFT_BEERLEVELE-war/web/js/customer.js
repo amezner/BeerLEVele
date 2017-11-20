@@ -190,13 +190,24 @@ $(document).ready(function () {
             url: 'resources/stock/getallstock',
             type: 'GET',
             dataType: "json",
-            contentType: "application/json", headers: {'authToken': token},
+            contentType: "application/json", 
+            headers: {'authToken': token},
         }, function (responseText) {
             $('#ajaxGetUserServletResponse').text(responseText);
         })
     });
 
-    
+    $("#getinvoice").click(function () {
+        $.ajax({
+            url: 'resources/invoice/getinvoice/'+  $("#invoicenumber").val(),
+            type: 'GET',
+            dataType: "json",
+            contentType: "application/json", 
+            headers: {'authToken': token},
+        }, function (responseText) {
+            $('#ajaxGetUserServletResponse').text(responseText);
+        })
+    });
     
     /*   $("#getall").click(
      function () {

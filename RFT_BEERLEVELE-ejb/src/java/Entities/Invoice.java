@@ -35,10 +35,8 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "invoice")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Invoice.findAll", query = "SELECT i FROM Invoice i")
-    , @NamedQuery(name = "Invoice.findByInvoicenumber", query = "SELECT i FROM Invoice i WHERE i.invoicenumber = :invoicenumber")
-    , @NamedQuery(name = "Invoice.findByDate", query = "SELECT i FROM Invoice i WHERE i.date = :date")
-    , @NamedQuery(name = "Invoice.findByDiscount", query = "SELECT i FROM Invoice i WHERE i.discount = :discount")})
+    @NamedQuery(name = "Invoice.findAll", query = "SELECT i FROM Invoice i"),
+    @NamedQuery(name = "Invoice.findByInvoicenumber", query = "SELECT i FROM Invoice i WHERE i.invoicenumber = :invoicenumber")})
 public class Invoice implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -47,6 +45,9 @@ public class Invoice implements Serializable {
     @Basic(optional = false)
     @Column(name = "invoicenumber")
     private Integer invoicenumber;
+
+    @OneToMany(mappedBy = "invoice")
+    private Collection<Invoicedproducts> invoicedproductsCollection;
 
     @Size(max = 100)
     @Column(name = "name")
@@ -81,17 +82,14 @@ public class Invoice implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
 
-    @Column(name = "discount")
-    private Integer discount;
-
-    @OneToMany(mappedBy = "invoicenumber")
-    private Collection<Invoicedproducts> invoicedproductsCollection;
     @Column(name = "loyaltycard")
     private Boolean loyaltycard;
 
-    @JoinColumn(name = "customer_id", referencedColumnName = "ID")
-    @ManyToOne
-    private Customer customerId;
+    @Column(name = "discount")
+    private Integer discount;
+
+    @Column(name = "customer_id")
+    private int customerId;
 
     public Invoice() {
     }
@@ -124,11 +122,11 @@ public class Invoice implements Serializable {
         this.discount = discount;
     }
 
-    public Customer getCustomerId() {
+    public int getCustomerId() {
         return customerId;
     }
 
-    public void setCustomerId(Customer customerId) {
+    public void setCustomerId(int customerId) {
         this.customerId = customerId;
     }
 
@@ -163,6 +161,7 @@ public class Invoice implements Serializable {
     public void setLoyaltycard(Boolean loyaltycard) {
         this.loyaltycard = loyaltycard;
     }
+
     @XmlTransient
     public Collection<Invoicedproducts> getInvoicedproductsCollection() {
         return invoicedproductsCollection;

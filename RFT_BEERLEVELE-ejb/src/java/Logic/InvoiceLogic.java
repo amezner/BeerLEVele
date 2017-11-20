@@ -30,7 +30,7 @@ public class InvoiceLogic {
 
     }
     
-    public Invoice findInvoiceByInvoicenumber(int invoicenumber) {
+    public Invoice findInvoiceByInvoicenumber(int invoicenumber) throws Exception {
         return facade.findByInvoicenumber(invoicenumber);
 
     }

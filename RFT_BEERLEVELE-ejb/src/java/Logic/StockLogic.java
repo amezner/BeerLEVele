@@ -58,9 +58,9 @@ public class StockLogic {
     }
 
     private boolean CheckIfCorrectStock(Stock stock) {
-//        if (stock.getName()== null || stock.getDescription() == null || stock.getType() == null ||stock.getSellingprice()== null || stock.getPurchaseprice() == null || stock.getOnstockquantity() == null ) {
-//            return false;
-//        }
+        if (stock.getName()== null || stock.getDescription() == null || stock.getType() == null ||stock.getSellingprice()== null || stock.getPurchaseprice() == null || stock.getOnstockquantity() == null ) {
+            return false;
+        }
         return true;
 
     }

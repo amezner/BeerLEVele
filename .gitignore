@@ -16,3 +16,5 @@ build.xml
 my-datavolume/
 data/
 nbproject/
+
+dist/gfdeploy/
