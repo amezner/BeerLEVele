@@ -61,7 +61,8 @@ class Productlist extends Component {
       }
       return resp;
     } catch (e) {
-      NotificationManager.error(e.message);
+      const message = e.message ? e.message : 'Ismeretlen hiba';
+      NotificationManager.error(message);
     }
   }
 

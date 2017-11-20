@@ -33,8 +33,9 @@ class Productform extends Component {
     }
 
     try {
-      if (this.state.product.id) {
-        const resp = await put('stock/editstock/'+this.state.product.id, data);
+      const id = this.state.product.id;
+      if (id) {
+        const resp = await put('stock/editstock/'+id, data);
       } else {
         const resp = await post('stock/savestock', data);
       }

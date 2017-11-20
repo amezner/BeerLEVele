@@ -16,7 +16,7 @@ class Table extends Component {
 
   render(){
     const {fields, datas} = this.props;
-
+    
     return (
       <div className="table-outer">
         <div className="table">
