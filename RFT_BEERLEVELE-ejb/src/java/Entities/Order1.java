@@ -28,6 +28,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "order1")
 @XmlRootElement
 @NamedQueries({
+    @NamedQuery(name = "Order1.findStockidQuantityIncart", query = "SELECT COALESCE(SUM(o.quantity),0) FROM Order1 o WHERE o.stockId = :stock_id"),
+    @NamedQuery(name = "Order1.findByStockid", query = "SELECT o FROM Order1 o WHERE o.stockId = :stock_id"),
     @NamedQuery(name = "Order1.findInCart", query = "SELECT o FROM Order1 o WHERE o.uid = :uid AND o.stockId = :stock_id"),
     @NamedQuery(name = "Order1.findCartByUid", query = "SELECT o FROM Order1 o WHERE o.uid = :uid"),
 })

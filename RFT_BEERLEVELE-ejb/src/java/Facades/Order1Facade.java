@@ -7,6 +7,7 @@ package Facades;
 
 import Entities.Order1;
 import Interfaces.FacadeInterface;
+import java.math.BigDecimal;
 import java.util.List;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
@@ -54,6 +55,12 @@ public class Order1Facade implements FacadeInterface<Order1> {
         return em.createNamedQuery("Order1.findCartByUid").setParameter("uid", uid).getResultList();
     }
 
+    public Integer findStockidQuantityIncart (Integer stock_id){
+        Logger logger = LoggerFactory.getLogger(Order1Facade.class);
+        logger.debug("Total quantity of a specific stock item ID:", stock_id, " in all carts");
+        return ((BigDecimal) em.createNamedQuery("Order1.findStockidQuantityIncart").setParameter("stock_id", stock_id).getSingleResult()).intValue(); 
+    }
+    
     public List<Order1> findInCart (Integer uid, Integer stock_id){
         Logger logger = LoggerFactory.getLogger(Order1Facade.class);
         logger.debug("Find a stock item in UID's cart");
