@@ -21,10 +21,10 @@ class App extends Component {
         <div>
           <Protected isLoggedIn={AuthStore.isLoggedIn}>
             <Layout1>
-              <Route exact path="/" component={CustomerForm} />
-              <Route path="/productform" component={ProductForm} />
+              <Route exact path="/" component={ProductList} />
+              <Route path="/productform/:id?" component={ProductForm} />
               <Route path="/productlist" component={ProductList} />
-              <Route path="/customerform" component={CustomerForm} />
+              <Route path="/customerform/:id?" component={CustomerForm} />
               <Route path="/customerlist" component={CustomerList} />
             </Layout1>
           </Protected>

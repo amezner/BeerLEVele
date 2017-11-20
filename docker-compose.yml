@@ -1,6 +1,14 @@
 version: "3.0"
 services:
- 
+  backend:
+    image: danida/beer_stock_for_rft_levelezo:GLASSFISH
+    ports:
+      - 4848:4848
+      - 8080:8080
+    networks:
+      my_net:
+        ipv4_address: 192.168.2.2
+
   mysql:
     image: mysql:5.6
     environment:

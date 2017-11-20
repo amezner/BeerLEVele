@@ -1,0 +1,51 @@
+@import '../../global.scss';
+
+.table-outer {
+  max-width:100%;
+  overflow-x:auto;
+}
+
+.table {
+  display:table;
+  margin-top:30px;
+  width:100%;
+
+  .table-row {
+    display:table-row;
+
+    &.header-row {
+      font-weight:$bold-fweight;
+
+      .table-cell {
+        border-bottom:$border-style;
+      }
+    }
+
+    &.data-row {
+      background:#ffffff;
+      &:nth-of-type(2n+2) {
+        background:#dcefdb;
+      }
+    }
+
+    .table-cell {
+      display:table-cell;
+      padding:10px 5px 10px 5px;
+      min-width:110px;
+      vertical-align:middle;
+
+      .features-content {
+        .feature-item {
+          margin-right:10px;
+          cursor:pointer;
+          color:$primary-color;
+
+          &:last-child {
+            margin-right:0px;
+          }
+        }
+      }
+    }
+
+  }
+}

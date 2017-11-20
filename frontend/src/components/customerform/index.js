@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {post} from '../../lib/client';
+import {post, get, put} from '../../lib/client';
 import {NotificationManager} from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
 import {withRouter} from 'react-router-dom';
@@ -13,6 +13,10 @@ class Customerform extends Component {
     super(props);
 
     this.handleSubmit = this.handleSubmit.bind(this);
+
+    this.state = {
+      customer: {}
+    };
   }
 
   async handleSubmit(e) {
@@ -42,7 +46,12 @@ class Customerform extends Component {
     };
 
     try {
-      const response = await post('customer/savecustomer', data);
+      const id = this.state.customer.id;
+      if (id) {
+        const response = await put('customer/editcustomer/'+id, data);
+      } else {
+        const response = await post('customer/savecustomer', data);
+      }
 
       NotificationManager.success('', 'Sikeres mentés!', 3000);
       this.props.history.push('/customerlist');
@@ -52,43 +61,62 @@ class Customerform extends Component {
         : 'Ismeretlen hiba';
       NotificationManager.error(message, 'Sikertelen mentés!', 3000);
     }
+  }
 
+  componentDidMount() {
+    let customerId = this.props.match.params.id;
+    if (customerId) {
+      this.loadCustomer(customerId).then((resp) => {
+        this.setState({'customer':resp});
+      });
+    }
+  }
+
+  async loadCustomer(customerId) {
+    try {
+      const resp = await get('customer/getcustomer/'+customerId);
+      return resp;
+    } catch (e) {
+      NotificationManager.error(e.message);
+    }
   }
 
   render() {
+    const {name, email, phone, country, postalcode, address, city, loyaltycard, discount} = this.state;
+
     return (<div className="customer-form content-width thin">
       <section className="content-section">
-        <h1>Vásárló hozzáadása</h1>
+        <h1>{name ? 'Vásárló módosítása' : 'Vásárló hozzáadása'}</h1>
         <form onSubmit={this.handleSubmit}>
-          <FormRow>
-            <Field ref="name" type="text" placeholder="név" name="name"/>
+          <FormRow label="Név" id="name">
+            <Field ref="name" value={name} type="text" id="name" name="name"/>
           </FormRow>
-          <FormRow>
-            <Field ref="email" type="text" placeholder="e-mail cím" name="email"/>
+          <FormRow label="Telefonszám" id="phone">
+            <Field ref="phone" value={phone} type="text" id="phone" name="phone"/>
           </FormRow>
-          <FormRow extraClass="country-row">
-            <Field ref="country" type="text" placeholder="ország" name="address"/>
+          <FormRow label="E-mail cím" id="email">
+            <Field ref="email" value={email} type="text" id="email" name="email"/>
+          </FormRow>
+          <FormRow extraClass="country-row" id="country" label="Ország">
+            <Field ref="country" value={country} type="text" id="country" name="country"/>
           </FormRow>
           <div className="address-row">
-            <FormRow extraClass="zip-row">
-              <Field ref="zip" type="text" extraClass="z" placeholder="irszám." name="address"/>
+            <FormRow extraClass="zip-row" label="Irszám." id="zip">
+              <Field ref="zip" type="text" value={postalcode} id="zip" name="postalcode"/>
             </FormRow>
-            <FormRow extraClass="city-row">
-              <Field ref="city" type="text" placeholder="város" name="address"/>
+            <FormRow extraClass="city-row" label="Város" id="city">
+              <Field ref="city" type="text" value={city} id="city" name="city"/>
             </FormRow>
             <div className="clear"></div>
           </div>
-          <FormRow extraClass="address-row">
-            <Field ref="address" type="text" placeholder="utca, házszám" name="address"/>
+          <FormRow extraClass="address-row" label="Utca, házszám" id="address">
+            <Field ref="address" type="text" value={address} id="address" name="address"/>
           </FormRow>
-          <FormRow>
-            <Field ref="phone" type="text" placeholder="telefonszám" name="phone"/>
+          <FormRow label="Partnerszám" id="parnter">
+            <Field ref="loyalty" type="text" value={loyaltycard} id="partner" name="loyalty"/>
           </FormRow>
-          <FormRow>
-            <Field ref="loyalty" type="text" placeholder="partnerszám" name="loyalty"/>
-          </FormRow>
-          <FormRow>
-            <Field ref="discount" type="text" placeholder="kedvezmény mértéke"/>
+          <FormRow label="Kedvezmény mértéke" id="discount">
+            <Field ref="discount" type="text" value={discount} id="discount" name="discount" />
           </FormRow>
           <FormRow extraClass="button-row">
             <Button text="mentés" type="submit"/>
