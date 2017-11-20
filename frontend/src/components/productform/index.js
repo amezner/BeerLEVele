@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import FormRow from '../formrow';
 import Field from '../field';
 import Button from '../button';
-import {post} from '../../lib/client';
+import {post, get} from '../../lib/client';
 import {NotificationManager} from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
 import {withRouter} from 'react-router-dom';
@@ -12,6 +12,9 @@ class Productform extends Component {
     super(props);
 
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.state = {
+      product: {}
+    }
   }
 
   async handleSubmit(e) {
@@ -36,6 +39,24 @@ class Productform extends Component {
     } catch (e) {
       const message = e.message != null ? e.message : 'Ismeretlen hiba';
       NotificationManager.error(message, 'Sikertelen mentés!', 3000);
+    }
+  }
+
+  componentDidMount() {
+    let productId = this.props.match.params.productId;
+    if (productId) {
+      this.loadProduct(productId).then((resp) => {
+        this.setState({'product':Object.values(resp).pop()});
+      });
+    }
+  }
+
+  async loadProduct(productId) {
+    try {
+      const resp = await get('stock/getstock/'+productId);
+      return resp;
+    } catch (e) {
+      NotificationManager.error(e.message);
     }
   }
 

@@ -1,0 +1,31 @@
+@import '../../global.scss';
+
+.table {
+  display:table;
+  margin-top:30px;
+  width:100%;
+
+  .table-row {
+    display:table-row;
+
+    &.header-row {
+      font-weight:$bold-fweight;
+
+      .table-cell {
+        border-bottom:$border-style;
+      }
+    }
+
+    &.data-row {
+      &:nth-of-type(2n+2) {
+        background:$light-green;
+      }
+    }
+
+    .table-cell {
+      display:table-cell;
+      padding:10px 5px 10px 5px;
+    }
+
+  }
+}

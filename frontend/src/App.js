@@ -22,7 +22,7 @@ class App extends Component {
           <Protected isLoggedIn={AuthStore.isLoggedIn}>
             <Layout1>
               <Route exact path="/" component={CustomerForm} />
-              <Route path="/productform" component={ProductForm} />
+              <Route path="/productform/:productId?" component={ProductForm} />
               <Route path="/productlist" component={ProductList} />
               <Route path="/customerform" component={CustomerForm} />
               <Route path="/customerlist" component={CustomerList} />
