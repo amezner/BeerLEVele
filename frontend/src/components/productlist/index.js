@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
-import {NotificationManager} from 'react-notifications';
 import {get} from '../../lib/client';
 import Table from '../table';
 import PropTypes from 'prop-types';
 import ProductsStore from '../../stores/products';
+import CartStore from '../../stores/cart';
 import {observer} from 'mobx-react';
 import ProductRow from '../productrow';
 
@@ -26,6 +26,7 @@ class Productlist extends Component {
 
   componentDidMount() {
     ProductsStore.loadData();
+    CartStore.loadData();
   }
 
   render () {

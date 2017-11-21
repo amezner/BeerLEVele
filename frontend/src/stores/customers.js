@@ -28,7 +28,7 @@ class CustomersStore {
         resp = Object.values(resp);
       }
 
-      this.customers = resp;
+      this.setCustomers(resp);
     } catch (e) {
       const message = e.message ? e.message : 'Ismeretlen hiba';
       NotificationManager.error(message);

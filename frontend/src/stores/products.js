@@ -27,7 +27,7 @@ class ProductsStore {
       if (!Array.isArray(resp)) {
         resp = Object.values(resp);
       }
-      this.products = resp;
+      this.setProducts(resp);
     } catch (e) {
       const message = e.message ? e.message : 'Ismeretlen hiba';
       NotificationManager.error(message);
