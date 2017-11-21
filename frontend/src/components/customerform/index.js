@@ -82,7 +82,7 @@ class Customerform extends Component {
   }
 
   render() {
-    const {name, email, phone, country, postalcode, address, city, loyaltycard, discount} = this.state;
+    const {name, email, phone, country, postalcode, address, city, loyaltycard, discount} = this.state.customer;
 
     return (<div className="customer-form content-width thin">
       <section className="content-section">
