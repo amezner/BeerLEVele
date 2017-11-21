@@ -17,10 +17,10 @@ class Formrow extends Component {
   render() {
     const {extraClass, label, id} = this.props;
     const classNames = extraClass ? 'form-row '+extraClass : 'form-row';
-    const labelObj = label ? <label htmlFor={id}>{label}</label> : null;
+    const labelElement = label ? <label htmlFor={id}>{label}</label> : null;
     return (
       <div className={classNames}>
-        {labelObj}
+        {labelElement}
         {this.props.children}
       </div>
     );

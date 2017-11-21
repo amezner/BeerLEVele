@@ -25,7 +25,7 @@ class Productform extends Component {
       name: name.value,
       description: description.value,
       type: type.value,
-      purcahaseprice: purchaseprice.value,
+      purchaseprice: purchaseprice.value,
       sellingprice: sellingprice.value,
       onstockquantity:onstockquantity.value,
       alcoholcontent:alcoholcontent.value,

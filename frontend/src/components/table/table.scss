@@ -15,16 +15,12 @@
 
     &.header-row {
       font-weight:$bold-fweight;
-
-      .table-cell {
-        border-bottom:$border-style;
-      }
     }
 
     &.data-row {
       background:#ffffff;
       &:nth-of-type(2n+2) {
-        background:#dcefdb;
+        background:#f2f2f2;
       }
     }
 
@@ -33,7 +29,9 @@
       padding:10px 5px 10px 5px;
       min-width:110px;
       vertical-align:middle;
-
+      &:first-of-type {
+        padding-left:20px;
+      }
       .features-content {
         .feature-item {
           margin-right:10px;
