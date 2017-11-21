@@ -3,36 +3,13 @@ import {NotificationManager} from 'react-notifications';
 import {get} from '../../lib/client';
 import Table from '../table';
 import PropTypes from 'prop-types';
+import ProductsStore from '../../stores/products';
+import {observer} from 'mobx-react';
+import ProductRow from '../productrow';
 
 class Productlist extends Component {
   static defaultProps = {
-    tableFields: [{
-        label: 'Név',
-        field: 'name',
-        key: 'name'
-      }, {
-        label: 'Beszerzési ár',
-        field: 'purchaseprice',
-        key: 'purchaseprice'
-      }, {
-        label: 'Eladási ár',
-        field: 'sellingprice',
-        key: 'sellingprice'
-      }, {
-        label: 'Készlet',
-        field: 'onstockquantity',
-        key: 'quantity'
-      },{
-        label: '',
-        key:'features',
-        features: {
-          edit: {
-            title: 'Módosítás',
-            link: '/productform/{id}',
-            icon: 'edit.png'
-          }
-        }
-      }]
+    tableFields: ['Név', 'Beszerzési ár', 'Eladási ár', 'Készlet', '']
   };
 
   static propTypes = {
@@ -48,35 +25,19 @@ class Productlist extends Component {
   }
 
   componentDidMount() {
-    this.loadProducts().then((resp) => {
-      this.setState({products:resp});
-    });
-  }
-
-  async loadProducts() {
-    try {
-      let resp = await get('stock/getallstock');
-      if (!Array.isArray(resp)) {
-        resp = Object.values(resp);
-      }
-      return resp;
-    } catch (e) {
-      const message = e.message ? e.message : 'Ismeretlen hiba';
-      NotificationManager.error(message);
-    }
+    ProductsStore.loadData();
   }
 
   render () {
-
     return (
       <div className="content-width">
         <section className="content-section">
           <h1>Termékek</h1>
-          <Table fields={this.props.tableFields} datas={this.state.products} />
+          <Table fields={this.props.tableFields} datas={ProductsStore.getProducts()} rowClass={ProductRow} />
         </section>
       </div>
     );
   }
 }
 
-export default Productlist;
+export default observer(Productlist);

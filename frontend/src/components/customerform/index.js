@@ -7,6 +7,7 @@ import {withRouter} from 'react-router-dom';
 import FormRow from '../formrow';
 import Field from '../field';
 import Button from '../button';
+import CheckField from '../checkfield';
 
 class Customerform extends Component {
   constructor(props) {
@@ -15,7 +16,8 @@ class Customerform extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
 
     this.state = {
-      customer: {}
+      customer: {},
+      loyalty:{}
     };
   }
 
@@ -33,11 +35,13 @@ class Customerform extends Component {
       discount
     } = this.refs;
 
+    let loyaltycard = loyalty.selected;
+
     const data = {
       name: name.value,
       email: email.value,
       address: address.value,
-      loyaltycard: loyalty.value,
+      loyaltycard: loyaltycard,
       phone: phone.value,
       discount: discount.value,
       postalcode: zip.value,
@@ -67,7 +71,10 @@ class Customerform extends Component {
     let customerId = this.props.match.params.id;
     if (customerId) {
       this.loadCustomer(customerId).then((resp) => {
-        this.setState({'customer':resp});
+        this.setState({
+          'customer':resp,
+          'loyalty':resp.loyaltycard
+        });
       });
     }
   }
@@ -95,8 +102,7 @@ class Customerform extends Component {
 
   render() {
     const {name, email, phone, country, postalcode, address, city, loyaltycard, discount} = this.state.customer;
-    const selected = loyaltycard == 'false' ? 0 : 1;
-    
+
     return (<div className="customer-form content-width thin">
       <section className="content-section">
         <h1>{name ? 'Vásárló módosítása' : 'Vásárló hozzáadása'}</h1>
@@ -125,11 +131,14 @@ class Customerform extends Component {
           <FormRow extraClass="address-row" label="Utca, házszám" id="address">
             <Field ref="address" type="text" value={address} id="address" name="address"/>
           </FormRow>
-          <FormRow label="Partnerszám" id="parnter">
-            <Field ref="loyalty" type="text" value={loyaltycard} id="partner" name="loyalty"/>
-          </FormRow>
           <FormRow label="Kedvezmény mértéke" id="discount">
             <Field ref="discount" type="text" value={discount} id="discount" name="discount" />
+          </FormRow>
+          <FormRow label="Partnerszám" id="parnter">
+            <div>
+              <CheckField label="igen" ref="loyalty" id="partner-1" type="radio" selected={loyaltycard === true} name="loyaltycard" onChange={this.handleCheckfieldChange} />
+              <CheckField label="nem" id="partner-0" type="radio" selected={loyaltycard !== true} name="loyaltycard" onChange={this.handleCheckfieldChange} />
+            </div>
           </FormRow>
           <FormRow extraClass="button-row">
             <Button text="mentés" type="submit"/>

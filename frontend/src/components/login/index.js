@@ -29,12 +29,12 @@ class Login extends Component {
         password: password.value,
       });
 
-      if (typeof resp.token != 'undefined') {
+      if (typeof resp.token !== 'undefined') {
         NotificationManager.info('Jó munkát kívánok!', 'Szia '+resp.username);
         sessionStorage.setItem('authToken', resp.token);
         AuthStore.setIsLoggedIn(true);
         this.props.history.push(AuthStore.oldUrl);
-      } else if (typeof resp.message != 'undefined'){
+      } else if (typeof resp.message !== 'undefined'){
         NotificationManager.error(resp.message, 'Sikertelen belépés!', 3000);
       } else {
         NotificationManager.error('Ismeretlen hiba', 'Sikertelen belépés!', 3000);

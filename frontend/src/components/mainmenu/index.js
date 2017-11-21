@@ -59,7 +59,7 @@ class MainMenu extends Component {
                 <Link to="/productlist">Termékek listája</Link>
               </li>
               <li className="menu-item submenu-item">
-                <Link to="productform">Termék rögzítése</Link>
+                <Link to="/productform">Termék rögzítése</Link>
               </li>
             </ul>
           </li>
