@@ -81,9 +81,22 @@ class Customerform extends Component {
     }
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    if (this.props.match.params.id !== nextProps.match.params.id) {
+      this.setState({customer:{}});
+    }
+
+    return true;
+  }
+
+  handleCheckfieldChange() {
+
+  }
+
   render() {
     const {name, email, phone, country, postalcode, address, city, loyaltycard, discount} = this.state.customer;
-
+    const selected = loyaltycard == 'false' ? 0 : 1;
+    
     return (<div className="customer-form content-width thin">
       <section className="content-section">
         <h1>{name ? 'Vásárló módosítása' : 'Vásárló hozzáadása'}</h1>

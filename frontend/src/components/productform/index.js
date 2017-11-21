@@ -56,6 +56,14 @@ class Productform extends Component {
     }
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    if (this.props.match.params.id !== nextProps.match.params.id) {
+      this.setState({product:{}});
+    }
+
+    return true;
+  }
+
   async loadProduct(productId) {
     try {
       const resp = await get('stock/getstock/'+productId);
