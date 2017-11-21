@@ -59,7 +59,6 @@ public class Email {
     }
 
     public void SendMail(String from, String to, String password, String subject, String msg) {
-        System.out.println(props);
         
         Session session = Session.getInstance(props,
                 new javax.mail.Authenticator() {

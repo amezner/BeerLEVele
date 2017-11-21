@@ -18,6 +18,7 @@ import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -95,6 +96,24 @@ public class StockController {
         DataObjectMapper<Stock> o = new DataObjectMapper<>(stockLogic.findStockById(id));
         
         return (Stock) o.getEntry();
+    }
     
+    @Path("editstock/{id}")
+    @PUT
+    @Produces("application/json")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void editCustomer(@HeaderParam("authToken") String authToken, @PathParam("id") Integer id,Map stockdetail) throws Exception {
+
+        authorizator.checkAuthorization(authToken, "operator");
+        Stock stock = new Stock(id);
+        stock.setAlcoholcontent(Double.parseDouble((String) stockdetail.get("alcoholcontent")));
+        stock.setBottlesize(Double.parseDouble((String) stockdetail.get("bottlesize")));
+        stock.setDescription((String) stockdetail.get("description"));
+        stock.setName((String) stockdetail.get("name"));
+        stock.setOnstockquantity(new Integer((String) stockdetail.get("onstockquantity")));
+        stock.setPurchaseprice(Double.parseDouble((String) stockdetail.get("purchaseprice")));
+        stock.setSellingprice(Double.parseDouble((String) stockdetail.get("sellingprice")));
+        stock.setType((String)stockdetail.get("type"));
+        stockLogic.editStock(stock);
     }
 }

@@ -21,6 +21,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
+import javax.ws.rs.PUT;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
 
@@ -91,6 +92,29 @@ public class CustomerController {
         return (Customer) o.getEntry();
 
     }
+    
+    @Path("editcustomer/{id}")
+    @PUT
+    @Produces("application/json")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void editCustomer(@HeaderParam("authToken") String authToken, @PathParam("id") Integer id,Map customerdetail) throws Exception {
+
+        authorizator.checkAuthorization(authToken, "operator");
+        Customer cu = new Customer(id);
+        cu.setAddress((String) customerdetail.get("address"));
+        cu.setCity((String) customerdetail.get("city"));
+        cu.setCountry((String) customerdetail.get("country"));
+        cu.setDiscount(new Integer ((String)customerdetail.get("discount")) );
+        cu.setEmail((String)customerdetail.get("email"));
+        cu.setLoyaltycard(Boolean.parseBoolean((String)customerdetail.get("loyaltycard")));
+        cu.setName((String)customerdetail.get("name"));
+        cu.setPhone((String) customerdetail.get("phone"));
+        cu.setPostalcode((String)customerdetail.get("postalcode"));
+        
+        customerLogic.editCustomer(cu);
+
+    }
+    
 
     @Path("sendemailto")
     @POST
