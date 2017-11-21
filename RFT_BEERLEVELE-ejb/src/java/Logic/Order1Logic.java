@@ -51,15 +51,20 @@ public class Order1Logic {
             throw new Exception("StockID does not exist");
         if (quantity <= 0)
             throw new Exception("You can't add ZERO or NEGATIVE items to the cart");  
-        if (facade.findStockidQuantityIncart(stockID)+quantity-facade.findInCart(uid, stockID).get(0).getQuantity() > stockFacade.findStockById(stockID).getOnstockquantity())
-            throw new Exception("Not enough stock from this product");
 
         Order1 order = new Order1(uid, stockID, quantity);
         if (facade.findInCart(uid, stockID).isEmpty()) {
-            facade.create(order);
+            if (facade.findStockidQuantityIncart(stockID)+quantity > stockFacade.findStockById(stockID).getOnstockquantity())
+                throw new Exception("Not enough stock from this product");
+            else
+                facade.create(order);
         } else {
-            order.setId(facade.findInCart(uid, stockID).get(0).getId());
-            facade.edit(order);
+            if (facade.findStockidQuantityIncart(stockID)+quantity-facade.findInCart(uid, stockID).get(0).getQuantity() > stockFacade.findStockById(stockID).getOnstockquantity())
+                throw new Exception("Not enough stock from this product");
+            else {
+                order.setId(facade.findInCart(uid, stockID).get(0).getId());
+                facade.edit(order);
+            }
         }
 
     }
