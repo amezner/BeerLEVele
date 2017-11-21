@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {NotificationManager} from 'react-notifications';
 import {get} from '../../lib/client';
 import PropTypes from 'prop-types';
 import Table from '../table';

@@ -1,0 +1,37 @@
+@import '../../global.scss';
+
+.cart-page {
+  .cart-content {
+    margin-top:40px;
+  }
+
+  .customer-content {
+    margin-bottom:40px;
+  }
+
+  .product-content {
+    .button-row {
+      padding-top:31px;
+
+      .button {
+        display:block;
+        width:100%;
+      }
+    }
+  }
+
+  .quantity-field {
+    width:88px;
+  }
+
+  .buttons-content {
+    text-align:right;
+
+    .button {
+      margin-right:25px;
+      &:last-child {
+        margin-right:0px;
+      }
+    }
+  }
+}

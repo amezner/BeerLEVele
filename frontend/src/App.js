@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import './global.css';
+import './styles/reset.css';
+import './styles/styles.css';
+
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import {observer} from 'mobx-react';
 import {NotificationContainer} from 'react-notifications';
@@ -13,6 +16,8 @@ import Protected from './components/protected';
 import AuthStore from './stores/authorization';
 import CustomerList from './components/customerlist';
 import ProductList from './components/productlist';
+import InvoiceList from './components/invoicelist';
+import Cart from './components/cart';
 
 class App extends Component {
   render() {
@@ -26,6 +31,8 @@ class App extends Component {
               <Route path="/productlist" component={ProductList} />
               <Route path="/customerform/:id?" component={CustomerForm} />
               <Route path="/customerlist" component={CustomerList} />
+              <Route path="/invoicelist" component={InvoiceList} />
+              <Route path="/cart" component={Cart} />
             </Layout1>
           </Protected>
           <Route path="/login" component={LoginPage} />

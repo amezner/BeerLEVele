@@ -13,6 +13,10 @@ class ProductsStore {
     this.products = products;
   }
 
+  getProduct(id) {
+    return this.products.length > 0 ? this.products.find((item) => item.id === id) : null;
+  }
+
   getProducts() {
     return this.products;
   }

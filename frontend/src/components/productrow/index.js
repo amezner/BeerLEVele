@@ -49,7 +49,7 @@ class ProductRow extends Component {
 
     } catch (e) {
       const message = e.message ? e.message : 'Ismeretlen hiba';
-      NotificationManager.error(message, 'Sikertelen kosárba rakás', 3000);
+      NotificationManager.error(message, 'Sikertelen kosárba rakás!', 3000);
     }
   }
 

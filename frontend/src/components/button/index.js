@@ -16,12 +16,26 @@ class Button extends Component {
     extraClass: PropTypes.string
   };
 
+  constructor(props) {
+    super(props);
+
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick() {
+    const {clickEvt} = this.props;
+
+    if (clickEvt) {
+      clickEvt();
+    }
+  }
+
   render() {
     const { type, text, clickEvt, extraClass } = this.props;
     const className = extraClass ? 'button '+extraClass : 'button';
 
     return (
-      <button type={type} className={className} onClick={clickEvt} >{text}</button>
+      <button type={type} className={className} onClick={this.handleClick} >{text}</button>
     )
   }
 }

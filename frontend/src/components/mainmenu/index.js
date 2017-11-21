@@ -63,8 +63,19 @@ class MainMenu extends Component {
               </li>
             </ul>
           </li>
+          <li className="menu-item">
+            Számlázás
+            <ul className="submenu">
+              <li className="menu-item submenu-item">
+                <Link to="/invoicelist">Számlák listája</Link>
+              </li>
+              <li className="menu-item submenu-item">
+                <Link to="/cart">Számla létrehozása</Link>
+              </li>
+            </ul>
+          </li>
           <li>
-            <a href="javascript:void(0)" onClick={this.handleLogout}>Kilépés</a>
+            <span onClick={this.handleLogout}>Kilépés</span>
           </li>
         </ul>
       </div>

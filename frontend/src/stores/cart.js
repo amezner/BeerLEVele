@@ -1,11 +1,15 @@
 import {extendObservable} from 'mobx';
 import {get} from '../lib/client';
 import {NotificationManager} from 'react-notifications';
+import ProductStore from './products';
+import CustomerStore from './customers';
 
 class CartStore {
   constructor() {
     extendObservable(this, {
-      items: []
+      items: [],
+      productStore: ProductStore,
+      customerStore: CustomerStore
     });
   }
 
@@ -56,6 +60,13 @@ class CartStore {
       NotificationManager.error(message, '', 3000);
     }
   }
+
+  loadResources() {
+    this.loadData();
+    ProductStore.loadData();
+    CustomerStore.loadData();
+  }
+
 }
 
 export default new CartStore();

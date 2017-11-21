@@ -8,20 +8,25 @@ class Field extends Component {
     type: 'text',
     placeholder: '',
     value: '',
-    id: ''
+    id: '',
+    extraClass: '',
+    changeEvt: null,
+    bindEvt: null
   };
 
   static propTypes = {
     type: PropTypes.string,
     placeholder: PropTypes.string,
     value: PropTypes.any,
-    id: PropTypes.string
+    id: PropTypes.string,
+    extraClass: PropTypes.string
   };
 
   constructor(props) {
     super(props);
 
     this.handleChange = this.handleChange.bind(this);
+    this.handleBlur = this.handleBlur.bind(this);
 
     this.state = {
       value: props.value
@@ -34,7 +39,7 @@ class Field extends Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    if (nextState.value == this.state.value) {
+    if (nextState.value === this.state.value) {
       return false;
     }
 
@@ -42,8 +47,21 @@ class Field extends Component {
   }
 
   handleChange(evt) {
+    const {changeEvt} = this.props;
     const value = evt.target.value;
     this.setState({value});
+
+    if (changeEvt) {
+      changeEvt();
+    }
+  }
+
+  handleBlur() {
+    const {blurEvt} = this.props;
+
+    if (blurEvt) {
+      blurEvt();
+    }
   }
 
   get value() {
@@ -51,10 +69,10 @@ class Field extends Component {
   }
 
   render() {
-    const {type, placeholder, id} = this.props;
+    const {type, placeholder, id, extraClass} = this.props;
     const {value} = this.state;
 
-    return (<input id={id} type={type} placeholder={placeholder} className="field" value={value} onChange={this.handleChange} />);
+    return (<input id={id} type={type} placeholder={placeholder} className={`field ${extraClass}`} value={value} onChange={this.handleChange} onBlur={this.handleBlur} />);
   }
 }
 
