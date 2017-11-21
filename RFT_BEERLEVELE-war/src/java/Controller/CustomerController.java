@@ -34,88 +34,80 @@ import javax.ws.rs.core.MediaType;
 @Path("customer")
 
 public class CustomerController {
-
+    
     @EJB
     private CustomerLogic customerLogic;
     @EJB
     private Authorizator authorizator;
     @EJB
     private Email emailservice;
-
+    
     @Path("savecustomer")
     @POST
     @Produces("application/json")
     @Consumes(MediaType.APPLICATION_JSON)
     public void saveCustomer(@HeaderParam("authToken") String authToken, Map<String, String> map) throws Exception {
-
+        
         authorizator.checkAuthorization(authToken, "admin");
-
+        
         customerLogic.insertCustomer(map.get("name"), map.get("country"), map.get("city"), map.get("address"), map.get("postalcode"), map.get("email"), map.get("phone"), Boolean.parseBoolean(map.get("loyaltycard")), new Integer(map.get("discount")));
-
+        
     }
-
+    
     @Path("getallcustomer")
     @GET
     @Produces("application/json")
     @Consumes(MediaType.APPLICATION_JSON)
     public Map getAll(@HeaderParam("authToken") String authToken) throws Exception {
-
+        
         authorizator.checkAuthorization(authToken, "operator");
-
+        
         DataObjectMapper<Customer> o = new DataObjectMapper<>(customerLogic.findAllCustomer());
-
+        
         return o.getMap();
-
+        
     }
-
+    
     @Path("deletecustomer/{id}")
     @DELETE
     @Consumes(MediaType.APPLICATION_JSON)
     public void delete(@HeaderParam("authToken") String authToken, @PathParam("id") Integer id) throws Exception {
-
+        
         authorizator.checkAuthorization(authToken, "admin");
-
+        
         customerLogic.deleteCustomerById(id);
-
+        
     }
-
+    
     @Path("getcustomer/{id}")
     @GET
     @Produces("application/json")
     @Consumes(MediaType.APPLICATION_JSON)
     public Customer getCustomer(@HeaderParam("authToken") String authToken, @PathParam("id") Integer id) throws Exception {
-
+        
         authorizator.checkAuthorization(authToken, "operator");
-
+        
         DataObjectMapper<Customer> o = new DataObjectMapper<>(customerLogic.findCustomerById(id));
-
+        
         return (Customer) o.getEntry();
-
+        
     }
     
     @Path("editcustomer/{id}")
     @PUT
     @Produces("application/json")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void editCustomer(@HeaderParam("authToken") String authToken, @PathParam("id") Integer id,Map customerdetail) throws Exception {
-
+    public void editCustomer(@HeaderParam("authToken") String authToken, @PathParam("id") Integer id, Map<String, String> map) throws Exception {
+        
         authorizator.checkAuthorization(authToken, "operator");
-        Customer cu = new Customer(id);
-        cu.setAddress((String) customerdetail.get("address"));
-        cu.setCity((String) customerdetail.get("city"));
-        cu.setCountry((String) customerdetail.get("country"));
-        cu.setDiscount(new Integer ((String)customerdetail.get("discount")) );
-        cu.setEmail((String)customerdetail.get("email"));
-        cu.setLoyaltycard(Boolean.parseBoolean((String)customerdetail.get("loyaltycard")));
-        cu.setName((String)customerdetail.get("name"));
-        cu.setPhone((String) customerdetail.get("phone"));
-        cu.setPostalcode((String)customerdetail.get("postalcode"));
+        
+        Customer cu = new Customer(map.get("name"), map.get("country"), map.get("city"), map.get("address"), map.get("postalcode"), map.get("email"), map.get("phone"), Boolean.parseBoolean(map.get("loyaltycard")), new Integer(map.get("discount")));
+        cu.setId(id);
         
         customerLogic.editCustomer(cu);
-
+        
     }
     
-
     @Path("sendemailto")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
@@ -126,8 +118,8 @@ public class CustomerController {
         String subject = (String) emaildetails.get("subject");
         String message = (String) emaildetails.get("message");
         String password = (String) emaildetails.get("password");
-
+        
         emailservice.SendMail(from, to, password, subject, message);
     }
-
+    
 }

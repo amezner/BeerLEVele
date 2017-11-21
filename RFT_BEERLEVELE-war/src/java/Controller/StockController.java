@@ -102,18 +102,22 @@ public class StockController {
     @PUT
     @Produces("application/json")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void editCustomer(@HeaderParam("authToken") String authToken, @PathParam("id") Integer id,Map stockdetail) throws Exception {
+    public void editCustomer(@HeaderParam("authToken") String authToken, @PathParam("id") Integer id,Map<String, String> map) throws Exception {
 
         authorizator.checkAuthorization(authToken, "operator");
-        Stock stock = new Stock(id);
-        stock.setAlcoholcontent(Double.parseDouble((String) stockdetail.get("alcoholcontent")));
-        stock.setBottlesize(Double.parseDouble((String) stockdetail.get("bottlesize")));
-        stock.setDescription((String) stockdetail.get("description"));
-        stock.setName((String) stockdetail.get("name"));
-        stock.setOnstockquantity(new Integer((String) stockdetail.get("onstockquantity")));
-        stock.setPurchaseprice(Double.parseDouble((String) stockdetail.get("purchaseprice")));
-        stock.setSellingprice(Double.parseDouble((String) stockdetail.get("sellingprice")));
-        stock.setType((String)stockdetail.get("type"));
+        
+        String a = map.get("name");
+        String b = map.get("description");
+        String c = map.get("type");
+        Double d = new Double(map.get("alcoholcontent"));
+        Double e = new Double(map.get("bottlesize"));
+        Double f = new Double(map.get("purchaseprice"));
+        Double g = new Double(map.get("sellingprice"));
+        Integer h = new Integer(map.get("onstockquantity"));
+        Stock stock = new Stock(a, b, c, d, e, f, g, h);
+        stock.setId(id);
+        
+        
         stockLogic.editStock(stock);
     }
 }
