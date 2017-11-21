@@ -31,8 +31,8 @@ class Login extends Component {
 
       if (typeof resp.token != 'undefined') {
         NotificationManager.info('Jó munkát kívánok!', 'Szia '+resp.username);
-        AuthStore.setIsLoggedIn(true);
         sessionStorage.setItem('authToken', resp.token);
+        AuthStore.setIsLoggedIn(true);
         this.props.history.push(AuthStore.oldUrl);
       } else if (typeof resp.message != 'undefined'){
         NotificationManager.error(resp.message, 'Sikertelen belépés!', 3000);

@@ -5,7 +5,7 @@
   box-sizing:border-box;
   padding:8px 35px 10px 35px;
   height:50px;
-  font-size:20px;
+  font-size:$primary-fsize;
   line-height:26px;
   border:none;
   outline:none;
@@ -16,7 +16,7 @@
   transition:$border-color-transition, $bg-transition, $color-transition, $shadow-transition;
   cursor:pointer;
   font-weight:$bold-fweight;
-  letter-spacing:1.5px;
+  letter-spacing:1.2px;
 
 
   &.secondary {
