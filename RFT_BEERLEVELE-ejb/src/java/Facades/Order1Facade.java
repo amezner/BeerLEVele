@@ -66,5 +66,11 @@ public class Order1Facade implements FacadeInterface<Order1> {
         logger.debug("Find a stock item in UID's cart");
         return em.createNamedQuery("Order1.findInCart").setParameter("uid", uid).setParameter("stock_id", stock_id).getResultList();
     }
+
+    public void emptyCart (Integer uid){
+        Logger logger = LoggerFactory.getLogger(Order1Facade.class);
+        logger.debug("mMpty cart for user ID :" + uid);
+        em.createNamedQuery("Order1.emptyCart").setParameter("uid", uid).executeUpdate();
+    }
     
 }

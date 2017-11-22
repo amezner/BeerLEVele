@@ -12,12 +12,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -32,6 +29,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Order1.findByStockid", query = "SELECT o FROM Order1 o WHERE o.stockId = :stock_id"),
     @NamedQuery(name = "Order1.findInCart", query = "SELECT o FROM Order1 o WHERE o.uid = :uid AND o.stockId = :stock_id"),
     @NamedQuery(name = "Order1.findCartByUid", query = "SELECT o FROM Order1 o WHERE o.uid = :uid"),
+    @NamedQuery(name = "Order1.emptyCart", query = "DELETE FROM Order1 o WHERE o.uid = :uid")
 })
 public class Order1 implements Serializable {
 

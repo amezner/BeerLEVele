@@ -8,7 +8,6 @@ package Logic;
 import Entities.Order1;
 import Facades.Order1Facade;
 import Facades.StockFacade;
-import Helper.Authenticator;
 import java.util.List;
 import javax.annotation.ManagedBean;
 import javax.ejb.Stateless;
@@ -79,6 +78,14 @@ public class Order1Logic {
         }
     }
 
+    public void emptyCart(int uid) throws Exception {
+        if (facade.findCartByUid(uid).isEmpty())
+            throw new Exception("Cart is already empty!");
+        else {
+            facade.emptyCart(uid);
+        }
+    }
+    
     public List<Order1> findCartByUid (Integer Uid) {
         return facade.findCartByUid(Uid);
     }

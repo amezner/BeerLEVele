@@ -6,7 +6,6 @@
 package Controller;
 
 import Entities.Order1;
-import Helper.Authenticator;
 import Helper.Authorizator;
 import Helper.DataObjectMapper;
 import Logic.Order1Logic;
@@ -71,5 +70,15 @@ public class Order1Controller {
         order1logic.deleteOrder(authorizator.getUserID(authToken), stock_id);
 
     }
+    
+    @Path("emptycart")
+    @DELETE
+    @Produces("application/json")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void emptyCart(@HeaderParam("authToken") String authToken) throws Exception {
 
+        authorizator.checkAuthorization(authToken, "admin");
+        order1logic.emptyCart(authorizator.getUserID(authToken));
+
+    }
 }

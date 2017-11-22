@@ -90,6 +90,19 @@ $(document).ready(function () {
             $('#ajaxGetUserServletResponse').text(responseText);
         })
     });
+
+     $("#emptycart").click(function () {
+
+        $.ajax({
+            url: 'resources/order/emptycart',
+            type: 'DELETE',
+            dataType: "json",
+            contentType: "application/json", 
+            headers: {'authToken': token},
+        }, function (responseText) {
+            $('#ajaxGetUserServletResponse').text(responseText);
+        })
+    });
     
      $("#addtocart").click(function () {
         $.ajax({
