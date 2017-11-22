@@ -9,6 +9,8 @@ import Logic.InvoiceLogic;
 import Entities.Invoice;
 import Helper.Authorizator;
 import Helper.DataObjectMapper;
+import Helper.InvoiceWrapper;
+import Helper.ObjectMapper;
 import java.util.HashMap;
 import java.util.Map;
 import javax.ejb.EJB;
@@ -42,13 +44,12 @@ public class InvoiceController {
     @GET
     @Produces("application/json")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Invoice getInvoice(@HeaderParam("authToken") String authToken, @PathParam("id") Integer id) throws Exception {
+    public InvoiceWrapper  getInvoice(@HeaderParam("authToken") String authToken, @PathParam("id") Integer id) throws Exception {
         
         authorizator.checkAuthorization(authToken, "admin");
-        
-        DataObjectMapper<Invoice> o = new DataObjectMapper<> (invoiceLogic.findInvoiceByInvoicenumber(id));
+        DataObjectMapper<InvoiceWrapper> o = new DataObjectMapper<>(invoiceLogic.findInvoiceByInvoicenumber(id));
 
-        return (Invoice) o.getEntry();
+        return        (InvoiceWrapper) o.getEntry();
         
     }
     

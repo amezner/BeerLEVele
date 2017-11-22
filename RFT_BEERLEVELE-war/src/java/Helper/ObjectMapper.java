@@ -34,6 +34,7 @@ public abstract class ObjectMapper <T> {
         return map;
     }
      public T getEntry() {
+         
         return map.get(1);
     }
     

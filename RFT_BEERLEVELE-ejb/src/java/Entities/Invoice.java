@@ -9,13 +9,13 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -46,7 +46,7 @@ public class Invoice implements Serializable {
     @Column(name = "invoicenumber")
     private Integer invoicenumber;
 
-    @OneToMany(mappedBy = "invoice")
+    @OneToMany(mappedBy = "invoice", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Collection<Invoicedproducts> invoicedproductsCollection;
 
     @Size(max = 100)
@@ -69,7 +69,7 @@ public class Invoice implements Serializable {
     @Column(name = "postalcode")
     private String postalcode;
 
-    @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
+    @Pattern(regexp = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message = "Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     @Size(max = 100)
     @Column(name = "email")
     private String email;
@@ -154,10 +154,11 @@ public class Invoice implements Serializable {
     public String toString() {
         return "Entities.Invoice[ invoicenumber=" + invoicenumber + " ]";
     }
-    
+
     public Boolean getLoyaltycard() {
         return loyaltycard;
     }
+
     public void setLoyaltycard(Boolean loyaltycard) {
         this.loyaltycard = loyaltycard;
     }
@@ -166,6 +167,7 @@ public class Invoice implements Serializable {
     public Collection<Invoicedproducts> getInvoicedproductsCollection() {
         return invoicedproductsCollection;
     }
+
     public void setInvoicedproductsCollection(Collection<Invoicedproducts> invoicedproductsCollection) {
         this.invoicedproductsCollection = invoicedproductsCollection;
     }
@@ -225,5 +227,5 @@ public class Invoice implements Serializable {
     public void setPhone(String phone) {
         this.phone = phone;
     }
-    
+
 }

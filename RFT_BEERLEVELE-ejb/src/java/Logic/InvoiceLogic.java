@@ -7,6 +7,7 @@ package Logic;
 
 import Entities.Invoice;
 import Facades.InvoiceFacade;
+import Helper.InvoiceWrapper;
 import java.util.List;
 import javax.annotation.ManagedBean;
 import javax.ejb.Stateless;
@@ -30,8 +31,10 @@ public class InvoiceLogic {
 
     }
     
-    public Invoice findInvoiceByInvoicenumber(int invoicenumber) throws Exception {
-        return facade.findByInvoicenumber(invoicenumber);
+    public InvoiceWrapper findInvoiceByInvoicenumber(int invoicenumber) throws Exception {
+         Invoice i = facade.findByInvoicenumber(invoicenumber);
+         InvoiceWrapper iw = new InvoiceWrapper(i);
+         return iw;
 
     }
 
