@@ -10,7 +10,8 @@ class DropDown extends Component {
     value: '',
     name: '',
     id: '',
-    options: {}
+    options: {},
+    changeEvt: null
   };
 
   static propTypes = {
@@ -32,8 +33,21 @@ class DropDown extends Component {
   }
 
   handleChange(evt) {
+    const {changeEvt} = this.props;
     const value = evt.target.value;
+
     this.setState({value});
+    if (changeEvt) {
+      changeEvt(value);
+    }
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    if (nextState.value === this.state.value && nextProps.options === this.props.options) {
+      return false;
+    }
+
+    return true;
   }
 
   get value() {
@@ -41,7 +55,7 @@ class DropDown extends Component {
   }
 
   render() {
-    const {name, id, label, value, options} = this.props;
+    const {name, id, label, value, options, changeEvt} = this.props;
 
     return (
 

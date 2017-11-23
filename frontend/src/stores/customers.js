@@ -17,6 +17,10 @@ class CustomersStore {
     return this.customers;
   }
 
+  getCustomer(id) {
+    return this.customers.length > 0 ?  this.customers.find((item) => item.id === id) : null;
+  }
+
   deleteCustomer(id) {
     this.customers = this.customers.filter((customer) => customer.id !== id);
   }

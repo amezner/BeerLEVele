@@ -9,7 +9,8 @@ class CartStore {
     extendObservable(this, {
       items: [],
       productStore: ProductStore,
-      customerStore: CustomerStore
+      customerStore: CustomerStore,
+      customer_id: null
     });
   }
 
@@ -47,6 +48,14 @@ class CartStore {
     this.items = this.items.filter((item) => item.stockId !== id);
   }
 
+  setCustomerId(id) {
+    this.customer_id = id;
+  }
+
+  getCustomerId() {
+    return this.customer_id;
+  }
+
   async loadData() {
     try {
       let resp = await get('order/getcart');
@@ -65,6 +74,11 @@ class CartStore {
     this.loadData();
     ProductStore.loadData();
     CustomerStore.loadData();
+  }
+
+  resetCart() {
+    this.items = [];
+    this.customer_id = null;
   }
 
 }

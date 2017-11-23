@@ -30,7 +30,9 @@ class CustomerRow extends Component {
     const {id,name, email, phone} = this.props.data;
     return (
       <div className="table-row data-row">
-        <div className="table-cell">{name}</div>
+        <div className="table-cell">
+          <Link to={`/customerform/${id}`}>{name}</Link>
+        </div>
         <div className="table-cell">{email}</div>
         <div className="table-cell">{phone}</div>
         <div className="table-cell">

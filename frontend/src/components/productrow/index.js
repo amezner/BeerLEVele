@@ -57,7 +57,9 @@ class ProductRow extends Component {
     const {id,name, purchaseprice, sellingprice, onstockquantity} = this.props.data;
     return (
       <div className="table-row data-row">
-        <div className="table-cell">{name}</div>
+        <div className="table-cell">
+          <Link to={`/productform/${id}`}>{name}</Link>
+        </div>
         <div className="table-cell">{purchaseprice}</div>
         <div className="table-cell">{sellingprice}</div>
         <div className="table-cell">{onstockquantity}</div>

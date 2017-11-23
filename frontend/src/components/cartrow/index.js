@@ -56,6 +56,15 @@ class CartRow extends Component {
     let id = product ? product.id : null;
     let name = product ? product.name : null;
     let price = product ? product.sellingprice : null;
+    let multiplier = 1;
+    const customerId = CartStore.getCustomerId();
+
+    if (customerId) {
+      const customer = CartStore.customerStore.getCustomer(parseInt(customerId));
+      if (customer) {
+        multiplier = 1 - (customer.discount / 100);
+      }
+    }
 
     return (
       <div className="table-row data-row">
@@ -64,7 +73,8 @@ class CartRow extends Component {
           <Field ref="quantity" value={data.quantity} blurEvt={this.modifyQuantity} extraClass="quantity-field"  />
         </div>
         <div className="table-cell">{price}</div>
-        <div className="table-cell">{data.quantity * price}</div>
+        <div className="table-cell">{price * multiplier}</div>
+        <div className="table-cell">{data.quantity * price * multiplier}</div>
         <div className="table-cell">
           <div className="features-content">
             <span className="feature-item" onClick={this.removeFromCart}>töröl</span>

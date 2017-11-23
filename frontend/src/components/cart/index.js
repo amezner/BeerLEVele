@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import Button from '../button';
 import DropDown from '../dropdown';
 import FormRow from '../formrow';
-import {post} from '../../lib/client';
+import {post, del} from '../../lib/client';
 import {NotificationManager} from 'react-notifications';
 
 import './cart.css';
@@ -15,7 +15,7 @@ import './cart.css';
 
 class Cart extends Component {
   static defaultProps = {
-    tableFields: ['Termék', 'Mennyiség', 'Eladási ár', 'Részösszeg', '']
+    tableFields: ['Termék', 'Mennyiség', 'Alapár','Eladási ár', 'Részösszeg', '']
   };
 
   static propTypes = {
@@ -28,6 +28,7 @@ class Cart extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.addToCart = this.addToCart.bind(this);
     this.deleteCart = this.deleteCart.bind(this);
+    this.changeCustomer = this.changeCustomer.bind(this);
   }
 
   componentDidMount() {
@@ -62,11 +63,24 @@ class Cart extends Component {
   }
 
   async deleteCart() {
-    NotificationManager.info('Ez a funkció még nincs implementálva', 'Kosár törlése!', 3000);
+    try {
+      const resp = await del('order/emptycart');
+
+      CartStore.resetCart();
+      NotificationManager.success('A kosarat kiürítettük', '', 3000);
+
+    } catch (e) {
+      const message = e.message ? e.message : 'Ismeretlen hiba';
+      NotificationManager.error(message, 'Sikeretelen kosár ürítés', 3000);
+    }
+  }
+
+  changeCustomer(customerId) {
+    CartStore.setCustomerId(customerId);
   }
 
   render() {
-    let customerOptions = {};
+    let customerOptions = {0: "Kérem válasszon vásárlót"};
     const customers = CartStore.customerStore.getCustomers();
     if (customers) {
       if (customers.length > 0) {
@@ -91,13 +105,14 @@ class Cart extends Component {
       }
     }
 
+    const isEmpty = CartStore.getItems().length == 0;
     return (
       <div className="content-width thin cart-page">
         <form onSubmit={this.handleSubmit}>
           <section className="content-section">
             <h1>Számla létrehozása</h1>
             <FormRow label="Vásárló kiválasztása" id="customer" extraClass="customer-content">
-              <DropDown options={customerOptions} id="customer" />
+              <DropDown ref="customerField" options={customerOptions} id="customer" changeEvt={this.changeCustomer} />
             </FormRow>
             <div className="product-content">
               <FormRow label="Termék hozzáadása a kosárhoz" id="product" extraClass="half">
@@ -108,14 +123,21 @@ class Cart extends Component {
               </FormRow>
               <div className="clear"></div>
             </div>
-            <FormRow extraClass="cart-content">
-              <h3>Kosár tartalma</h3>
-              <Table datas={CartStore.getItems()} fields={this.props.tableFields} rowClass={CartRow} />
-            </FormRow>
+            {
+            (!isEmpty ?
+              <FormRow extraClass="cart-content">
+                <h3>Kosár tartalma</h3>
+                <Table datas={CartStore.getItems()} fields={this.props.tableFields} rowClass={CartRow} />
+              </FormRow>
+              : null)
+            }
           </section>
           <section className="content-section buttons-content">
-            <Button text="elvetés
-            " type="button" extraClass="secondary" clickEvt={this.deleteCart} />
+            {
+              (!isEmpty ?
+              <Button text="elvetés" type="button" extraClass="secondary" clickEvt={this.deleteCart} />
+              : null)
+            }
             <Button text="lezárás" type="submit" extraClass="primary"  />
           </section>
         </form>
