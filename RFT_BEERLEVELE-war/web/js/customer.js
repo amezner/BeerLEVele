@@ -158,6 +158,18 @@ $(document).ready(function () {
         )
     });
 
+    $("#getallinvoices").click(function () {
+
+        $.ajax({
+            url: 'resources/invoice/getallinvoices',
+            type: 'GET',
+            dataType: "json",
+            contentType: "application/json", headers: {'authToken': token},
+        }, function (responseText) {
+            $('#ajaxGetUserServletResponse').text(responseText);
+        })
+    });
+    
     $("#getallcustomer").click(function () {
 
         $.ajax({
