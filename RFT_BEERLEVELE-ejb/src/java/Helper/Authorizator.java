@@ -32,8 +32,8 @@ public class Authorizator {
     @PostConstruct
     public void init(){
         roles.put("admin", 100);
-        roles.put("operator",50);
-        roles.put("customer",1);
+        roles.put("finance",50);
+        roles.put("operator",1);
 
     }
     
