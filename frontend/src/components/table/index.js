@@ -5,7 +5,7 @@ import './table.css';
 class Table extends Component {
   static defaultProps = {
     fields: [],
-    datas: []
+    datas: {}
   };
 
   static propTypes = {
