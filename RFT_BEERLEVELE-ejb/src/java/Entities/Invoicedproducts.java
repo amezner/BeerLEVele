@@ -5,6 +5,7 @@
  */
 package Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -87,6 +88,7 @@ public class Invoicedproducts implements Serializable {
     
     @JoinColumn(name = "invoicenumber", referencedColumnName = "invoicenumber")
     @ManyToOne
+    @JsonIgnore
     private Invoice invoice;
 
     public Invoicedproducts() {
@@ -149,7 +151,7 @@ public class Invoicedproducts implements Serializable {
     public void setStockid(int stockid) {
         this.stockid = stockid;
     }
-    @XmlTransient
+
     public Invoice getInvoice() {
         return invoice;
     }

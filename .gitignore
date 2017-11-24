@@ -16,5 +16,5 @@ build.xml
 my-datavolume/
 data/
 nbproject/
-
 dist/gfdeploy/
+docker-compose.yml
