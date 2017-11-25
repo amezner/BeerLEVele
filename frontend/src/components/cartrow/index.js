@@ -4,6 +4,7 @@ import CartStore from '../../stores/cart';
 import Field from '../field';
 import {del, post} from '../../lib/client';
 import {NotificationManager} from 'react-notifications';
+import NumberFormat from 'react-number-format';
 
 
 class CartRow extends Component {
@@ -55,7 +56,7 @@ class CartRow extends Component {
     const product = CartStore.productStore.getProduct(data.stockId);
     let id = product ? product.id : null;
     let name = product ? product.name : null;
-    let price = product ? product.sellingprice : null;
+    let price = product ? product.sellingprice : 0;
     let multiplier = 1;
     const customerId = CartStore.getCustomerId();
 
@@ -66,15 +67,23 @@ class CartRow extends Component {
       }
     }
 
+
+
     return (
       <div className="table-row data-row">
         <div className="table-cell">{name}</div>
         <div className="table-cell">
           <Field ref="quantity" value={data.quantity} blurEvt={this.modifyQuantity} extraClass="quantity-field"  />
         </div>
-        <div className="table-cell">{price}</div>
-        <div className="table-cell">{price * multiplier}</div>
-        <div className="table-cell">{data.quantity * price * multiplier}</div>
+        <div className="table-cell">
+          <NumberFormat decimalSeparator="," thousandSeparator="." value={price} displayType="text" suffix=" Ft" decimalScale={2} />
+        </div>
+        <div className="table-cell">
+          <NumberFormat decimalSeparator="," thousandSeparator="." value={(price * multiplier)} displayType="text" suffix=" Ft" decimalScale={2} />
+        </div>
+        <div className="table-cell">
+          <NumberFormat decimalSeparator="," thousandSeparator="." value={(price * multiplier * data.quantity)} decimalScale={2} displayType="text" suffix=" Ft" />
+        </div>
         <div className="table-cell">
           <div className="features-content">
             <span className="feature-item" onClick={this.removeFromCart}>töröl</span>

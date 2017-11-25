@@ -9,6 +9,7 @@ import DropDown from '../dropdown';
 import FormRow from '../formrow';
 import {post, del} from '../../lib/client';
 import {NotificationManager} from 'react-notifications';
+import {withRouter} from 'react-router-dom';
 
 import './cart.css';
 
@@ -25,7 +26,7 @@ class Cart extends Component {
   constructor(props) {
     super(props);
 
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.closeInvoice = this.closeInvoice.bind(this);
     this.addToCart = this.addToCart.bind(this);
     this.deleteCart = this.deleteCart.bind(this);
     this.changeCustomer = this.changeCustomer.bind(this);
@@ -35,9 +36,25 @@ class Cart extends Component {
     CartStore.loadResources();
   }
 
-  async handleSubmit(evt) {
-    evt.preventDefault();
-    NotificationManager.info('Ez a funkció még nincs implementálva', 'Számla kiállítása!', 3000);
+  async closeInvoice() {
+    const {customerField} = this.refs;
+    const customerId = parseInt(customerField.value);
+    if (!isNaN(customerId)) {
+      try {
+        const resp = await post('invoice/closeinvoice', {
+          customer_id: customerId
+        });
+        CartStore.resetCart();
+        NotificationManager.success('', 'Sikeres mentés!', 3000);
+        this.props.history.push('/invoicelist');
+      } catch (e) {
+        const message = e.message ? e.message : 'Ismeretlen hiba!';
+        NotificationManager.error(e.message, 'Sikertelen mentés!', 3000);
+      }
+    } else {
+      NotificationManager.error('A vásárló kiválsztása kötelező!', 'Sikertelen mentés!', 3000);
+    }
+
   }
 
   async addToCart() {
@@ -85,7 +102,7 @@ class Cart extends Component {
     if (customers) {
       if (customers.length > 0) {
         customers.map((customer) => {
-          customerOptions[customer.id] = customer.name;
+          return customerOptions[customer.id] = customer.name;
         });
       }
     }
@@ -101,14 +118,14 @@ class Cart extends Component {
           if (!stockInCart || (stockInCart && !stockInCart.includes(product.id))) {
             productOptions[product.id] = product.name;
           }
+          return true;
         });
       }
     }
 
-    const isEmpty = CartStore.getItems().length == 0;
+    const isEmpty = CartStore.getItems().length === 0;
     return (
       <div className="content-width thin cart-page">
-        <form onSubmit={this.handleSubmit}>
           <section className="content-section">
             <h1>Számla létrehozása</h1>
             <FormRow label="Vásárló kiválasztása" id="customer" extraClass="customer-content">
@@ -132,18 +149,17 @@ class Cart extends Component {
               : null)
             }
           </section>
-          <section className="content-section buttons-content">
-            {
-              (!isEmpty ?
-              <Button text="elvetés" type="button" extraClass="secondary" clickEvt={this.deleteCart} />
-              : null)
-            }
-            <Button text="lezárás" type="submit" extraClass="primary"  />
-          </section>
-        </form>
+          {
+            (!isEmpty ?
+              <section className="content-section buttons-content">
+                <Button text="elvetés" type="button" extraClass="secondary" clickEvt={this.deleteCart} />
+                <Button text="lezárás" type="button" extraClass="primary" clickEvt={this.closeInvoice}  />
+              </section>
+            : null)
+          }
       </div>
     )
   }
 }
 
-export default observer(Cart);
+export default withRouter(observer(Cart));

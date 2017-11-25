@@ -5,6 +5,7 @@ import {Link} from 'react-router-dom';
 import {del, post} from '../../lib/client';
 import {NotificationManager} from 'react-notifications';
 import CartStore from '../../stores/cart';
+import NumberFormat from 'react-number-format';
 
 class ProductRow extends Component {
   constructor (props) {
@@ -60,9 +61,15 @@ class ProductRow extends Component {
         <div className="table-cell">
           <Link to={`/productform/${id}`}>{name}</Link>
         </div>
-        <div className="table-cell">{purchaseprice}</div>
-        <div className="table-cell">{sellingprice}</div>
-        <div className="table-cell">{onstockquantity}</div>
+        <div className="table-cell">
+          <NumberFormat value={purchaseprice} decimalSeparator="," thousandSeparator="." decimalScale={2} displayType="text" suffix=" Ft" />
+        </div>
+        <div className="table-cell">
+          <NumberFormat value={sellingprice} decimalSeparator="," thousandSeparator="." decimalScale={2} displayType="text" suffix=" Ft" />
+        </div>
+        <div className="table-cell">
+          <NumberFormat value={onstockquantity} decimalSeparator="," thousandSeparator="." decimalScale={2} displayType="text" suffix=" db" />
+        </div>
         <div className="table-cell">
           <div className="features-content">
             <Link className="feature-item" to={`/productform/${id}`}>Módosítás</Link>

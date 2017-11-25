@@ -18,6 +18,7 @@ import CustomerList from './components/customerlist';
 import ProductList from './components/productlist';
 import InvoiceList from './components/invoicelist';
 import Cart from './components/cart';
+import Invoice from './components/invoice';
 
 class App extends Component {
   render() {
@@ -33,6 +34,7 @@ class App extends Component {
               <Route path="/customerlist" component={CustomerList} />
               <Route path="/invoicelist" component={InvoiceList} />
               <Route path="/cart" component={Cart} />
+              <Route path="/invoice/:id" component={Invoice} />
             </Layout1>
           </Protected>
           <Route path="/login" component={LoginPage} />

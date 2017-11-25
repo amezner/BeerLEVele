@@ -123,7 +123,7 @@ class Customerform extends Component {
             <FormRow extraClass="zip-row" label="Irszám." id="zip">
               <Field ref="zip" type="text" value={postalcode} id="zip" name="postalcode"/>
             </FormRow>
-            <FormRow extraClass="city-row" label="Város" id="city">
+            <FormRow extraClass="city-row" label="Település" id="city">
               <Field ref="city" type="text" value={city} id="city" name="city"/>
             </FormRow>
             <div className="clear"></div>

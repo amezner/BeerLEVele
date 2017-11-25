@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {get} from '../../lib/client';
 import Table from '../table';
 import PropTypes from 'prop-types';
 import ProductsStore from '../../stores/products';

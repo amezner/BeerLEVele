@@ -36,6 +36,7 @@ class Table extends Component {
               })
             ) : null
           }
+          {this.props.children}
         </div>
       </div>
     )

@@ -5,7 +5,8 @@ import {NotificationManager} from 'react-notifications';
 class InvoiceStore {
   constructor() {
     extendObservable(this, {
-      invoices: []
+      invoices: [],
+      invoice: {}
     });
   }
 
@@ -15,6 +16,25 @@ class InvoiceStore {
 
   getInvoices () {
     return this.invoices;
+  }
+
+  setInvoice(invoice) {
+    this.invoice = invoice;
+  }
+
+  getInvoice() {
+    return this.invoice;
+  }
+
+  async loadInvoice(invoiceId) {
+    try {
+      let resp = await get('invoice/getinvoice/'+invoiceId);
+
+      this.setInvoice(resp);
+    } catch (e) {
+      const message = e.message ? e.message : 'Ismeretlen hiba';
+      NotificationManager.error(message);
+    }
   }
 
   async loadData() {
