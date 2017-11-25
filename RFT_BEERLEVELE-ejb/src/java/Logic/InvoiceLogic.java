@@ -79,19 +79,17 @@ public class InvoiceLogic {
                
         for (Order1 o : orderFacade.findCartByUid(uid)) {
             Invoicedproducts ip = new Invoicedproducts(
+                o.getStockId(),
                 stockFacade.findStockById(o.getStockId()).getName(),
                 stockFacade.findStockById(o.getStockId()).getType(),
                 stockFacade.findStockById(o.getStockId()).getAlcoholcontent(),
                 stockFacade.findStockById(o.getStockId()).getBottlesize(),
                 stockFacade.findStockById(o.getStockId()).getPurchaseprice(),
-                stockFacade.findStockById(o.getStockId()).getSellingprice() * (100 - customerFacade.findById(uid).getDiscount()/100),
+                stockFacade.findStockById(o.getStockId()).getSellingprice() * (100 - customerFacade.findById(uid).getDiscount())/100,
                 o.getQuantity()
             );
             ip.setInvoice(invoice);
-//            throw new Exception("Szamlaszam: " + ip.getInvoice().getInvoicenumber());
             ipFacade.create(ip);
-//            throw new Exception("Szamlaszam: " + ip.getInvoice().getInvoicenumber());
-//            throw new Exception("Szamla: " + ip.getInvoice());
         }
         
         orderFacade.emptyCart(uid);

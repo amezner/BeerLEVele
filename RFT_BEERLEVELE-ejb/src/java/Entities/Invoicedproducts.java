@@ -98,7 +98,8 @@ public class Invoicedproducts implements Serializable {
         this.id = id;
     }
 
-        public Invoicedproducts(String name, String type, Double alcoholcontent, Double bottlesize, Double purchaseprice, Double soldprice, Integer soldquantity) {
+    public Invoicedproducts(Integer stockid, String name, String type, Double alcoholcontent, Double bottlesize, Double purchaseprice, Double soldprice, Integer soldquantity) {
+        this.stockid = stockid;
         this.name = name;
         this.type = type;
         this.alcoholcontent = alcoholcontent;
