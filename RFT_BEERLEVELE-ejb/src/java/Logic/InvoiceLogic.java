@@ -6,7 +6,13 @@
 package Logic;
 
 import Entities.Invoice;
+import Entities.Invoicedproducts;
+import Entities.Order1;
+import Facades.CustomerFacade;
 import Facades.InvoiceFacade;
+import Facades.InvoicedproductsFacade;
+import Facades.Order1Facade;
+import Facades.StockFacade;
 import Helper.InvoiceWrapper;
 import java.util.List;
 import javax.annotation.ManagedBean;
@@ -24,22 +30,71 @@ import javax.inject.Inject;
 public class InvoiceLogic {
     
     @Inject
-    InvoiceFacade facade;
+    InvoiceFacade invoiceFacade;
+    
+    @Inject
+    Order1Facade orderFacade;
+
+    @Inject
+    StockFacade stockFacade;
+    
+    @Inject
+    CustomerFacade customerFacade;
+    
+    @Inject
+    InvoicedproductsFacade ipFacade;
     
     public List<Invoice> findAllInvoices() {
-        return facade.findAll();
+        return invoiceFacade.findAll();
 
     }
     
     public InvoiceWrapper findInvoiceByInvoicenumber(int invoicenumber) throws Exception {
-         Invoice i = facade.findByInvoicenumber(invoicenumber);
+         Invoice i = invoiceFacade.findByInvoicenumber(invoicenumber);
          InvoiceWrapper iw = new InvoiceWrapper(i);
          return iw;
 
     }
 
-    public void closeInvoice() {
-        //TODO
-
+    public void closeInvoice(int uid, int customer_id) throws Exception {
+        
+        if (orderFacade.findCartByUid(uid).isEmpty()) 
+            throw new Exception("Cart is empty, please add items to cart before closing invoice");
+        if (customerFacade.findById(customer_id) == null)
+            throw new Exception("Invalid customer ID");
+        Invoice invoice = new Invoice(
+                customerFacade.findById(customer_id).getId(),
+                customerFacade.findById(customer_id).getName(),
+                customerFacade.findById(customer_id).getCountry(),
+                customerFacade.findById(customer_id).getCity(),
+                customerFacade.findById(customer_id).getAddress(),
+                customerFacade.findById(customer_id).getPostalcode(),
+                customerFacade.findById(customer_id).getEmail(),
+                customerFacade.findById(customer_id).getPhone(),
+                customerFacade.findById(customer_id).getLoyaltycard(),
+                customerFacade.findById(customer_id).getDiscount()
+        );
+        
+        invoiceFacade.create(invoice);
+               
+        for (Order1 o : orderFacade.findCartByUid(uid)) {
+            Invoicedproducts ip = new Invoicedproducts(
+                stockFacade.findStockById(o.getStockId()).getName(),
+                stockFacade.findStockById(o.getStockId()).getType(),
+                stockFacade.findStockById(o.getStockId()).getAlcoholcontent(),
+                stockFacade.findStockById(o.getStockId()).getBottlesize(),
+                stockFacade.findStockById(o.getStockId()).getPurchaseprice(),
+                stockFacade.findStockById(o.getStockId()).getSellingprice() * (100 - customerFacade.findById(uid).getDiscount()/100),
+                o.getQuantity()
+            );
+            ip.setInvoice(invoice);
+//            throw new Exception("Szamlaszam: " + ip.getInvoice().getInvoicenumber());
+            ipFacade.create(ip);
+//            throw new Exception("Szamlaszam: " + ip.getInvoice().getInvoicenumber());
+//            throw new Exception("Szamla: " + ip.getInvoice());
+        }
+        
+        orderFacade.emptyCart(uid);
+        
     }
 }

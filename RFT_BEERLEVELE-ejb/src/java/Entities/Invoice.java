@@ -6,6 +6,7 @@
 package Entities;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -94,6 +95,21 @@ public class Invoice implements Serializable {
     public Invoice() {
     }
 
+    public Invoice(Integer customer_id, String name, String country, String city, String address, String postalcode, String email, String phone, Boolean loyaltycard, Integer discount) {
+        Timestamp stamp = new Timestamp(System.currentTimeMillis());
+        this.date = new Date(stamp.getTime());
+        this.customerId = customer_id;
+        this.name = name;
+        this.country = country;
+        this.city = city;
+        this.address = address;
+        this.postalcode = postalcode;
+        this.email = email;
+        this.phone = phone;
+        this.loyaltycard = loyaltycard;
+        this.discount = discount;
+    }
+    
     public Invoice(Integer invoicenumber) {
         this.invoicenumber = invoicenumber;
     }

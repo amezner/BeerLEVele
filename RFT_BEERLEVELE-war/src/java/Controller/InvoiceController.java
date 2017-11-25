@@ -10,7 +10,6 @@ import Entities.Invoice;
 import Helper.Authorizator;
 import Helper.DataObjectMapper;
 import Helper.InvoiceWrapper;
-import Helper.ObjectMapper;
 import java.util.HashMap;
 import java.util.Map;
 import javax.ejb.EJB;
@@ -76,7 +75,7 @@ public class InvoiceController {
 
         authorizator.checkAuthorization(authToken, "admin");
 
-        invoiceLogic.closeInvoice();
+        invoiceLogic.closeInvoice(authorizator.getUserID(authToken), new Integer(map.get("customer_id")));
 
     }   
 }

@@ -50,7 +50,7 @@ public class Invoicedproducts implements Serializable {
     @Column(name = "ID")
     private Integer id;
 
-    @Size(max = 20)
+    //@Size(max = 20)
     @Column(name = "name")
     private String name;
     
@@ -98,6 +98,15 @@ public class Invoicedproducts implements Serializable {
         this.id = id;
     }
 
+        public Invoicedproducts(String name, String type, Double alcoholcontent, Double bottlesize, Double purchaseprice, Double soldprice, Integer soldquantity) {
+        this.name = name;
+        this.type = type;
+        this.alcoholcontent = alcoholcontent;
+        this.bottlesize = bottlesize;
+        this.purchaseprice = purchaseprice;
+        this.soldprice = soldprice;
+        this.soldquantity = soldquantity;
+    }
     public Invoicedproducts(Integer id, double alcoholcontent, double bottlesize) {
         this.id = id;
         this.alcoholcontent = alcoholcontent;

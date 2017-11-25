@@ -209,8 +209,7 @@ $(document).ready(function () {
         )
     });
     
-        $("#getallstock").click(function () {
-
+    $("#getallstock").click(function () {
         $.ajax({
             url: 'resources/stock/getallstock',
             type: 'GET',
@@ -233,7 +232,22 @@ $(document).ready(function () {
             $('#ajaxGetUserServletResponse').text(responseText);
         })
     });
-    
+
+        $("#closeinvoice").click(function () {
+        $.ajax({
+            url: 'resources/invoice/closeinvoice',
+            type: 'POST',
+            headers: {'authToken': token},
+            dataType: "json",
+            contentType: "application/json",
+            data: JSON.stringify({
+                customer_id: $("#customerforinvoice").val()
+            })
+        }, function (responseText) {
+            $('#ajaxGetUserServletResponse').text(responseText);
+        });
+    });
+
     /*   $("#getall").click(
      function () {
      var request = $.ajax({

@@ -7,7 +7,6 @@ package Facades;
 
 import Entities.Invoice;
 import Interfaces.FacadeInterface;
-import java.util.Date;
 import java.util.List;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
@@ -26,10 +25,13 @@ public class InvoiceFacade implements FacadeInterface<Invoice>{
 
     @PersistenceContext(name = "RFT_BEERLEVELE-ejbPU")
     EntityManager em;
-
+    
     @Override
     public void create(Invoice t) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Logger logger = LoggerFactory.getLogger(Order1Facade.class);
+        logger.info("Create invoice, InvoiceNumber: ", t.getInvoicenumber());
+        em.persist(t);
+                
     }
 
     @Override
