@@ -37,7 +37,16 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Invoice.findAll", query = "SELECT i FROM Invoice i ORDER BY i.date DESC"),
-    @NamedQuery(name = "Invoice.findByInvoicenumber", query = "SELECT i FROM Invoice i WHERE i.invoicenumber = :invoicenumber")})
+    @NamedQuery(name = "Invoice.findByInvoicenumber", query = "SELECT i FROM Invoice i WHERE i.invoicenumber = :invoicenumber"),
+    @NamedQuery(name = "Invoice.profitPerInvoice", query = (//"SELECT i.name FROM Invoice i"))
+"SELECT i.name, ( SELECT SUM (ip.soldprice - ip.purchaseprice) * ip.soldquantity  AS Profit FROM Invoicedproducts ip WHERE i.invoicenumber = ip.invoicenumber AS profit) FROM Invoice i"))
+})
+
+//
+// Fogyas termekenkent SELECT stockid, sum(soldquantity) FROM `invoicedproducts` GROUP BY stockid
+// SELECT i.name, (SELECT SUM((ip.soldprice-ip.purchaseprice) * ip.soldquantity) AS Profit FROM invoicedproducts ip WHERE i.invoicenumber = ip.invoicenumber ) AS Profit FROM invoice i
+//
+
 public class Invoice implements Serializable {
 
     private static final long serialVersionUID = 1L;

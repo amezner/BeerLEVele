@@ -58,5 +58,11 @@ public class InvoiceFacade implements FacadeInterface<Invoice>{
         else
             return (Invoice) em.createNamedQuery("Invoice.findByInvoicenumber").setParameter("invoicenumber", invoicenumber).getResultList().get(0);
     }
- 
+
+    public List<Invoice> findAll() {
+        Logger logger = LoggerFactory.getLogger(InvoiceFacade.class);
+        logger.debug("findAllInvoices");
+        return em.createNamedQuery("Invoice.findAll").getResultList();
+    }
+   
 }

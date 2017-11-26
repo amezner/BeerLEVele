@@ -8,6 +8,7 @@ package Logic;
 import Entities.Invoice;
 import Entities.Invoicedproducts;
 import Entities.Order1;
+import Entities.Stock;
 import Facades.CustomerFacade;
 import Facades.InvoiceFacade;
 import Facades.InvoicedproductsFacade;
@@ -90,6 +91,10 @@ public class InvoiceLogic {
             );
             ip.setInvoice(invoice);
             ipFacade.create(ip);
+            Stock updatestock = stockFacade.findStockById(o.getStockId());
+            updatestock.setOnstockquantity(updatestock.getOnstockquantity() - o.getQuantity());
+            stockFacade.edit(updatestock);
+            
         }
         
         orderFacade.emptyCart(uid);
