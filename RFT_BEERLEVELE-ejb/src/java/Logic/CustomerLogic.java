@@ -6,8 +6,11 @@
 package Logic;
 
 import Entities.Customer;
+import Entities.Stock;
 import Facades.CustomerFacade;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 import javax.annotation.ManagedBean;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -60,6 +63,17 @@ public class CustomerLogic {
         return facade.findById(id);
     }
 
+    
+      public List<Customer> filterCustomerByName(String searchpattern) {
+        List<Customer> allCustomer = facade.findAll();
+        List<Customer> r = new ArrayList<>();
+        String pattern = ".*" + searchpattern.toLowerCase() + ".*";
+        allCustomer.stream().filter((s) -> (Pattern.matches(pattern, s.getName().toLowerCase()))).forEach((s) -> {
+            r.add(s);
+        });
+        return r;
+    }
+    
     private boolean CheckIfCorrectCustomer(Customer customer) {
         if (customer.getLoyaltycard() == null || customer.getAddress() == null || customer.getDiscount() == null || customer.getEmail() == null || customer.getName() == null) {
             return false;

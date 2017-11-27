@@ -7,6 +7,7 @@ package Controller;
 
 import Logic.CustomerLogic;
 import Entities.Customer;
+import Entities.Stock;
 import Helper.Authorizator;
 import Helper.DataObjectMapper;
 import Helper.Email;
@@ -120,6 +121,19 @@ public class CustomerController {
         String password = (String) emaildetails.get("password");
         
         emailservice.SendMail(from, to, password, subject, message);
+    }
+    @Path("filtercustomer/{filter}")
+    @GET
+    @Produces("application/json")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Map filterStock(@HeaderParam("authToken") String authToken, @PathParam("filter") String filter) throws Exception {
+
+        authorizator.checkAuthorization(authToken, "operator");
+        
+        DataObjectMapper<Customer> o = new DataObjectMapper<>(customerLogic.filterCustomerByName(filter));
+      
+        return o.getMap();
+
     }
     
 }

@@ -65,6 +65,30 @@ $(document).ready(function () {
         });
     }
     );
+    $("#filters").click(function () {
+        $.ajax({
+            type: 'GET',
+            url: 'resources/stock/filterstock/'+$('#filterstock').val(),
+            dataType: "json",
+            contentType: "application/json",
+            headers: {'authToken': token},
+            complete: function (responseText) {
+            },
+        });
+    }
+    );
+    $("#filterc").click(function () {
+        $.ajax({
+            type: 'GET',
+            url: 'resources/customer/filtercustomer/'+$('#filtercustomer').val(),
+            dataType: "json",
+            contentType: "application/json",
+            headers: {'authToken': token},
+            complete: function (responseText) {
+            },
+        });
+    }
+    );
 
     $("#logout").click(function () {
         $.ajax({
@@ -84,27 +108,27 @@ $(document).ready(function () {
             url: 'resources/order/getcart',
             type: 'GET',
             dataType: "json",
-            contentType: "application/json", 
+            contentType: "application/json",
             headers: {'authToken': token},
         }, function (responseText) {
             $('#ajaxGetUserServletResponse').text(responseText);
         })
     });
 
-     $("#emptycart").click(function () {
+    $("#emptycart").click(function () {
 
         $.ajax({
             url: 'resources/order/emptycart',
             type: 'DELETE',
             dataType: "json",
-            contentType: "application/json", 
+            contentType: "application/json",
             headers: {'authToken': token},
         }, function (responseText) {
             $('#ajaxGetUserServletResponse').text(responseText);
         })
     });
-    
-     $("#addtocart").click(function () {
+
+    $("#addtocart").click(function () {
         $.ajax({
             url: 'resources/order/putinthecart',
             type: 'POST',
@@ -120,9 +144,9 @@ $(document).ready(function () {
         });
     });
 
-     $("#deletefromcart").click(function () {
+    $("#deletefromcart").click(function () {
         $.ajax({
-            url: 'resources/order/deleteitemfromcart/'+  $("#stockidtocart").val(),
+            url: 'resources/order/deleteitemfromcart/' + $("#stockidtocart").val(),
             type: 'DELETE',
             headers: {'authToken': token},
             dataType: "json",
@@ -135,16 +159,16 @@ $(document).ready(function () {
 
     $("#getcustomer").click(function () {
         $.ajax({
-            url: 'resources/customer/getcustomer/'+  $("#customeridtoget").val(),
+            url: 'resources/customer/getcustomer/' + $("#customeridtoget").val(),
             type: 'GET',
             dataType: "json",
-            contentType: "application/json", 
+            contentType: "application/json",
             headers: {'authToken': token},
         }, function (responseText) {
             $('#ajaxGetUserServletResponse').text(responseText);
         })
     });
-    
+
     $("#deletecustomer").click(function () {
         $.ajax({
             url: 'resources/customer/deletecustomer/' + $("#customeridtodelete").val(),
@@ -169,7 +193,7 @@ $(document).ready(function () {
             $('#ajaxGetUserServletResponse').text(responseText);
         })
     });
-    
+
     $("#getallcustomer").click(function () {
 
         $.ajax({
@@ -181,19 +205,19 @@ $(document).ready(function () {
             $('#ajaxGetUserServletResponse').text(responseText);
         })
     });
-    
+
     $("#getstock").click(function () {
         $.ajax({
-            url: 'resources/stock/getstock/'+  $("#stockidtoget").val(),
+            url: 'resources/stock/getstock/' + $("#stockidtoget").val(),
             type: 'GET',
             dataType: "json",
-            contentType: "application/json", 
+            contentType: "application/json",
             headers: {'authToken': token},
         }, function (responseText) {
             $('#ajaxGetUserServletResponse').text(responseText);
         })
     });
-    
+
     $("#deletestock").click(function () {
         $.ajax({
             url: 'resources/stock/deletestock/' + $("#stockidtodelete").val(),
@@ -208,14 +232,13 @@ $(document).ready(function () {
             }}
         )
     });
-    
-        $("#getallstock").click(function () {
 
+    $("#getallstock").click(function () {
         $.ajax({
             url: 'resources/stock/getallstock',
             type: 'GET',
             dataType: "json",
-            contentType: "application/json", 
+            contentType: "application/json",
             headers: {'authToken': token},
         }, function (responseText) {
             $('#ajaxGetUserServletResponse').text(responseText);
@@ -224,16 +247,31 @@ $(document).ready(function () {
 
     $("#getinvoice").click(function () {
         $.ajax({
-            url: 'resources/invoice/getinvoice/'+  $("#invoicenumber").val(),
+            url: 'resources/invoice/getinvoice/' + $("#invoicenumber").val(),
             type: 'GET',
             dataType: "json",
-            contentType: "application/json", 
+            contentType: "application/json",
             headers: {'authToken': token},
         }, function (responseText) {
             $('#ajaxGetUserServletResponse').text(responseText);
         })
     });
-    
+
+    $("#closeinvoice").click(function () {
+        $.ajax({
+            url: 'resources/invoice/closeinvoice',
+            type: 'POST',
+            headers: {'authToken': token},
+            dataType: "json",
+            contentType: "application/json",
+            data: JSON.stringify({
+                customer_id: $("#customerforinvoice").val()
+            })
+        }, function (responseText) {
+            $('#ajaxGetUserServletResponse').text(responseText);
+        });
+    });
+
     /*   $("#getall").click(
      function () {
      var request = $.ajax({

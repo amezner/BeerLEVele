@@ -27,6 +27,7 @@ public class LoginExceptionMapper implements ExceptionMapper<LoginException> {
     @Override
     public Response toResponse(LoginException exception) {
         Error error = new Error();
+        exception.printStackTrace();
         error.cause = "login-failure";
         error.message = exception.getMessage();
         return Response.status(Status.BAD_REQUEST).entity(error).build();

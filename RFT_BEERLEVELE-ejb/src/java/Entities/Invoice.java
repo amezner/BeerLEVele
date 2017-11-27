@@ -38,8 +38,8 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Invoice.findAll", query = "SELECT i FROM Invoice i ORDER BY i.date DESC"),
     @NamedQuery(name = "Invoice.findByInvoicenumber", query = "SELECT i FROM Invoice i WHERE i.invoicenumber = :invoicenumber"),
-    @NamedQuery(name = "Invoice.profitPerInvoice", query = (//"SELECT i.name FROM Invoice i"))
-"SELECT i.name, ( SELECT SUM (ip.soldprice - ip.purchaseprice) * ip.soldquantity  AS Profit FROM Invoicedproducts ip WHERE i.invoicenumber = ip.invoicenumber AS profit) FROM Invoice i"))
+ //   @NamedQuery(name = "Invoice.profitPerInvoice", query = (//"SELECT i.name FROM Invoice i"))
+//"SELECT i.name, ( SELECT SUM (ip.soldprice - ip.purchaseprice) * ip.soldquantity  AS Profit FROM Invoicedproducts ip WHERE i.invoicenumber = ip.invoicenumber AS profit) FROM Invoice i"))
 })
 
 //

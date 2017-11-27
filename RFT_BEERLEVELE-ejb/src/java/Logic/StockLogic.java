@@ -7,7 +7,9 @@ package Logic;
 
 import Entities.Stock;
 import Facades.StockFacade;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 import javax.annotation.ManagedBean;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -18,12 +20,11 @@ import org.slf4j.LoggerFactory;
  *
  * @author danida
  */
-
 @ManagedBean
 @Stateless
 
 public class StockLogic {
-         
+
     @Inject
     StockFacade facade;
 
@@ -58,7 +59,7 @@ public class StockLogic {
     }
 
     private boolean CheckIfCorrectStock(Stock stock) {
-        if (stock.getName()== null || stock.getDescription() == null || stock.getType() == null ||stock.getSellingprice()== null || stock.getPurchaseprice() == null || stock.getOnstockquantity() == null ) {
+        if (stock.getName() == null || stock.getDescription() == null || stock.getType() == null || stock.getSellingprice() == null || stock.getPurchaseprice() == null || stock.getOnstockquantity() == null) {
             return false;
         }
         return true;
@@ -70,5 +71,14 @@ public class StockLogic {
 
     }
 
-    
+    public List<Stock> filterStockByName(String searchpattern) {
+        List<Stock> allStock = facade.findAll();
+        List<Stock> r = new ArrayList<>();
+        String pattern = ".*" + searchpattern.toLowerCase() + ".*";
+        allStock.stream().filter((s) -> (Pattern.matches(pattern, s.getName().toLowerCase()))).forEach((s) -> {
+            r.add(s);
+        });
+        return r;
+    }
+
 }

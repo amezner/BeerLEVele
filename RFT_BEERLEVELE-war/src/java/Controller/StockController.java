@@ -102,7 +102,7 @@ public class StockController {
     @PUT
     @Produces("application/json")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void editCustomer(@HeaderParam("authToken") String authToken, @PathParam("id") Integer id,Map<String, String> map) throws Exception {
+    public void editStock(@HeaderParam("authToken") String authToken, @PathParam("id") Integer id,Map<String, String> map) throws Exception {
 
         authorizator.checkAuthorization(authToken, "operator");
         
@@ -120,4 +120,20 @@ public class StockController {
         
         stockLogic.editStock(stock);
     }
+    @Path("filterstock/{filter}")
+    @GET
+    @Produces("application/json")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Map filterStock(@HeaderParam("authToken") String authToken, @PathParam("filter") String filter) throws Exception {
+
+        authorizator.checkAuthorization(authToken, "operator");
+        
+        DataObjectMapper<Stock> o = new DataObjectMapper<>(stockLogic.filterStockByName(filter));
+      
+        return o.getMap();
+
+    }
+    
+    
+    
 }
