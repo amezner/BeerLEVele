@@ -21,27 +21,31 @@ class Login extends Component {
 
   async handleSubmit(e) {
     e.preventDefault();
-    const {username, password} = this.refs;
+    const {username, password, button} = this.refs;
 
-    try {
-      const resp = await post('authentication/login', {
-        username: username.value,
-        password: password.value,
-      });
+    if (!button.disabled) {
+      try {
+        button.setDisabled(true);
+        const resp = await post('authentication/login', {
+          username: username.value,
+          password: password.value,
+        });
 
-      if (typeof resp.token !== 'undefined') {
-        NotificationManager.info('Jó munkát kívánok!', 'Szia '+resp.username);
-        sessionStorage.setItem('authToken', resp.token);
-        AuthStore.setIsLoggedIn(true);
-        this.props.history.push(AuthStore.oldUrl);
-      } else if (typeof resp.message !== 'undefined'){
-        NotificationManager.error(resp.message, 'Sikertelen belépés!', 3000);
-      } else {
-        NotificationManager.error('Ismeretlen hiba', 'Sikertelen belépés!', 3000);
+        if (typeof resp.token !== 'undefined') {
+          NotificationManager.info('Jó munkát kívánok!', 'Szia '+resp.username);
+          sessionStorage.setItem('authToken', resp.token);
+          AuthStore.setIsLoggedIn(true);
+          this.props.history.push(AuthStore.oldUrl);
+        } else if (typeof resp.message !== 'undefined'){
+          NotificationManager.error(resp.message, 'Sikertelen belépés!', 3000);
+        } else {
+          NotificationManager.error('Ismeretlen hiba', 'Sikertelen belépés!', 3000);
+        }
+      } catch (e) {
+        const error = e.message ? e.message : 'Ismeretlen hiba!';
+        NotificationManager.error(error, 'Sikertelen belépés!', 3000);
+        button.setDisabled(false);
       }
-    } catch (e) {
-      const error = e.message ? e.message : 'Ismeretlen hiba!';
-      NotificationManager.error(error, 'Sikertelen belépés!', 3000);
     }
 
 
@@ -58,7 +62,7 @@ class Login extends Component {
           <Field ref="password" type="password" placeholder="jelszó"/>
         </FormRow>
         <FormRow>
-          <Button text="belépés" type="submit"/>
+          <Button text="belépés" type="submit" ref="button" />
         </FormRow>
       </form>
     </div>);

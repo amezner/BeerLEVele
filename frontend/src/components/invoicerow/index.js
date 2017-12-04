@@ -5,7 +5,7 @@ class InvoiceRow extends Component {
   render() {
     const {invoicenumber, name, date} = this.props.data;
 
-    let dateString = new Date(date).toLocaleString('hu-HU');
+    const dateString = new Date(date).toLocaleString('hu-HU');
 
     return (
       <div className="table-row data-row">

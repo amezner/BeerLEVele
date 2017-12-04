@@ -28,8 +28,8 @@ class MainMenu extends Component {
     } catch (e) {
       NotificationManager.warning(e.message);
     } finally {
-      sessionStorage.removeItem('authToken');
       AuthStore.setIsLoggedIn(false);
+      sessionStorage.removeItem('authToken');
       this.props.history.push('/login');
     }
   }

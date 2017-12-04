@@ -28,18 +28,14 @@ class DropDown extends Component {
     this.handleChange = this.handleChange.bind(this);
 
     this.state = {
-      value: props.value
+      value: props.value,
     };
   }
 
   handleChange(evt) {
-    const {changeEvt} = this.props;
     const value = evt.target.value;
 
     this.setState({value});
-    if (changeEvt) {
-      changeEvt(value);
-    }
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -48,6 +44,16 @@ class DropDown extends Component {
     }
 
     return true;
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const {changeEvt} = this.props;
+
+    if (prevState.value !== this.state.value) {
+      if (changeEvt) {
+        changeEvt();
+      }
+    }
   }
 
   get value() {
@@ -60,7 +66,7 @@ class DropDown extends Component {
     return (
 
       <span className="custom-select">
-        <select name={name} id={id} onChange={this.handleChange}>
+        <select name={name} id={id} onChange={this.handleChange} defaultValue={this.state.value}>
             {
               Object.keys(options).length > 0 ?
                 Object.entries(options).map(([value, label]) => {

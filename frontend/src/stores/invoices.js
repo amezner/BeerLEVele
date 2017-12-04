@@ -26,6 +26,15 @@ class InvoiceStore {
     return this.invoice;
   }
 
+  getInvoiceTotal() {
+    let total = 0;
+    if (typeof this.invoice.invoicedproducts !== 'undefined') {
+      this.invoice.invoicedproducts.map((row) => { total += row.soldprice });
+    }
+
+    return total;
+  }
+
   async loadInvoice(invoiceId) {
     try {
       let resp = await get('invoice/getinvoice/'+invoiceId);

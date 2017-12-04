@@ -37,19 +37,24 @@ class Cart extends Component {
   }
 
   async closeInvoice() {
-    const {customerField} = this.refs;
+    const {customerField, closeBtn} = this.refs;
     const customerId = parseInt(customerField.value);
+    
     if (!isNaN(customerId)) {
-      try {
-        const resp = await post('invoice/closeinvoice', {
-          customer_id: customerId
-        });
-        CartStore.resetCart();
-        NotificationManager.success('', 'Sikeres mentés!', 3000);
-        this.props.history.push('/invoicelist');
-      } catch (e) {
-        const message = e.message ? e.message : 'Ismeretlen hiba!';
-        NotificationManager.error(e.message, 'Sikertelen mentés!', 3000);
+      if (!closeBtn.disabled) {
+        closeBtn.setDisabled(true);
+        try {
+          const resp = await post('invoice/closeinvoice', {
+            customer_id: customerId
+          });
+          CartStore.resetCart();
+          NotificationManager.success('', 'Sikeres mentés!', 3000);
+          this.props.history.push('/invoicelist');
+        } catch (e) {
+          const message = e.message ? e.message : 'Ismeretlen hiba!';
+          NotificationManager.error(message, 'Sikertelen mentés!', 3000);
+          closeBtn.setDisabled(false);
+        }
       }
     } else {
       NotificationManager.error('A vásárló kiválsztása kötelező!', 'Sikertelen mentés!', 3000);
@@ -58,11 +63,12 @@ class Cart extends Component {
   }
 
   async addToCart() {
-    const {productField} = this.refs;
+    const {productField, addBtn} = this.refs;
     const stockId = parseInt(productField.value);
     const item = CartStore.getItem(stockId);
 
-    if (!item) {
+    if (!item && !addBtn.disabled) {
+      addBtn.setDisabled(true);
       try {
         const product = CartStore.productStore.getProduct(stockId);
         const resp = await post('order/putinthecart', {
@@ -75,25 +81,32 @@ class Cart extends Component {
       } catch (e) {
         const message = e.message ? e.message : 'Ismeretlen hiba';
         NotificationManager.error(message, 'Sikertelen kosárba rakás!', 3000);
+      } finally {
+        addBtn.setDisabled(false);
       }
     }
   }
 
   async deleteCart() {
-    try {
-      const resp = await del('order/emptycart');
+    const {deleteBtn, customerField} = this.refs;
+    if (!deleteBtn.disabled) {
+      deleteBtn.setDisabled(true);
+      try {
+        const resp = await del('order/emptycart');
 
-      CartStore.resetCart();
-      NotificationManager.success('A kosarat kiürítettük', '', 3000);
+        CartStore.resetCart();
+        NotificationManager.success('A kosarat kiürítettük', '', 3000);
 
-    } catch (e) {
-      const message = e.message ? e.message : 'Ismeretlen hiba';
-      NotificationManager.error(message, 'Sikeretelen kosár ürítés', 3000);
+      } catch (e) {
+        const message = e.message ? e.message : 'Ismeretlen hiba';
+        NotificationManager.error(message, 'Sikeretelen kosár ürítés', 3000);
+      }
     }
   }
 
-  changeCustomer(customerId) {
-    CartStore.setCustomerId(customerId);
+  changeCustomer() {
+    const {customerField} = this.refs;
+    CartStore.setCustomerId(customerField.value);
   }
 
   render() {
@@ -129,14 +142,14 @@ class Cart extends Component {
           <section className="content-section">
             <h1>Számla létrehozása</h1>
             <FormRow label="Vásárló kiválasztása" id="customer" extraClass="customer-content">
-              <DropDown ref="customerField" options={customerOptions} id="customer" changeEvt={this.changeCustomer} />
+              <DropDown ref="customerField" options={customerOptions} id="customer" value={CartStore.getCustomerId()} changeEvt={this.changeCustomer} />
             </FormRow>
             <div className="product-content">
               <FormRow label="Termék hozzáadása a kosárhoz" id="product" extraClass="half">
                   <DropDown ref="productField" options={productOptions} id="product" />
               </FormRow>
               <FormRow extraClass="button-row half">
-                <Button text="hozzáadás" type="button" clickEvt={this.addToCart} />
+                <Button text="hozzáadás" type="button" clickEvt={this.addToCart} ref="addBtn" />
               </FormRow>
               <div className="clear"></div>
             </div>
@@ -152,8 +165,8 @@ class Cart extends Component {
           {
             (!isEmpty ?
               <section className="content-section buttons-content">
-                <Button text="elvetés" type="button" extraClass="secondary" clickEvt={this.deleteCart} />
-                <Button text="lezárás" type="button" extraClass="primary" clickEvt={this.closeInvoice}  />
+                <Button text="elvetés" type="button" extraClass="secondary" clickEvt={this.deleteCart} ref="deleteBtn" />
+                <Button text="lezárás" type="button" extraClass="primary" clickEvt={this.closeInvoice} ref="closeBtn"  />
               </section>
             : null)
           }

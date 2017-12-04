@@ -4,6 +4,7 @@ import FormRow from '../formrow';
 import Table from '../table';
 import InvoicedProductRow from '../invoicedproductrow';
 import InvoiceStore from '../../stores/invoices';
+import NumberFormat from 'react-number-format';
 
 import './invoice.css';
 
@@ -26,7 +27,10 @@ class Invoice extends Component {
 
   render() {
     const invoice = InvoiceStore.getInvoice();
-    const {name, email, phone, country, postalcode, address, city, loyaltycard, discount, invoicedproducts} = invoice;
+    const {name, email, phone, country, postalcode, address, city, discount, invoicedproducts, date} = invoice;
+    const total = InvoiceStore.getInvoiceTotal();
+
+    const dateString = new Date(date).toLocaleString('hu-HU');
 
     return (
       <div className="content-width thin invoice-page">
@@ -67,8 +71,22 @@ class Invoice extends Component {
         </section>
 
         <section className="content-section">
+          <FormRow label="Számla kelte">
+            {dateString}
+          </FormRow>
           <h3>Termékek</h3>
           <Table fields={this.props.tableFields} rowClass={InvoicedProductRow} datas={invoicedproducts}>
+            {
+              total > 0 ? (
+                <div className="table-row total-row header-row">
+                  <div className="table-cell">Összesen</div>
+                  <div className="table-cell"></div>
+                  <div className="table-cell">
+                    <NumberFormat decimalSeparator="," thousandSeparator="." value={total}  decimalScale={2} displayType="text" suffix=" Ft" />
+                  </div>
+                </div>
+              ) : null
+            }
           </Table>
         </section>
       </div>

@@ -3,7 +3,7 @@ import {extendObservable} from 'mobx';
 class Auth {
   constructor() {
     extendObservable(this, {
-      isLoggedIn: !!sessionStorage.getItem('isLoggedIn'),
+      isLoggedIn: !!(JSON.parse(sessionStorage.getItem('isLoggedIn'))),
       oldUrl: '/'
     });
   }

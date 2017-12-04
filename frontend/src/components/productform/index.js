@@ -19,31 +19,35 @@ class Productform extends Component {
 
   async handleSubmit(e) {
     e.preventDefault();
-    const {name, description, type, purchaseprice, sellingprice, onstockquantity, alcoholcontent, bottlesize} = this.refs;
+    const {name, description, type, purchaseprice, sellingprice, onstockquantity, alcoholcontent, bottlesize, button} = this.refs;
 
-    const data = {
-      name: name.value,
-      description: description.value,
-      type: type.value,
-      purchaseprice: purchaseprice.value,
-      sellingprice: sellingprice.value,
-      onstockquantity:onstockquantity.value,
-      alcoholcontent:alcoholcontent.value,
-      bottlesize:bottlesize.value
-    }
-
-    try {
-      const id = this.state.product.id;
-      if (id) {
-        const resp = await put('stock/editstock/'+id, data);
-      } else {
-        const resp = await post('stock/savestock', data);
+    if (!button.disabled) {
+      button.setDisabled(true);
+      const data = {
+        name: name.value,
+        description: description.value,
+        type: type.value,
+        purchaseprice: purchaseprice.value,
+        sellingprice: sellingprice.value,
+        onstockquantity:onstockquantity.value,
+        alcoholcontent:alcoholcontent.value,
+        bottlesize:bottlesize.value
       }
-      NotificationManager.success('', 'Sikeres mentés!', 3000);
-      this.props.history.push('/productlist');
-    } catch (e) {
-      const message = e.message != null ? e.message : 'Ismeretlen hiba';
-      NotificationManager.error(message, 'Sikertelen mentés!', 3000);
+
+      try {
+        const id = this.state.product.id;
+        if (id) {
+          const resp = await put('stock/editstock/'+id, data);
+        } else {
+          const resp = await post('stock/savestock', data);
+        }
+        NotificationManager.success('', 'Sikeres mentés!', 3000);
+        this.props.history.push('/productlist');
+      } catch (e) {
+        const message = e.message != null ? e.message : 'Ismeretlen hiba';
+        NotificationManager.error(message, 'Sikertelen mentés!', 3000);
+        button.setDisabled(false);
+      }
     }
   }
 
@@ -111,7 +115,7 @@ class Productform extends Component {
               <Field ref="onstockquantity" value={onstockquantity} type="text" id="quantity" />
             </FormRow>
             <FormRow extraClass="button-row">
-              <Button text="mentés" type="submit" />
+              <Button text="mentés" type="submit" ref="button" />
             </FormRow>
           </form>
         </section>

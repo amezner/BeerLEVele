@@ -20,22 +20,38 @@ class Button extends Component {
     super(props);
 
     this.handleClick = this.handleClick.bind(this);
+
+    this.state = {
+      disabled: false
+    };
   }
 
   handleClick() {
     const {clickEvt} = this.props;
+
+    this.setState({
+      disabled: false
+    });
 
     if (clickEvt) {
       clickEvt();
     }
   }
 
+  get disabled() {
+    return this.state.disabled;
+  }
+
+  setDisabled(disabled) {
+    this.setState({disabled});
+  }
+
   render() {
-    const { type, text, clickEvt, extraClass } = this.props;
+    const { type, text, extraClass } = this.props;
     const className = extraClass ? 'button '+extraClass : 'button';
 
     return (
-      <button type={type} className={className} onClick={this.handleClick} >{text}</button>
+      <button type={type} className={className} disabled={this.state.disabled} onClick={this.handleClick} >{text}</button>
     )
   }
 }

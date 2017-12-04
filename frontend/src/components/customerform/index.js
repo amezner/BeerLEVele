@@ -32,38 +32,43 @@ class Customerform extends Component {
       city,
       country,
       zip,
-      discount
+      discount,
+      button
     } = this.refs;
 
-    let loyaltycard = loyalty.selected;
+    if (!button.disabled) {
+      button.setDisabled(true);
+      let loyaltycard = loyalty.selected;
 
-    const data = {
-      name: name.value,
-      email: email.value,
-      address: address.value,
-      loyaltycard: loyaltycard,
-      phone: phone.value,
-      discount: discount.value,
-      postalcode: zip.value,
-      country: country.value,
-      city: city.value
-    };
+      const data = {
+        name: name.value,
+        email: email.value,
+        address: address.value,
+        loyaltycard: loyaltycard,
+        phone: phone.value,
+        discount: discount.value,
+        postalcode: zip.value,
+        country: country.value,
+        city: city.value
+      };
 
-    try {
-      const id = this.state.customer.id;
-      if (id) {
-        const response = await put('customer/editcustomer/'+id, data);
-      } else {
-        const response = await post('customer/savecustomer', data);
+      try {
+        const id = this.state.customer.id;
+        if (id) {
+          const response = await put('customer/editcustomer/'+id, data);
+        } else {
+          const response = await post('customer/savecustomer', data);
+        }
+
+        NotificationManager.success('', 'Sikeres mentés!', 3000);
+        this.props.history.push('/customerlist');
+      } catch (e) {
+        const message = e.message != null
+          ? e.message
+          : 'Ismeretlen hiba';
+        NotificationManager.error(message, 'Sikertelen mentés!', 3000);
+        button.setDisabled(false);
       }
-
-      NotificationManager.success('', 'Sikeres mentés!', 3000);
-      this.props.history.push('/customerlist');
-    } catch (e) {
-      const message = e.message != null
-        ? e.message
-        : 'Ismeretlen hiba';
-      NotificationManager.error(message, 'Sikertelen mentés!', 3000);
     }
   }
 
@@ -141,7 +146,7 @@ class Customerform extends Component {
             </div>
           </FormRow>
           <FormRow extraClass="button-row">
-            <Button text="mentés" type="submit"/>
+            <Button text="mentés" type="submit" ref="button" />
           </FormRow>
         </form>
       </section>

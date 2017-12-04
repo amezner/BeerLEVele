@@ -7,10 +7,10 @@ import CustomerStore from './customers';
 class CartStore {
   constructor() {
     extendObservable(this, {
+      customer_id: null,
       items: [],
       productStore: ProductStore,
       customerStore: CustomerStore,
-      customer_id: null
     });
   }
 
@@ -77,8 +77,8 @@ class CartStore {
   }
 
   resetCart() {
-    this.items = [];
-    this.customer_id = null;
+    this.setCustomerId(null);
+    this.setItems([]);
   }
 
 }
