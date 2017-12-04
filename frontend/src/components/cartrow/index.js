@@ -67,13 +67,11 @@ class CartRow extends Component {
       }
     }
 
-
-
     return (
       <div className="table-row data-row">
         <div className="table-cell">{name}</div>
         <div className="table-cell">
-          <Field ref="quantity" value={data.quantity} blurEvt={this.modifyQuantity} extraClass="quantity-field"  />
+          <Field ref="quantity" value={data.quantity} changeEvt={this.modifyQuantity} extraClass="quantity-field"  />
         </div>
         <div className="table-cell">
           <NumberFormat decimalSeparator="," thousandSeparator="." value={price} displayType="text" suffix=" Ft" decimalScale={2} />

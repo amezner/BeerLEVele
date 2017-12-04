@@ -47,10 +47,12 @@ class Field extends Component {
   }
 
   handleChange(evt) {
-    const {changeEvt} = this.props;
     const value = evt.target.value;
     this.setState({value});
+  }
 
+  componentDidUpdate() {
+    const {changeEvt} = this.props;
     if (changeEvt) {
       changeEvt();
     }

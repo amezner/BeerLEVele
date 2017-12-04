@@ -39,7 +39,7 @@ class Cart extends Component {
   async closeInvoice() {
     const {customerField, closeBtn} = this.refs;
     const customerId = parseInt(customerField.value);
-    
+
     if (!isNaN(customerId)) {
       if (!closeBtn.disabled) {
         closeBtn.setDisabled(true);
@@ -88,7 +88,7 @@ class Cart extends Component {
   }
 
   async deleteCart() {
-    const {deleteBtn, customerField} = this.refs;
+    const {deleteBtn} = this.refs;
     if (!deleteBtn.disabled) {
       deleteBtn.setDisabled(true);
       try {
