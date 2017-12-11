@@ -15,6 +15,9 @@
 
     &.header-row {
       font-weight:$bold-fweight;
+      .table-cell {
+        text-align:center;
+      }
     }
 
     &.data-row {
@@ -32,6 +35,11 @@
       &:first-of-type {
         padding-left:20px;
       }
+
+      &.number-cell {
+        text-align:right;
+      }
+
       .features-content {
         .feature-item {
           margin-right:10px;

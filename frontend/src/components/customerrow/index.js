@@ -4,6 +4,7 @@ import {observer} from 'mobx-react';
 import {Link} from 'react-router-dom';
 import {del} from '../../lib/client';
 import {NotificationManager} from 'react-notifications';
+import NumberFormat from 'react-number-format';
 
 class CustomerRow extends Component {
   constructor (props) {
@@ -27,7 +28,7 @@ class CustomerRow extends Component {
   }
 
   render() {
-    const {id,name, email, phone} = this.props.data;
+    const {id,name, email, phone, discount} = this.props.data;
     return (
       <div className="table-row data-row">
         <div className="table-cell">
@@ -35,6 +36,9 @@ class CustomerRow extends Component {
         </div>
         <div className="table-cell">{email}</div>
         <div className="table-cell">{phone}</div>
+        <div className="table-cell number-cell">
+          <NumberFormat value={discount} displayType="text" suffix="%" />
+        </div>
         <div className="table-cell">
           <div className="features-content">
             <Link className="feature-item" to={`/customerform/${id}`}>Módosítás</Link>

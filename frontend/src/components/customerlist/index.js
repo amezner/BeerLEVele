@@ -7,7 +7,7 @@ import CustomerRow from '../customerrow';
 
 class CustomerList extends Component {
   static defaultProps = {
-    tableFields: ['Név', 'E-mail cím', 'Telefonszám', '']
+    tableFields: ['Név', 'E-mail cím', 'Telefonszám', 'Kedvezmény', '']
   };
 
   static propTypes = {

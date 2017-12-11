@@ -1,4 +1,5 @@
 import join from 'url-join';
+import AuthStore from '../stores/authorization';
 
 const BASE_URL = 'http://localhost:8080/RFT_BEERLEVELE-war/resources/';
 
@@ -7,18 +8,22 @@ const addHeaders = options => {
     ...options
   };
 
-  if (!result.headers)
+  if (!result.headers) {
     result.headers = {};
-
-  if (sessionStorage.getItem('authToken')) {
-    result.headers.authToken = sessionStorage.authToken;
+  }
+  
+  if (localStorage.getItem('authToken')) {
+    result.headers.authToken = localStorage.getItem('authToken');
   }
 
   return result;
 }
 
 const attachHandlers = promise => promise.then(response => new Promise((resolve, reject) => {
-  if (response.ok && response.status === 204) {
+  if (response.status === 401) {
+    AuthStore.logout();
+  }
+  else if (response.ok && response.status === 204) {
     return resolve();
   }
 

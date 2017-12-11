@@ -81,7 +81,7 @@ class Invoice extends Component {
                 <div className="table-row total-row header-row">
                   <div className="table-cell">Összesen</div>
                   <div className="table-cell"></div>
-                  <div className="table-cell">
+                  <div className="table-cell number-cell">
                     <NumberFormat decimalSeparator="," thousandSeparator="." value={total}  decimalScale={2} displayType="text" suffix=" Ft" />
                   </div>
                 </div>

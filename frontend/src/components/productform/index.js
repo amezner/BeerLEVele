@@ -4,10 +4,10 @@ import Field from '../field';
 import Button from '../button';
 import {post, get, put} from '../../lib/client';
 import {NotificationManager} from 'react-notifications';
-import 'react-notifications/lib/notifications.css';
 import {withRouter} from 'react-router-dom';
+import AuthStore from '../../stores/authorization';
 
-class Productform extends Component {
+class ProductForm extends Component {
   constructor(props) {
     super(props);
 
@@ -21,7 +21,7 @@ class Productform extends Component {
     e.preventDefault();
     const {name, description, type, purchaseprice, sellingprice, onstockquantity, alcoholcontent, bottlesize, button} = this.refs;
 
-    if (!button.disabled) {
+    if (button && !button.disabled) {
       button.setDisabled(true);
       const data = {
         name: name.value,
@@ -36,13 +36,20 @@ class Productform extends Component {
 
       try {
         const id = this.state.product.id;
+        let resp = null;
         if (id) {
-          const resp = await put('stock/editstock/'+id, data);
+          resp = await put('stock/editstock/'+id, data);
         } else {
-          const resp = await post('stock/savestock', data);
+          resp = await post('stock/savestock', data);
         }
-        NotificationManager.success('', 'Sikeres mentés!', 3000);
-        this.props.history.push('/productlist');
+        
+        if (resp) {
+          NotificationManager.success('', 'Sikeres mentés!', 3000);
+          this.props.history.push('/productlist');
+        } else {
+          NotificationManager.error('Hiba a művelet során! Van ehhez joga?', 'Sikertelen mentés!', 3000);
+          button.setDisabled(false);
+        }
       } catch (e) {
         const message = e.message != null ? e.message : 'Ismeretlen hiba';
         NotificationManager.error(message, 'Sikertelen mentés!', 3000);
@@ -114,9 +121,13 @@ class Productform extends Component {
             <FormRow label="Készlet (db)" id="quantity">
               <Field ref="onstockquantity" value={onstockquantity} type="text" id="quantity" />
             </FormRow>
-            <FormRow extraClass="button-row">
+            {
+              AuthStore.hasRight('addproduct') ? 
+              (<FormRow extraClass="button-row">
               <Button text="mentés" type="submit" ref="button" />
-            </FormRow>
+              </FormRow>) : null
+            }
+            
           </form>
         </section>
       </div>
@@ -124,4 +135,4 @@ class Productform extends Component {
   }
 }
 
-export default withRouter(Productform);
+export default withRouter(ProductForm);

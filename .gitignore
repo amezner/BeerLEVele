@@ -18,3 +18,5 @@ data/
 nbproject/
 dist/gfdeploy/
 docker-compose.yml
+.vscode/settings.json
+beerlevele.code-workspace

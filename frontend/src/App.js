@@ -17,6 +17,8 @@ import AuthStore from './stores/authorization';
 import CustomerList from './components/customerlist';
 import ProductList from './components/productlist';
 import InvoiceList from './components/invoicelist';
+import UserList from './components/userlist';
+import UserForm from './components/userform';
 import Cart from './components/cart';
 import Invoice from './components/invoice';
 
@@ -35,6 +37,8 @@ class App extends Component {
               <Route path="/invoicelist" component={InvoiceList} />
               <Route path="/cart" component={Cart} />
               <Route path="/invoice/:id" component={Invoice} />
+              <Route path="/userlist" component={UserList} />
+              <Route path="/userform/:id?" component={UserForm} />
             </Layout1>
           </Protected>
           <Route path="/login" component={LoginPage} />

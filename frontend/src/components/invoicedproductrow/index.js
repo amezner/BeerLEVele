@@ -8,10 +8,10 @@ class InvoicedProductRow extends Component {
     return (
       <div className="table-row data-row">
         <div className="table-cell">{name}</div>
-        <div className="table-cell">
+        <div className="table-cell number-cell">
           <NumberFormat decimalSeparator="," thousandSeparator="." value={soldquantity} decimalScale={2} displayType="text" suffix=" db" />
         </div>
-        <div className="table-cell">
+        <div className="table-cell number-cell">
           <NumberFormat decimalSeparator="," thousandSeparator="." value={soldprice}  decimalScale={2} displayType="text" suffix=" Ft" />
         </div>
       </div>

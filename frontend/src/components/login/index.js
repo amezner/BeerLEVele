@@ -12,7 +12,7 @@ import {withRouter} from 'react-router-dom';
 
 import './login.css';
 
-class Login extends Component {
+class LoginPage extends Component {
   constructor(props) {
     super(props);
 
@@ -30,11 +30,10 @@ class Login extends Component {
           username: username.value,
           password: password.value,
         });
-
+        console.log(resp);
         if (typeof resp.token !== 'undefined') {
           NotificationManager.info('Jó munkát kívánok!', 'Szia '+resp.username);
-          sessionStorage.setItem('authToken', resp.token);
-          AuthStore.setIsLoggedIn(true);
+          AuthStore.setIsLoggedIn(true, resp.privilege, resp.token);
           this.props.history.push(AuthStore.oldUrl);
         } else if (typeof resp.message !== 'undefined'){
           NotificationManager.error(resp.message, 'Sikertelen belépés!', 3000);
@@ -47,8 +46,6 @@ class Login extends Component {
         button.setDisabled(false);
       }
     }
-
-
   }
 
   render() {
@@ -69,4 +66,4 @@ class Login extends Component {
   }
 }
 
-export default observer(withRouter(Login));
+export default observer(withRouter(LoginPage));

@@ -61,13 +61,13 @@ class ProductRow extends Component {
         <div className="table-cell">
           <Link to={`/productform/${id}`}>{name}</Link>
         </div>
-        <div className="table-cell">
+        <div className="table-cell number-cell">
           <NumberFormat value={purchaseprice} decimalSeparator="," thousandSeparator="." decimalScale={2} displayType="text" suffix=" Ft" />
         </div>
-        <div className="table-cell">
+        <div className="table-cell number-cell">
           <NumberFormat value={sellingprice} decimalSeparator="," thousandSeparator="." decimalScale={2} displayType="text" suffix=" Ft" />
         </div>
-        <div className="table-cell">
+        <div className="table-cell number-cell">
           <NumberFormat value={onstockquantity} decimalSeparator="," thousandSeparator="." decimalScale={2} displayType="text" suffix=" db" />
         </div>
         <div className="table-cell">

@@ -9,7 +9,7 @@ import Field from '../field';
 import Button from '../button';
 import CheckField from '../checkfield';
 
-class Customerform extends Component {
+class CustomerForm extends Component {
   constructor(props) {
     super(props);
 
@@ -154,4 +154,4 @@ class Customerform extends Component {
   }
 }
 
-export default withRouter(Customerform);
+export default withRouter(CustomerForm);

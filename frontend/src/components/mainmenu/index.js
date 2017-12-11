@@ -21,15 +21,14 @@ class MainMenu extends Component {
 
     try {
       const resp = await post('authentication/logout', {
-        authtoken: sessionStorage.getItem('authToken')
+        authtoken: localStorage.getItem('authToken')
       });
 
       NotificationManager.success(resp.message);
     } catch (e) {
       NotificationManager.warning(e.message);
     } finally {
-      AuthStore.setIsLoggedIn(false);
-      sessionStorage.removeItem('authToken');
+      AuthStore.logout();
       this.props.history.push('/login');
     }
   }
@@ -71,6 +70,17 @@ class MainMenu extends Component {
               </li>
               <li className="menu-item submenu-item">
                 <Link to="/cart">Számla létrehozása</Link>
+              </li>
+            </ul>
+          </li>
+          <li className="menu-item">
+            Felhasználó kezelés
+            <ul className="submenu">
+              <li className="menu-item submenu-item">
+                <Link to="/userlist">Felhasználók listája</Link>
+              </li>
+              <li>
+                <Link to="/userform">Felhasználó létrehozása</Link>
               </li>
             </ul>
           </li>
