@@ -51,13 +51,7 @@ public class Authenticator {
         logger.debug("Authenticator is checking the details of the user");
         
         
-/*        for (String value : authorizationTokensStorage.values()) {
-            if (value.toLowerCase().equals(username.toLowerCase())) {
-                    String authToken = UUID.randomUUID().toString();
-            authorizationTokensStorage.put(authToken, username.toLowerCase());
-            }
-        }
-*/
+
         if (userfacade.findByUsername(username)
                 .getPassword() != null) {
 

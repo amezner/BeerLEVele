@@ -5,9 +5,6 @@
  */
 package Helper.Exceptions;
 
-import java.security.GeneralSecurityException;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
@@ -28,7 +25,7 @@ public class DefaultExceptionMapper implements ExceptionMapper<Exception> {
 
     @Override
     public Response toResponse(Exception e) {
-         LoginExceptionMapper.Error error = new LoginExceptionMapper.Error();
+        LoginExceptionMapper.Error error = new LoginExceptionMapper.Error();
         error.cause = "failure";
         error.message = e.getMessage();
         return Response.status(400).entity(error).build();

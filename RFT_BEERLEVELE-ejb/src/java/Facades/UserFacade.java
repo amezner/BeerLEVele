@@ -53,7 +53,7 @@ public class UserFacade implements FacadeInterface<User> {
         logger.debug("Listing all the users");
         return em.createNamedQuery("User.findAll").getResultList();
     }
-    public User findByUsername(String username) throws LoginException{
+    public User findByUsername(String username) throws IllegalStateException{
         Logger logger = LoggerFactory.getLogger(UserFacade.class);
         logger.debug("Finding user by username");
         
@@ -61,7 +61,7 @@ public class UserFacade implements FacadeInterface<User> {
         if (!result.isEmpty())
             return (User)em.createNamedQuery("User.findByName").setParameter("name", username).getResultList().get(0);
         else
-            throw new LoginException("User does not exist!");
+            throw new IllegalStateException("User does not exist!");
         
     }
     

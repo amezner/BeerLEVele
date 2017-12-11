@@ -6,6 +6,7 @@
 package Controller;
 
 import Helper.Authenticator;
+import Helper.Authorizator;
 import java.security.GeneralSecurityException;
 import java.util.HashMap;
 import java.util.Map;
@@ -31,31 +32,35 @@ public class LoginController {
 
     @EJB
     private Authenticator authenticator;
+    @EJB
+    private Authorizator authorizator;
 
     @Path("login")
     @POST
     @Produces("application/json")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Map<String, String> login(Map <String,String> map) throws LoginException {
-        
+    public Map<String, String> login(Map<String, String> map) throws LoginException {
+
         String token = authenticator.login(map.get("username"), map.get("password"));
         Map<String, String> tok = new HashMap<String, String>();
         tok.put("username", map.get("username"));
         tok.put("token", token);
+
+        tok.put("privilege", authorizator.getPrivilege(map.get("username")));
         return tok;
-        
+
     }
 
     @Path("logout")
     @POST
     @Produces("application/json")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Map<String, String> logout(Map <String,String> map) throws GeneralSecurityException {
-        
+    public Map<String, String> logout(Map<String, String> map) throws GeneralSecurityException {
+
         authenticator.logout(map.get("authtoken"));
         Map<String, String> tok = new HashMap<>();
         tok.put("message", "Logout was successful");
         return tok;
-    
+
     }
 }

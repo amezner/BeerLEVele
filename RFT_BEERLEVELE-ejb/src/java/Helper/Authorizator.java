@@ -27,20 +27,20 @@ public class Authorizator {
     UserFacade userfacade;
 
     private static Authorizator authorizator = null;
-    private  Map<String,Integer> roles= new HashMap<String, Integer>();
-   
+    private Map<String, Integer> roles = new HashMap<String, Integer>();
+
     @PostConstruct
-    public void init(){
+    public void init() {
         roles.put("admin", 100);
-        roles.put("finance",50);
-        roles.put("operator",1);
+        roles.put("finance", 50);
+        roles.put("operator", 1);
 
     }
-    
+
     public Authorizator() {
 
     }
-    
+
     public static Authorizator getInstance() {
         if (authorizator == null) {
             authorizator = new Authorizator();
@@ -50,12 +50,12 @@ public class Authorizator {
 
     }
 
-    public  boolean checkAuthorization(String authToken,String requirement) throws Exception {
+    public boolean checkAuthorization(String authToken, String requirement) throws Exception {
 
         if (Authenticator.getAuthorizationTokensStorage().containsKey(authToken)) {
             String username = Authenticator.getAuthorizationTokensStorage().get(authToken);
             User user = userfacade.findByUsername(username);
-            if(roles.get(user.getRole().toLowerCase()) >= roles.get(requirement)){
+            if (roles.get(user.getRole().toLowerCase()) >= roles.get(requirement)) {
                 return true;
             }
         }
@@ -75,5 +75,11 @@ public class Authorizator {
         throw new Exception("You are not authorized for this call!");
 
     }
-    
+
+    public String getPrivilege(String username) {
+        User user = userfacade.findByUsername(username);
+        return user.getRole().toLowerCase();
+        
+    }
+
 }
