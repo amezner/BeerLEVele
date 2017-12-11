@@ -18,4 +18,3 @@ data/
 nbproject/
 dist/gfdeploy/
 docker-compose.yml
-/dist/
