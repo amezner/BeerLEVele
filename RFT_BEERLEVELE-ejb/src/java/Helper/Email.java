@@ -59,7 +59,7 @@ public class Email {
     }
 
     public void SendMail(String from, String to, String password, String subject, String msg) {
-        
+
         Session session = Session.getInstance(props,
                 new javax.mail.Authenticator() {
             @Override
@@ -77,6 +77,47 @@ public class Email {
             message.setSubject(subject);
             message.setText(msg);
 
+            Transport.send(message);
+
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void SendMaiWithAttachment(String from, String to, String password, String subject, String msg) {
+
+        Session session = Session.getInstance(props,
+                new javax.mail.Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(from, password);
+            }
+        });
+
+        try {
+
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(from));
+            message.setRecipients(Message.RecipientType.TO,
+                    InternetAddress.parse(to));
+            message.setSubject(subject);
+            message.setText(msg);
+            
+ /**          
+            MimeBodyPart messageBodyPart = new MimeBodyPart();
+
+            Multipart multipart = new MimeMultipart();
+
+            messageBodyPart = new MimeBodyPart();
+            String file = "path of file to be attached";
+            String fileName = "attachmentName";
+            DataSource source = new FileDataSource(file);
+            messageBodyPart.setDataHandler(new DataHandler(source));
+            messageBodyPart.setFileName(fileName);
+            multipart.addBodyPart(messageBodyPart);
+
+            message.setContent(multipart);
+ **/
             Transport.send(message);
 
         } catch (MessagingException e) {

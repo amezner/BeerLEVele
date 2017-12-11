@@ -119,7 +119,6 @@ public class CustomerController {
         String subject = (String) emaildetails.get("subject");
         String message = (String) emaildetails.get("message");
         String password = (String) emaildetails.get("password");
-        
         emailservice.SendMail(from, to, password, subject, message);
     }
     @Path("filtercustomer/{filter}")
@@ -129,7 +128,6 @@ public class CustomerController {
     public Map filterStock(@HeaderParam("authToken") String authToken, @PathParam("filter") String filter) throws Exception {
 
         authorizator.checkAuthorization(authToken, "operator");
-        
         DataObjectMapper<Customer> o = new DataObjectMapper<>(customerLogic.filterCustomerByName(filter));
       
         return o.getMap();
