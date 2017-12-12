@@ -7,10 +7,13 @@ package Controller;
 
 import Logic.CustomerLogic;
 import Entities.Customer;
-import Entities.Stock;
+import Exceptions.AuthorizationFailedException;
+import Exceptions.NoSuchATokenException;
+import Exceptions.NoSuchAUserException;
 import Helper.Authorizator;
 import Helper.DataObjectMapper;
 import Helper.Email;
+import java.util.List;
 import java.util.Map;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -43,31 +46,54 @@ public class CustomerController {
     @EJB
     private Email emailservice;
     
+    
+    /**
+     * 
+     * @param authToken: A user tokenje.
+     * @param customerdetails: Az ügyfél adatai.
+     * @throws AuthorizationFailedException
+     * @throws NoSuchAUserException
+     * @throws NoSuchATokenException
+     * @throws Exception 
+     */
+
     @Path("savecustomer")
     @POST
     @Produces("application/json")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void saveCustomer(@HeaderParam("authToken") String authToken, Map<String, String> map) throws Exception {
+    public void saveCustomer(@HeaderParam("authToken") String authToken, Map<String, String> customerdetails) throws AuthorizationFailedException, NoSuchAUserException, NoSuchATokenException, Exception  {
         
         authorizator.checkAuthorization(authToken, "admin");
         
-        customerLogic.insertCustomer(map.get("name"), map.get("country"), map.get("city"), map.get("address"), map.get("postalcode"), map.get("email"), map.get("phone"), Boolean.parseBoolean(map.get("loyaltycard")), new Integer(map.get("discount")));
+        customerLogic.insertCustomer(customerdetails.get("name"), customerdetails.get("country"), customerdetails.get("city"), customerdetails.get("address"), customerdetails.get("postalcode"), customerdetails.get("email"), customerdetails.get("phone"), Boolean.parseBoolean(customerdetails.get("loyaltycard")), new Integer(customerdetails.get("discount")));
         
     }
+    /**
+     * @param authToken: A user tokenje.
+     * @return : Visszaadja az összes customert. 
+     * @throws Exception 
+     */
+    
     
     @Path("getallcustomer")
     @GET
     @Produces("application/json")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Map getAll(@HeaderParam("authToken") String authToken) throws Exception {
+    public List<Customer> getAll(@HeaderParam("authToken") String authToken) throws Exception {
         
-        authorizator.checkAuthorization(authToken, "operator");
+        authorizator.checkAuthorization(authToken, "operator");        
         
-        DataObjectMapper<Customer> o = new DataObjectMapper<>(customerLogic.findAllCustomer());
         
-        return o.getMap();
+        return customerLogic.findAllCustomer();
         
     }
+    
+    /**
+     * 
+     * @param authToken: A user tokenje.
+     * @param id: A törölni kívánt ügyfél id-ja.
+     * @throws Exception 
+     */
     
     @Path("deletecustomer/{id}")
     @DELETE
@@ -79,6 +105,14 @@ public class CustomerController {
         customerLogic.deleteCustomerById(id);
         
     }
+    /**
+     * 
+     * @param authToken: A user tokenje.
+     * @param id: Ügyfél id-ja.
+     * @return Visszaadja a lekérdezett ügyfelet.
+     * @throws Exception 
+     */
+    
     
     @Path("getcustomer/{id}")
     @GET
@@ -94,20 +128,35 @@ public class CustomerController {
         
     }
     
+    /**
+     * 
+     * @param authToken: A user tokenje.
+     * @param id: Az ügyfél id-ja. 
+     * @param customerdetails: Az ügyfél adatai.
+     * @throws Exception 
+     */
+    
     @Path("editcustomer/{id}")
     @PUT
     @Produces("application/json")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void editCustomer(@HeaderParam("authToken") String authToken, @PathParam("id") Integer id, Map<String, String> map) throws Exception {
+    public void editCustomer(@HeaderParam("authToken") String authToken, @PathParam("id") Integer id, Map<String, String> customerdetails) throws Exception {
         
         authorizator.checkAuthorization(authToken, "operator");
         
-        Customer cu = new Customer(map.get("name"), map.get("country"), map.get("city"), map.get("address"), map.get("postalcode"), map.get("email"), map.get("phone"), Boolean.parseBoolean(map.get("loyaltycard")), new Integer(map.get("discount")));
+        Customer cu = new Customer(customerdetails.get("name"), customerdetails.get("country"), customerdetails.get("city"), customerdetails.get("address"), customerdetails.get("postalcode"), customerdetails.get("email"), customerdetails.get("phone"), Boolean.parseBoolean(customerdetails.get("loyaltycard")), new Integer(customerdetails.get("discount")));
         cu.setId(id);
         
         customerLogic.editCustomer(cu);
         
     }
+    
+    /**
+     * 
+     * @param authToken: A user tokenje.
+     * @param emaildetails: Az email küldéshez szükséges információk.
+     * @throws Exception 
+     */
     
     @Path("sendemailto")
     @POST
@@ -121,11 +170,20 @@ public class CustomerController {
         String password = (String) emaildetails.get("password");
         emailservice.SendMail(from, to, password, subject, message);
     }
+    
+    /**
+     * 
+     * @param authToken: A user tokenje.
+     * @param filter: Az ügyfél neve amely alapján szűrni kell.
+     * @return: Visszaadja az ügyfelek listáját, amely megfelel a feltételeknek.
+     * @throws Exception 
+     */
+    
     @Path("filtercustomer/{filter}")
     @GET
     @Produces("application/json")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Map filterStock(@HeaderParam("authToken") String authToken, @PathParam("filter") String filter) throws Exception {
+    public Map filterCustomer(@HeaderParam("authToken") String authToken, @PathParam("filter") String filter) throws Exception {
 
         authorizator.checkAuthorization(authToken, "operator");
         DataObjectMapper<Customer> o = new DataObjectMapper<>(customerLogic.filterCustomerByName(filter));

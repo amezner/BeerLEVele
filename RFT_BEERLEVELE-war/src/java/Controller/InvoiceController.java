@@ -39,6 +39,14 @@ public class InvoiceController {
     @EJB
     private Authorizator authorizator;
 
+    /**
+     * 
+     * @param authToken: A user tokenje.
+     * @param id: A számla id-ja
+     * @return: Visszaadja a kiválasztott számlát.
+     * @throws Exception 
+     */
+    
     @Path("getinvoice/{id}")
     @GET
     @Produces("application/json")

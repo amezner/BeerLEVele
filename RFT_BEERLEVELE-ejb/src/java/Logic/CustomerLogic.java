@@ -30,7 +30,7 @@ public class CustomerLogic {
     @Inject
     CustomerFacade facade;
 
-    public void insertCustomer(String name, String country, String city, String address, String postalcode, String email, String phone, Boolean loyaltycard, Integer discount) throws Exception {
+    public void insertCustomer(String name, String country, String city, String address, String postalcode, String email, String phone, Boolean loyaltycard, Integer discount) throws Exception   {
         Customer customer = new Customer(name, country, city, address, postalcode, email, phone, loyaltycard, discount);
         Logger logger = LoggerFactory.getLogger(CustomerLogic.class);
         logger.debug("Check, if the customer is persistable");
