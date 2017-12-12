@@ -6,9 +6,6 @@
 package Helper.Exceptions;
 
 import java.security.GeneralSecurityException;
-import javax.security.auth.login.LoginException;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;

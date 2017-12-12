@@ -5,9 +5,10 @@
  */
 package Helper.Exceptions;
 
+import Exceptions.AuthorizationFailedException;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.ext.Provider;
 import javax.ws.rs.ext.ExceptionMapper;
+import javax.ws.rs.ext.Provider;
 
 /**
  *
@@ -15,8 +16,9 @@ import javax.ws.rs.ext.ExceptionMapper;
  */
 @Provider
 
-public class ArrayOutOfExceptionMapper implements ExceptionMapper<ArrayIndexOutOfBoundsException> {
 
+
+public class AuthorizationFailedExceptionMapper implements ExceptionMapper<AuthorizationFailedException> {
     public static class Error {
 
         public String cause;
@@ -25,11 +27,10 @@ public class ArrayOutOfExceptionMapper implements ExceptionMapper<ArrayIndexOutO
 
     @Override
 
-    public Response toResponse(ArrayIndexOutOfBoundsException e) {
+    public Response toResponse(AuthorizationFailedException e) {
         LoginExceptionMapper.Error error = new LoginExceptionMapper.Error();
-        error.cause = "failure";
+        error.cause = "authorization-failure";
         error.message = e.getMessage();
-        return Response.status(400).entity(error).build();
+        return Response.status(403).entity(error).build();
     }
-
 }

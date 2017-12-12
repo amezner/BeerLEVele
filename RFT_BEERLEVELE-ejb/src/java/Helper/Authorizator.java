@@ -7,6 +7,7 @@ package Helper;
 
 import Entities.User;
 import Exceptions.AuthorizationFailedException;
+import Exceptions.NoSuchATokenException;
 import Exceptions.NoSuchAUserException;
 import Facades.UserFacade;
 import java.util.HashMap;
@@ -52,7 +53,7 @@ public class Authorizator {
 
     }
 
-    public boolean checkAuthorization(String authToken, String requirement) throws Exception {
+    public boolean checkAuthorization(String authToken, String requirement) throws AuthorizationFailedException, NoSuchAUserException, NoSuchATokenException {
 
         if (Authenticator.getAuthorizationTokensStorage().containsKey(authToken)) {
             String username = Authenticator.getAuthorizationTokensStorage().get(authToken);
@@ -60,13 +61,14 @@ public class Authorizator {
             if (roles.get(user.getRole().toLowerCase()) >= roles.get(requirement)) {
                 return true;
             }
+            throw new AuthorizationFailedException("You are not authorized for this call!");
         }
 
-        throw new AuthorizationFailedException("You are not authorized for this call!");
+        throw new NoSuchATokenException("Token is invalid!");
 
     }
 
-    public Integer getUserID(String authToken) throws Exception {
+    public Integer getUserID(String authToken) throws NoSuchATokenException, NoSuchAUserException {
 
         if (Authenticator.getAuthorizationTokensStorage().containsKey(authToken)) {
             String username = Authenticator.getAuthorizationTokensStorage().get(authToken);
@@ -74,14 +76,14 @@ public class Authorizator {
             return user.getId();
         }
 
-        throw new AuthorizationFailedException("You are not authorized for this call!");
+        throw new NoSuchATokenException("Token is invalid!");
 
     }
 
     public String getPrivilege(String username) throws NoSuchAUserException {
         User user = userfacade.findByUsername(username);
         return user.getRole().toLowerCase();
-        
+
     }
 
 }
