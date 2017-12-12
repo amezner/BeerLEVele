@@ -103,4 +103,15 @@ public class InvoiceLogic {
         orderFacade.emptyCart(uid);
         
     }
+    
+    public List profitPerInvoice() {
+        return invoiceFacade.profitPerInvoice();
+
+    }
+    
+    public List stockConsumption() {
+        return invoiceFacade.stockConsumption();
+
+    }
+
 }

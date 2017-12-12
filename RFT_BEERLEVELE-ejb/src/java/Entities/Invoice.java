@@ -18,13 +18,15 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedNativeQueries;
+import javax.persistence.NamedNativeQuery;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.SecondaryTable;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.metamodel.PluralAttribute.CollectionType;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -36,18 +38,12 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name = "invoice")
+@SecondaryTable (name = "invoicedproducts")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Invoice.findAll", query = "SELECT i FROM Invoice i ORDER BY i.date DESC"),
     @NamedQuery(name = "Invoice.findByInvoicenumber", query = "SELECT i FROM Invoice i WHERE i.invoicenumber = :invoicenumber"),
- //   @NamedQuery(name = "Invoice.profitPerInvoice", query = (//"SELECT i.name FROM Invoice i"))
-//"SELECT i.name, ( SELECT SUM (ip.soldprice - ip.purchaseprice) * ip.soldquantity  AS Profit FROM Invoicedproducts ip WHERE i.invoicenumber = ip.invoicenumber AS profit) FROM Invoice i"))
 })
-
-//
-// Fogyas termekenkent SELECT stockid, sum(soldquantity) FROM `invoicedproducts` GROUP BY stockid
-// SELECT i.name, (SELECT SUM((ip.soldprice-ip.purchaseprice) * ip.soldquantity) AS Profit FROM invoicedproducts ip WHERE i.invoicenumber = ip.invoicenumber ) AS Profit FROM invoice i
-//
 
 public class Invoice implements Serializable {
 

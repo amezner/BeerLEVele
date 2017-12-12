@@ -8,6 +8,7 @@ package Facades;
 import Entities.Invoice;
 import Interfaces.FacadeInterface;
 import java.util.List;
+import java.util.Map;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -59,11 +60,15 @@ public class InvoiceFacade implements FacadeInterface<Invoice>{
             return (Invoice) em.createNamedQuery("Invoice.findByInvoicenumber").setParameter("invoicenumber", invoicenumber).getResultList().get(0);
     }
 
-    // in progress
-    public List<Invoice> profitPerInvoice() {
+    public List profitPerInvoice() {
         Logger logger = LoggerFactory.getLogger(InvoiceFacade.class);
-        logger.debug("findAllInvoices");
-        return em.createNamedQuery("Invoice.findAll").getResultList();
+        logger.debug("profitPerInvoice");
+        return em.createNativeQuery("SELECT i.invoicenumber, i.name, (SELECT sum(ip.soldprice-ip.purchaseprice) * ip.soldquantity FROM invoicedproducts ip WHERE ip.invoicenumber = i.invoicenumber) AS profit FROM invoice i").getResultList();
     }
-   
+
+    public List stockConsumption() {
+        Logger logger = LoggerFactory.getLogger(InvoiceFacade.class);
+        logger.debug("stockConsumption");
+        return em.createNativeQuery("select ip.stockid, ip.name, sum(ip.soldquantity) as quantity, month(i.date) as month, year(i.date) as year, sum(ip.soldquantity * ip.soldprice) as income, sum(ip.soldquantity * ip.purchaseprice) as purchase from invoicedproducts as ip join invoice i on i.invoicenumber = ip.invoicenumber group by ip.stockid, month(i.date), year(i.date)").getResultList();
+    }
 }
