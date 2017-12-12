@@ -7,6 +7,7 @@ package Logic;
 
 import Entities.Customer;
 import Entities.Stock;
+import Exceptions.NoSuchACustomer;
 import Facades.CustomerFacade;
 import java.util.ArrayList;
 import java.util.List;
@@ -59,7 +60,7 @@ public class CustomerLogic {
 
     }
 
-    public Customer findCustomerById(int id){
+    public Customer findCustomerById(int id) throws NoSuchACustomer{
         return facade.findById(id);
     }
 

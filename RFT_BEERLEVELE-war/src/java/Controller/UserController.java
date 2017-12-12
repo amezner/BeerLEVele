@@ -5,6 +5,7 @@
  */
 package Controller;
 
+import Entities.Customer;
 import Entities.User;
 import Helper.Authorizator;
 import Helper.DataObjectMapper;
@@ -86,4 +87,17 @@ public class UserController {
         return (User) o.getEntry();
     
     }
+    
+    @Path("edituser/{id}")
+    @POST
+    @Produces("application/json")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void editUser(@HeaderParam("authToken") String authToken, @PathParam("id") Integer id, Map<String, String> map) throws Exception {
+
+        authorizator.checkAuthorization(authToken, "admin");
+        userLogic.editUser(map.get("name"), map.get("role"), map.get("password"),id);
+
+    }
+    
+    
 }

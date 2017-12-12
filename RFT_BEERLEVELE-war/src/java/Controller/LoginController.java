@@ -5,6 +5,7 @@
  */
 package Controller;
 
+import Exceptions.NoSuchAUserException;
 import Helper.Authenticator;
 import Helper.Authorizator;
 import java.security.GeneralSecurityException;
@@ -39,7 +40,7 @@ public class LoginController {
     @POST
     @Produces("application/json")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Map<String, String> login(Map<String, String> map) throws LoginException {
+    public Map<String, String> login(Map<String, String> map) throws LoginException, NoSuchAUserException {
 
         String token = authenticator.login(map.get("username"), map.get("password"));
         Map<String, String> tok = new HashMap<String, String>();

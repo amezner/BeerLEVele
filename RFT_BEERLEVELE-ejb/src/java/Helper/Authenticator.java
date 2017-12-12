@@ -9,6 +9,7 @@ package Helper;
  *
  * @author danida
  */
+import Exceptions.NoSuchAUserException;
 import Facades.UserFacade;
 import java.util.HashMap;
 import java.util.Map;
@@ -45,7 +46,7 @@ public class Authenticator {
         return authenticator;
     }
 
-    public String login(String username, String password) throws LoginException {
+    public String login(String username, String password) throws LoginException, NoSuchAUserException {
         
         Logger logger = LoggerFactory.getLogger(Authenticator.class);
         logger.debug("Authenticator is checking the details of the user");

@@ -6,7 +6,6 @@
 package Entities;
 
 import java.io.Serializable;
-import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,12 +14,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -83,8 +80,6 @@ public class Customer implements Serializable {
     @Column(name = "discount")
     private Integer discount;
 
-//    @OneToMany(mappedBy = "customerId")
-//    private Collection<Invoice> invoiceCollection;
 
     public Customer() {
     }
@@ -129,14 +124,6 @@ public class Customer implements Serializable {
         this.discount = discount;
     }
 
-//    @XmlTransient
-//    public Collection<Invoice> getInvoiceCollection() {
-//        return invoiceCollection;
-//    }
-//
-//    public void setInvoiceCollection(Collection<Invoice> invoiceCollection) {
-//        this.invoiceCollection = invoiceCollection;
-//    }
 
     @Override
     public int hashCode() {

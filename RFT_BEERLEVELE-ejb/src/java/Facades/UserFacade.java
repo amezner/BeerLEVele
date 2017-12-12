@@ -6,13 +6,13 @@
 package Facades;
 
 import Entities.User;
+import Exceptions.NoSuchAUserException;
 import Interfaces.FacadeInterface;
 import java.util.List;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.security.auth.login.LoginException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -53,7 +53,7 @@ public class UserFacade implements FacadeInterface<User> {
         logger.debug("Listing all the users");
         return em.createNamedQuery("User.findAll").getResultList();
     }
-    public User findByUsername(String username) throws IllegalStateException{
+    public User findByUsername(String username) throws  NoSuchAUserException{
         Logger logger = LoggerFactory.getLogger(UserFacade.class);
         logger.debug("Finding user by username");
         
@@ -61,14 +61,14 @@ public class UserFacade implements FacadeInterface<User> {
         if (!result.isEmpty())
             return (User)em.createNamedQuery("User.findByName").setParameter("name", username).getResultList().get(0);
         else
-            throw new IllegalStateException("User does not exist!");
+            throw new NoSuchAUserException("User does not exist!");
         
     }
     
     public User findUserById(Integer id) {
         Logger logger = LoggerFactory.getLogger(UserFacade.class);
         logger.debug("findUserbyId");
-        return (User) em.createNamedQuery("User.findUserById").setParameter("id", id).getResultList().get(0);
+        return (User) em.createNamedQuery("User.findById").setParameter("id", id).getResultList().get(0);
 
     }
 

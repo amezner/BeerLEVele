@@ -6,6 +6,8 @@
 package Helper;
 
 import Entities.User;
+import Exceptions.AuthorizationFailedException;
+import Exceptions.NoSuchAUserException;
 import Facades.UserFacade;
 import java.util.HashMap;
 import java.util.Map;
@@ -60,7 +62,7 @@ public class Authorizator {
             }
         }
 
-        throw new Exception("You are not authorized for this call!");
+        throw new AuthorizationFailedException("You are not authorized for this call!");
 
     }
 
@@ -72,11 +74,11 @@ public class Authorizator {
             return user.getId();
         }
 
-        throw new Exception("You are not authorized for this call!");
+        throw new AuthorizationFailedException("You are not authorized for this call!");
 
     }
 
-    public String getPrivilege(String username) {
+    public String getPrivilege(String username) throws NoSuchAUserException {
         User user = userfacade.findByUsername(username);
         return user.getRole().toLowerCase();
         
