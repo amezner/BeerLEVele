@@ -1,7 +1,7 @@
 import join from 'url-join';
 import AuthStore from '../stores/authorization';
 
-const BASE_URL = 'http://localhost:8080/RFT_BEERLEVELE-war/resources/';
+const BASE_URL = `http://${window.location.hostname}:8080/RFT_BEERLEVELE-war/resources/`;
 
 const addHeaders = options => {
   const result = {

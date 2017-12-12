@@ -16,6 +16,7 @@
   border:$border-style;
   border-radius:$border-radius;
   transition:$border-color-transition;
+  @include appearance(none);
 
   &.has-error {
     border-color:$error-color;

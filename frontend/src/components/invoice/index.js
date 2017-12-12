@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {observer} from 'mobx-react';
+import PropTypes from 'prop-types';
 import FormRow from '../formrow';
 import Table from '../table';
 import InvoicedProductRow from '../invoicedproductrow';
@@ -11,6 +12,10 @@ import './invoice.css';
 class Invoice extends Component {
   static defaultProps = {
     tableFields: ['Termék neve', 'Mennyiség', 'Eladási ár']
+  };
+
+  static propTypes = {
+    tableFields: PropTypes.array
   };
 
   constructor(props) {
