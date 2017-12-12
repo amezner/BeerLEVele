@@ -75,9 +75,9 @@ public class InvoiceLogic {
                 customerFacade.findById(customer_id).getLoyaltycard(),
                 customerFacade.findById(customer_id).getDiscount()
         );
-        
+
         invoiceFacade.create(invoice);
-               
+             
         for (Order1 o : orderFacade.findCartByUid(uid)) {
             Invoicedproducts ip = new Invoicedproducts(
                 o.getStockId(),
@@ -91,12 +91,15 @@ public class InvoiceLogic {
             );
             ip.setInvoice(invoice);
             ipFacade.create(ip);
+
+            invoice.getInvoicedproductsCollection().add(ip);
+
             Stock updatestock = stockFacade.findStockById(o.getStockId());
             updatestock.setOnstockquantity(updatestock.getOnstockquantity() - o.getQuantity());
             stockFacade.edit(updatestock);
             
         }
-        
+
         orderFacade.emptyCart(uid);
         
     }

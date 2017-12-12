@@ -7,6 +7,7 @@ package Entities;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -23,6 +24,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.metamodel.PluralAttribute.CollectionType;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -190,6 +192,8 @@ public class Invoice implements Serializable {
 
     @XmlTransient
     public Collection<Invoicedproducts> getInvoicedproductsCollection() {
+        if (invoicedproductsCollection == null) 
+            invoicedproductsCollection = new ArrayList<>();
         return invoicedproductsCollection;
     }
 
