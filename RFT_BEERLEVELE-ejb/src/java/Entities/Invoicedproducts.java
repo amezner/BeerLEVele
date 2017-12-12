@@ -50,7 +50,7 @@ public class Invoicedproducts implements Serializable {
     @Column(name = "ID")
     private Integer id;
 
-    //@Size(max = 20)
+    @Size(max = 100)
     @Column(name = "name")
     private String name;
     

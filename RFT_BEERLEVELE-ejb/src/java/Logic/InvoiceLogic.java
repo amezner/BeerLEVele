@@ -86,7 +86,7 @@ public class InvoiceLogic {
                 stockFacade.findStockById(o.getStockId()).getAlcoholcontent(),
                 stockFacade.findStockById(o.getStockId()).getBottlesize(),
                 stockFacade.findStockById(o.getStockId()).getPurchaseprice(),
-                stockFacade.findStockById(o.getStockId()).getSellingprice() * (100 - customerFacade.findById(uid).getDiscount())/100,
+                stockFacade.findStockById(o.getStockId()).getSellingprice() * (100 - customerFacade.findById(customer_id).getDiscount())/100,
                 o.getQuantity()
             );
             ip.setInvoice(invoice);
