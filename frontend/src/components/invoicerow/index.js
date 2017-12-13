@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
+import Visibility from 'react-icons/lib/md/visibility';
 
 class InvoiceRow extends Component {
   constructor(props) {
@@ -41,9 +42,11 @@ class InvoiceRow extends Component {
           </Link>
         </div>
         <div className="table-cell">{dateString}</div>
-        <div className="table-cell">
+        <div className="table-cell feature-cell">
           <div className="features-content">
-            <Link to={`/invoice/${invoicenumber}`} className="feature-item">Megtekint</Link>
+            <Link to={`/invoice/${invoicenumber}`} className="feature-item">
+              <Visibility />
+            </Link>
           </div>
         </div>
       </div>

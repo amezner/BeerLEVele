@@ -1,6 +1,7 @@
 
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
+import MenuItem from '../menuitem';
 import {observer} from 'mobx-react';
 import {withRouter} from 'react-router-dom';
 import {post} from '../../lib/client';
@@ -20,7 +21,7 @@ class MainMenu extends Component {
     this.handleLogout = this.handleLogout.bind(this);
     this.state = {
       menu: {
-        header: 'Funkciók',
+        header: `Szia ${AuthStore.getName()},`,
         children: [
           {
             name:'Vásárlók',
@@ -107,12 +108,15 @@ class MainMenu extends Component {
           if (typeof node.type !== 'undefined') {
             this.handleLogout(e);
           }
+          
+          menu.tools.reset();
         }}
         nodes={this.state.menu}
         type={'overlap'}
         propMap={{
           url: 'link',
         }}
+        linkComponent={MenuItem}
         autoHide={true} >
         <div className="rpm-trigger" id="rpm-trigger" >
           <Bars />

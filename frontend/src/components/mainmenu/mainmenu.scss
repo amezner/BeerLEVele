@@ -20,6 +20,14 @@
 
     .rpm-mp-level {
       background:$green;
+
+      &.rpm-mp-level-open {
+        z-index:3;
+      }
+    }
+
+    .rpm-scroller {
+      overflow-y:auto;
     }
 
     .rpm-trigger {
@@ -58,15 +66,16 @@
       .rpm-node-link {
         vertical-align:top;
         box-sizing:border-box;
-        width:calc(100% - 62px);
+        width:calc(100% - 54px);
         padding-left:20px;
         padding-right:20px;
+        font-size:20px;
       }
       .rpm-node-exp {
         vertical-align:top;
         box-sizing:border-box;
-        height:62px;
-        width:62px;
+        height:54px;
+        width:54px;
         position:relative;
 
         svg {
@@ -89,7 +98,7 @@
   .mainmenu-outer {
     .rpm-mp-pusher {
       .rpm-trigger {
-        left:2%;
+        left:0px;
       }
     }
   }

@@ -5,6 +5,8 @@ import {Link} from 'react-router-dom';
 import {del} from '../../lib/client';
 import {NotificationManager} from 'react-notifications';
 import NumberFormat from 'react-number-format';
+import Edit from 'react-icons/lib/md/edit';
+import Delete from 'react-icons/lib/md/delete';
 
 class CustomerRow extends Component {
   constructor (props) {
@@ -39,10 +41,14 @@ class CustomerRow extends Component {
         <div className="table-cell number-cell">
           <NumberFormat value={discount} displayType="text" suffix="%" />
         </div>
-        <div className="table-cell">
+        <div className="table-cell feature-cell">
           <div className="features-content">
-            <Link className="feature-item" to={`/customerform/${id}`}>Módosítás</Link>
-            <span className="feature-item" onClick={this.handleClick}>Törlés</span>
+            <Link className="feature-item" to={`/customerform/${id}`}>
+              <Edit />
+            </Link>
+            <span className="feature-item" onClick={this.handleClick}>
+              <Delete />
+            </span>
           </div>
         </div>
       </div>

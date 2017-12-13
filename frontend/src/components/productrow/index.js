@@ -6,6 +6,10 @@ import {del, post} from '../../lib/client';
 import {NotificationManager} from 'react-notifications';
 import CartStore from '../../stores/cart';
 import NumberFormat from 'react-number-format';
+import Edit from 'react-icons/lib/md/edit';
+import Delete from 'react-icons/lib/md/delete';
+import AddToCart from 'react-icons/lib/md/shopping-cart';
+
 
 class ProductRow extends Component {
   constructor (props) {
@@ -70,11 +74,17 @@ class ProductRow extends Component {
         <div className="table-cell number-cell">
           <NumberFormat value={onstockquantity} decimalSeparator="," thousandSeparator="." decimalScale={2} displayType="text" suffix=" db" />
         </div>
-        <div className="table-cell">
+        <div className="table-cell feature-cell">
           <div className="features-content">
-            <Link className="feature-item" to={`/productform/${id}`}>Módosítás</Link>
-            <span className="feature-item" onClick={this.addToCart}>Kosárba</span>
-            <span className="feature-item" onClick={this.handleClick}>Törlés</span>
+            <Link className="feature-item" to={`/productform/${id}`}>
+              <Edit />
+            </Link>
+            <span className="feature-item" onClick={this.addToCart}>
+              <AddToCart />
+            </span>
+            <span className="feature-item" onClick={this.handleClick}>
+              <Delete />
+            </span>
           </div>
         </div>
       </div>

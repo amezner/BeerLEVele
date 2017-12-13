@@ -31,7 +31,6 @@ class CustomersStore {
      /* if (!Array.isArray(resp)) {
         resp = Object.values(resp);
       }*/
-      console.log(resp);
 
       this.setCustomers(resp.customer);
     } catch (e) {

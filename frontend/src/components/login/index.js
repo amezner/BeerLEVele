@@ -30,10 +30,10 @@ class LoginPage extends Component {
           username: username.value,
           password: password.value,
         });
-        console.log(resp);
+        
         if (typeof resp.token !== 'undefined') {
           NotificationManager.info('Jó munkát kívánok!', 'Szia '+resp.username);
-          AuthStore.setIsLoggedIn(true, resp.privilege, resp.token);
+          AuthStore.setIsLoggedIn(true, resp);
           this.props.history.push(AuthStore.oldUrl);
         } else if (typeof resp.message !== 'undefined'){
           NotificationManager.error(resp.message, 'Sikertelen belépés!', 3000);

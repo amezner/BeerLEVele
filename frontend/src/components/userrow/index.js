@@ -4,6 +4,8 @@ import {NotificationManager} from 'react-notifications';
 import UserStore from '../../stores/users';
 import {del} from '../../lib/client';
 import {observer} from 'mobx-react';
+import Edit from 'react-icons/lib/md/edit';
+import Delete from 'react-icons/lib/md/delete';
 
 class UserRow extends Component {
   constructor(props) {
@@ -33,10 +35,14 @@ class UserRow extends Component {
           <Link to={`/userform/${id}`}>{name}</Link>
         </div>
         <div className="table-cell">{role}</div>
-        <div className="table-cell">
+        <div className="table-cell feature-cell">
           <div className="features-content">
-            <Link to={`/userform/${id}`} className="feature-item">Módosítás</Link>
-            <span className="feature-item" onClick={this.handleDelete}>Törlés</span>
+            <Link to={`/userform/${id}`} className="feature-item">
+              <Edit />
+            </Link>
+            <span className="feature-item" onClick={this.handleDelete}>
+              <Delete />
+            </span>
           </div>
         </div>
       </div>

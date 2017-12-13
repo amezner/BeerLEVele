@@ -5,6 +5,7 @@ import Field from '../field';
 import {del, post} from '../../lib/client';
 import {NotificationManager} from 'react-notifications';
 import NumberFormat from 'react-number-format';
+import RemoveFromCart from 'react-icons/lib/md/remove-shopping-cart';
 
 
 class CartRow extends Component {
@@ -82,9 +83,11 @@ class CartRow extends Component {
         <div className="table-cell number-cell">
           <NumberFormat decimalSeparator="," thousandSeparator="." value={(price * multiplier * data.quantity)} decimalScale={2} displayType="text" suffix=" Ft" />
         </div>
-        <div className="table-cell">
+        <div className="table-cell feature-cell">
           <div className="features-content">
-            <span className="feature-item" onClick={this.removeFromCart}>töröl</span>
+            <span className="feature-item" onClick={this.removeFromCart}>
+              <RemoveFromCart />
+            </span>
           </div>
         </div>
       </div>

@@ -5,13 +5,15 @@ class Auth {
     extendObservable(this, {
       isLoggedIn: !!(JSON.parse(localStorage.getItem('isLoggedIn'))),
       oldUrl: '/',
-      role: localStorage.getItem('adminRole')
+      role: localStorage.getItem('adminRole'),
+      name: localStorage.getItem('adminName')
     });
   }
-  setIsLoggedIn(value, role, token) {
+  setIsLoggedIn(value, data) {
     localStorage.setItem('isLoggedIn', value);
-    localStorage.setItem('adminRole', role);
-    localStorage.setItem('authToken', token);
+    localStorage.setItem('adminRole', data.privilege);
+    localStorage.setItem('authToken', data.token);
+    localStorage.setItem('adminName', data.username);
     this.isLoggedIn = value;
   }
 
@@ -19,10 +21,15 @@ class Auth {
     return this.role;
   }
 
+  getName() {
+    return this.name;
+  }
+
   logout() {
     localStorage.removeItem('isLoggedIn');
     localStorage.removeItem('adminRole');
     localStorage.removeItem('authToken');
+    localStorage.removeItem('adminName');
     this.isLoggedIn = false;
   }
 
