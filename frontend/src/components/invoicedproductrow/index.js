@@ -9,10 +9,10 @@ class InvoicedProductRow extends Component {
       <div className="table-row data-row">
         <div className="table-cell">{name}</div>
         <div className="table-cell number-cell">
-          <NumberFormat decimalSeparator="," thousandSeparator="." value={soldquantity} decimalScale={2} displayType="text" suffix=" db" />
+          <NumberFormat decimalSeparator="," thousandSeparator="." value={parseInt(soldquantity)} decimalScale={2} displayType="text" suffix=" db" />
         </div>
         <div className="table-cell number-cell">
-          <NumberFormat decimalSeparator="," thousandSeparator="." value={soldprice}  decimalScale={2} displayType="text" suffix=" Ft" />
+          <NumberFormat decimalSeparator="," thousandSeparator="." value={parseFloat(soldprice) * parseInt(soldquantity)}  decimalScale={2} displayType="text" suffix=" Ft" />
         </div>
       </div>
     )

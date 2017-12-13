@@ -29,7 +29,7 @@ class InvoiceStore {
   getInvoiceTotal() {
     let total = 0;
     if (typeof this.invoice.invoicedproducts !== 'undefined') {
-      this.invoice.invoicedproducts.map((row) => { total += row.soldprice });
+      this.invoice.invoicedproducts.map((row) => { total += row.soldprice * row.soldquantity });
     }
 
     return total;
@@ -37,7 +37,7 @@ class InvoiceStore {
 
   async loadInvoice(invoiceId) {
     try {
-      let resp = await get('invoice/getinvoice/'+invoiceId);
+      const resp = await get('invoice/getinvoice/'+invoiceId);
 
       this.setInvoice(resp);
     } catch (e) {

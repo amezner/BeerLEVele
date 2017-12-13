@@ -7,7 +7,7 @@ import InvoiceRow from '../invoicerow';
 
 class InvoiceList extends Component {
   static defaultProps = {
-    tableFields: ['Vásárló neve', 'Kiállítás dátuma', '']
+    tableFields: ['Számlaszám', 'Vásárló neve', 'Kiállítás dátuma', '']
   };
 
   static propTypes = {

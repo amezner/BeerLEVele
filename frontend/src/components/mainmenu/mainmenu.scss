@@ -1,78 +1,95 @@
 @import '../../global.scss';
 
-.menu-outer {
-  .menu {
+.mainmenu-outer {
+  width:300px;
+  height:100%;
+  display:block;
+  color:#ffffff;
+
+  .rpm-container {
+    min-height:0px;
+  }
+
+  .rpm-mp-pusher {
     position:absolute;
-    top:100%;
     left:0px;
-    box-sizing:border-box;
-
-    display:none;
-
-
-  }
-
-  .menu-icon {
-    width:45px;
-    height:28px;
-    color:#ffffff;
-    font-weight:$bold-fweight;
-
-    position:absolute;
     top:0px;
-    left:0px;
-    right:0px;
-    bottom:0px;
-    margin:auto;
-  }
+    width:100%;
+    height:93px;
+    z-index:2;
 
-  .submenu {
-    position:absolute;
-    display:none;
-    top:0px;
-    left:200px;
-  }
+    .rpm-mp-level {
+      background:$green;
+    }
 
-  ul {
-    list-style:none;
-    margin:0px;
-    padding:0px;
-    width:200px;
-    padding:20px 0px 20px 0px;
-    background:#ffffff;
-    box-shadow: 0px 10px 15px rgba(17, 53, 21, 0.2);
-
-    li {
-      box-sizing:border-box;
+    .rpm-trigger {
       display:block;
-      position:relative;
-      width:100%;
-      padding:0px 20px 0px 20px;
-      margin-bottom:15px;
-      &:last-of-type {
-        margin-bottom:0px;
-      }
+      width:30px;
+      height:24px;
+      position:absolute;
+      top:34px;
+      left:34px;
+      opacity:1;
+      transition:$opacity-transition;
 
-      a {
-        color:$primary-color;
-        text-decoration:none;
-        &:hover {
-          text-decoration:underline;
+      svg {
+        display:block;
+        width:100%;
+        height:100%;
+      }
+    }
+
+    &.rpm-mp-pushed {
+      position:fixed;
+      left:0px;
+      top:0px;
+      width:100%;
+      height:100%;
+      z-index:2;
+      min-height:100vh;
+
+      .rpm-trigger {
+        opacity:0;
+        display:none;
+      }
+    }
+
+    .rpm-node-cntr {
+      .rpm-node-link {
+        vertical-align:top;
+        box-sizing:border-box;
+        width:calc(100% - 62px);
+        padding-left:20px;
+        padding-right:20px;
+      }
+      .rpm-node-exp {
+        vertical-align:top;
+        box-sizing:border-box;
+        height:62px;
+        width:62px;
+        position:relative;
+
+        svg {
+          position:absolute;
+          width:20px;
+          height:20px;
+          display:block;
+          top:0px;
+          left:0px;
+          right:0px;
+          bottom:0px;
+          margin:auto;
         }
       }
     }
   }
+}
 
-  &:hover {
-    .menu {
-      display:block;
-
-      .menu-item {
-        &:hover {
-          .submenu {
-            display:block;
-          }
-        }
+@include mobile {
+  .mainmenu-outer {
+    .rpm-mp-pusher {
+      .rpm-trigger {
+        left:2%;
       }
     }
   }

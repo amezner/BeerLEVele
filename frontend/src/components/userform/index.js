@@ -56,9 +56,9 @@ class UserForm extends Component {
       try {
         const id = this.state.user.id;
         if (id) {
-          const resp = await put('user/edituser'+id, data);
+          const resp = await post('user/edituser/'+id, data);
         } else {
-          const resp = await put('user/saveuser', data);
+          const resp = await post('user/saveuser', data);
         }
         
         NotificationManager.success('', 'Sikeres mentés!', 3000);
@@ -107,6 +107,7 @@ class UserForm extends Component {
 
   render() {
     const {id, name, role} = this.state.user;
+    
     return (
       <div className="content-width thin">
         <section className="content-section">

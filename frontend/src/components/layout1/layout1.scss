@@ -4,7 +4,7 @@ header {
   background:$green;
   box-sizing:border-box;
   height:93px;
-  margin-bottom:95px;
+  margin-bottom:6.5vw;
 
   .content-width {
     position:relative;
@@ -68,10 +68,37 @@ body {
   }
 }
 
+@media screen and (min-width:1441px) {
+  header {
+    margin-bottom:93px;
+  }
+}
+
 @include below-lying-tablet {
   #wrapper {
     .content-section {
       padding:30px;
+
+      h1, .like-h1 {
+        margin-bottom:30px;
+      }
+    }
+  }
+}
+
+@include mobile {
+  body {
+    background:#ffffff;
+  }
+  #wrapper {
+    .content-section {
+      padding:0px;
+      box-shadow:none;
+      border-radius:0px;
+
+      h1, .like-h1 {
+        margin-bottom:20px;
+      }
     }
   }
 }

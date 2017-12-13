@@ -22,7 +22,7 @@ class UserStore {
   }
 
   deleteUser(id) {
-    this.products = this.products.filter((user) => user.id !== id);
+    this.users = this.users.filter((user) => user.id !== id);
   }
 
   async loadData() {

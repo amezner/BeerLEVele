@@ -11,7 +11,9 @@ class Layout1 extends Component {
       <div id="wrapper">
         <header>
           <div className="content-width">
-            <MainMenu />
+            <div className="mainmenu-outer">
+              <MainMenu />
+            </div>
             <div className="logo-content">
               <img src={logo} alt="BeerLEVele" />
             </div>

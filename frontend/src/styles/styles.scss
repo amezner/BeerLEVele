@@ -42,6 +42,10 @@ body {
     margin-bottom: 0;
   }
 
+  &.button-row {
+    margin-top:40px;
+  }
+
   label {
     font-weight:$bold-fweight;
     margin-bottom:5px;
@@ -116,5 +120,58 @@ a {
 @include below-lying-tablet {
   .content-width {
     width:92%;
+  }
+
+  .like-h1,
+  h1 {
+    font-size: 36px;
+    line-height: 46px;
+  }
+  
+  .like-h2,
+  h2 {
+    font-size: 28px;
+    line-height: 38px;
+  }
+  
+  .like-h3,
+  h3 {
+    font-size: 20px;
+    line-height: 30px;
+  }
+}
+
+@include mobile {
+  h1 {
+    font-size: 32px;
+    line-height: 38px;
+  }
+  
+  .like-h2,
+  h2 {
+    font-size: 24px;
+    line-height: 30px;
+  }
+  
+  .like-h3,
+  h3 {
+    font-size: 18px;
+    line-height: 24px;
+  }
+
+  .form-row {
+    margin-bottom:15px;
+
+    &.half {
+      width:100%;
+      float:none;
+    }
+
+    &.button-row {
+      .button {
+        display:block;
+        width:100%;
+      }
+    }
   }
 }

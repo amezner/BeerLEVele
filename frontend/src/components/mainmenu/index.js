@@ -7,6 +7,10 @@ import {post} from '../../lib/client';
 import {NotificationManager} from 'react-notifications';
 import AuthStore from '../../stores/authorization';
 
+import 'react-push-menu/styles/component.css';
+import PushMenu from 'react-push-menu';
+import Bars from 'react-icons/lib/fa/bars';
+
 import './mainmenu.css';
 
 class MainMenu extends Component {
@@ -14,6 +18,68 @@ class MainMenu extends Component {
     super(props);
 
     this.handleLogout = this.handleLogout.bind(this);
+    this.state = {
+      menu: {
+        header: 'Funkciók',
+        children: [
+          {
+            name:'Vásárlók',
+            id: 1,
+            link: '/customerlist',
+            children: [
+              {
+                name: 'Vásárlók listája',
+                link: '/customerlist'
+              }, {
+                name: 'Vásárló rögzítése',
+                link: '/customerform'
+              }
+            ]
+          },
+          {
+            name:'Termékek',
+            link:'/productlist',
+            children: [
+              {
+                name:'Termékek listája',
+                link:'/productlist'
+              },
+              {
+                name:'Termék rögzítése',
+                link:'/productform'
+              }
+            ]
+          },
+          {
+            name:'Számlák',
+            link:'/invoicelist',
+            children: [
+              {
+                name:'Kiállított számlák',
+                link:'/invoicelist'
+              }, {
+                name:'Számla létrehozása',
+                link:'/cart'
+              }
+            ]
+          },
+          {
+            name:'Felhasználók',
+            link:'/userlist',
+            children: [
+              {
+                name:'Felhasználók listája',
+                link:'/userlist'
+              }, {
+                name:'Felhasználó létrehozása',
+                link:'/userform'
+              }
+            ]
+          },
+          {name:'Kilépés', type:'logout'}
+        ]
+      }
+    };
   }
 
   async handleLogout(e) {
@@ -35,60 +101,23 @@ class MainMenu extends Component {
 
   render() {
     return (
-      <div className="menu-outer">
-        <div className="menu-icon">
-          menü
+      <PushMenu 
+        className="beerlevele-push-menu"
+        onNodeClick={(e, {menu, node, rootNode}) => {
+          if (typeof node.type !== 'undefined') {
+            this.handleLogout(e);
+          }
+        }}
+        nodes={this.state.menu}
+        type={'overlap'}
+        propMap={{
+          url: 'link',
+        }}
+        autoHide={true} >
+        <div className="rpm-trigger" id="rpm-trigger" >
+          <Bars />
         </div>
-        <ul className="menu">
-          <li className="menu-item">
-            Vásárlók
-            <ul className="submenu">
-              <li className="menu-item submenu-item">
-                <Link to="/customerlist">Vásárlók listája</Link>
-              </li>
-              <li className="menu-item submenu-item">
-                <Link to="/customerform">Vásárló rögzítése</Link>
-              </li>
-            </ul>
-          </li>
-          <li className="menu-item">
-            Termékek
-            <ul className="submenu">
-              <li className="menu-item submenu-item">
-                <Link to="/productlist">Termékek listája</Link>
-              </li>
-              <li className="menu-item submenu-item">
-                <Link to="/productform">Termék rögzítése</Link>
-              </li>
-            </ul>
-          </li>
-          <li className="menu-item">
-            Számlázás
-            <ul className="submenu">
-              <li className="menu-item submenu-item">
-                <Link to="/invoicelist">Számlák listája</Link>
-              </li>
-              <li className="menu-item submenu-item">
-                <Link to="/cart">Számla létrehozása</Link>
-              </li>
-            </ul>
-          </li>
-          <li className="menu-item">
-            Felhasználó kezelés
-            <ul className="submenu">
-              <li className="menu-item submenu-item">
-                <Link to="/userlist">Felhasználók listája</Link>
-              </li>
-              <li>
-                <Link to="/userform">Felhasználó létrehozása</Link>
-              </li>
-            </ul>
-          </li>
-          <li>
-            <span onClick={this.handleLogout}>Kilépés</span>
-          </li>
-        </ul>
-      </div>
+      </PushMenu>
     );
   }
 }

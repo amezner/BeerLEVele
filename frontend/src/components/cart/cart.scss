@@ -12,6 +12,7 @@
   .product-content {
     .button-row {
       padding-top:31px;
+      margin-top:0px;
 
       .button {
         display:block;
@@ -31,6 +32,37 @@
       margin-right:25px;
       &:last-child {
         margin-right:0px;
+      }
+    }
+  }
+}
+
+@include mobile {
+  .cart-page {
+    .cart-content {
+      margin-top:25px;
+    }
+  
+    .customer-content {
+      margin-bottom:25px;
+    }
+
+    .product-content {
+      .button-row {
+        padding-top:0px;
+      }
+    }
+
+    .buttons-content {
+      margin-top:40px;
+      .button {
+        margin-right:0px;
+        width:100%;
+        display:block;
+        margin-bottom:15px;
+        &:last-child {
+          margin-bottom:0px;
+        }
       }
     }
   }
