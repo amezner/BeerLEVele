@@ -10,6 +10,7 @@ import Entities.Invoice;
 import Helper.Authorizator;
 import Helper.DataObjectMapper;
 import Helper.InvoiceWrapper;
+import Helper.ProfitPerInvoice;
 import java.util.HashMap;
 import java.util.Map;
 import javax.ejb.EJB;
@@ -23,8 +24,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
 
 /**
  *
@@ -42,26 +41,25 @@ public class InvoiceController {
     private Authorizator authorizator;
 
     /**
-     * 
+     *
      * @param authToken: A user tokenje.
      * @param id: A számla id-ja
      * @return: Visszaadja a kiválasztott számlát.
-     * @throws Exception 
+     * @throws Exception
      */
-    
     @Path("getinvoice/{id}")
     @GET
     @Produces("application/json")
     @Consumes(MediaType.APPLICATION_JSON)
-    public InvoiceWrapper  getInvoice(@HeaderParam("authToken") String authToken, @PathParam("id") Integer id) throws Exception {
-        
+    public InvoiceWrapper getInvoice(@HeaderParam("authToken") String authToken, @PathParam("id") Integer id) throws Exception {
+
         authorizator.checkAuthorization(authToken, "admin");
         DataObjectMapper<InvoiceWrapper> o = new DataObjectMapper<>(invoiceLogic.findInvoiceByInvoicenumber(id));
 
         return (InvoiceWrapper) o.getEntry();
-        
+
     }
-    
+
     @Path("getallinvoices")
     @GET
     @Produces("application/json")
@@ -72,7 +70,7 @@ public class InvoiceController {
 
         Map ret = new HashMap<>();
         DataObjectMapper<Invoice> o = new DataObjectMapper<>(invoiceLogic.findAllInvoices());
-      
+
         return o.getMap();
 
     }
@@ -88,7 +86,7 @@ public class InvoiceController {
         invoiceLogic.closeInvoice(authorizator.getUserID(authToken), new Integer(map.get("customer_id")));
 
     }
-    
+
     @Path("stockconsumption")
     @GET
     @Produces("application/json")
@@ -98,22 +96,23 @@ public class InvoiceController {
         authorizator.checkAuthorization(authToken, "finance");
 
         DataObjectMapper<Object> o = new DataObjectMapper<>(invoiceLogic.stockConsumption());
-      
+
         return o.getMap();
         //return new Gson().toJsonTree(invoiceLogic.stockConsumption());
-                //.toJson(invoiceLogic.stockConsumption());
+        //.toJson(invoiceLogic.stockConsumption());
 
     }
-    
+
     @Path("profitperinvoice")
     @GET
     @Produces("application/json")
     @Consumes(MediaType.APPLICATION_JSON)
-    public String profitPerInvoice(@HeaderParam("authToken") String authToken) throws Exception {
+    public Map profitPerInvoice(@HeaderParam("authToken") String authToken) throws Exception {
 
         authorizator.checkAuthorization(authToken, "finance");
+        DataObjectMapper<ProfitPerInvoice> o = new DataObjectMapper<>(invoiceLogic.profitPerInvoice());
 
-        return new Gson().toJson(invoiceLogic.profitPerInvoice());
+        return o.getMap();
 
     }
 

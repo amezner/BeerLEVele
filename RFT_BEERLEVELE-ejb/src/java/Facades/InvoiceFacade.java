@@ -8,7 +8,6 @@ package Facades;
 import Entities.Invoice;
 import Interfaces.FacadeInterface;
 import java.util.List;
-import java.util.Map;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -60,12 +59,12 @@ public class InvoiceFacade implements FacadeInterface<Invoice>{
             return (Invoice) em.createNamedQuery("Invoice.findByInvoicenumber").setParameter("invoicenumber", invoicenumber).getResultList().get(0);
     }
 
-    public List profitPerInvoice() {
+  /*  public List profitPerInvoice() {
         Logger logger = LoggerFactory.getLogger(InvoiceFacade.class);
         logger.debug("profitPerInvoice");
-        return em.createNativeQuery("SELECT i.invoicenumber, i.name, (SELECT sum(ip.soldprice-ip.purchaseprice) * ip.soldquantity FROM invoicedproducts ip WHERE ip.invoicenumber = i.invoicenumber) AS profit FROM invoice i").getResultList();
+        return em.createNamedQuery("Invoice.profitPerInvoice").getResultList();
     }
-
+*/
     public List stockConsumption() {
         Logger logger = LoggerFactory.getLogger(InvoiceFacade.class);
         logger.debug("stockConsumption");

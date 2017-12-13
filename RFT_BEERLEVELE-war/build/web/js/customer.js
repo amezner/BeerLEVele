@@ -271,7 +271,30 @@ $(document).ready(function () {
             $('#ajaxGetUserServletResponse').text(responseText);
         });
     });
+    
+    $("#stockconsumption").click(function () {
+        $.ajax({
+            url: 'resources/invoice/stockconsumption',
+            type: 'GET',
+            dataType: "json",
+            contentType: "application/json",
+            headers: {'authToken': token},
+        }, function (responseText) {
+            $('#ajaxGetUserServletResponse').text(responseText);
+        })
+    });
 
+    $("#profitperinvoice").click(function () {
+        $.ajax({
+            url: 'resources/invoice/profitperinvoice',
+            type: 'GET',
+            dataType: "json",
+            contentType: "application/json",
+            headers: {'authToken': token},
+        }, function (responseText) {
+            $('#ajaxGetUserServletResponse').text(responseText);
+        })
+    });
     /*   $("#getall").click(
      function () {
      var request = $.ajax({

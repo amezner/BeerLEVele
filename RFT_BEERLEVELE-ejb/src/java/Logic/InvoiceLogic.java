@@ -15,7 +15,13 @@ import Facades.InvoicedproductsFacade;
 import Facades.Order1Facade;
 import Facades.StockFacade;
 import Helper.InvoiceWrapper;
+import Helper.ProfitPerInvoice;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import javax.annotation.ManagedBean;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -104,8 +110,18 @@ public class InvoiceLogic {
         
     }
     
-    public List profitPerInvoice() {
-        return invoiceFacade.profitPerInvoice();
+    public List<ProfitPerInvoice> profitPerInvoice() {
+        List<Invoice> invoices = invoiceFacade.findAll();
+        List<ProfitPerInvoice> profitPerInvoiceList  = new ArrayList<>();
+        
+        
+        
+        for (Invoice i : invoices){
+            
+            ProfitPerInvoice pi = new ProfitPerInvoice(i.getInvoicenumber(), i.getName(),calculateProfit(i) ); 
+            profitPerInvoiceList.add(pi);
+        }
+        return profitPerInvoiceList;
 
     }
     
@@ -113,5 +129,12 @@ public class InvoiceLogic {
         return invoiceFacade.stockConsumption();
 
     }
-
+    public Double calculateProfit(Invoice i){
+       Collection<Invoicedproducts> lista =  i.getInvoicedproductsCollection();
+       Double profit = 0.0;
+       profit = lista.stream().map((ip) -> (ip.getSoldprice()-ip.getPurchaseprice())*ip.getSoldquantity()).reduce(profit, (accumulator, _item) -> accumulator + _item);
+       return profit;
+    }
+    
+    
 }

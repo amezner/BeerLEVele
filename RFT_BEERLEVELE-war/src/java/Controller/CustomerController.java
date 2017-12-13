@@ -13,7 +13,6 @@ import Exceptions.NoSuchAUserException;
 import Helper.Authorizator;
 import Helper.DataObjectMapper;
 import Helper.Email;
-import java.util.List;
 import java.util.Map;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -79,12 +78,12 @@ public class CustomerController {
     @GET
     @Produces("application/json")
     @Consumes(MediaType.APPLICATION_JSON)
-    public List<Customer> getAll(@HeaderParam("authToken") String authToken) throws Exception {
+    public Map getAll(@HeaderParam("authToken") String authToken) throws Exception {
         
         authorizator.checkAuthorization(authToken, "operator");        
+        DataObjectMapper<Customer> o = new DataObjectMapper<>(customerLogic.findAllCustomer());
         
-        
-        return customerLogic.findAllCustomer();
+        return o.getMap();
         
     }
     
