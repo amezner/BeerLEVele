@@ -1,6 +1,5 @@
 
 import React, {Component} from 'react';
-import {Link} from 'react-router-dom';
 import MenuItem from '../menuitem';
 import {observer} from 'mobx-react';
 import {withRouter} from 'react-router-dom';

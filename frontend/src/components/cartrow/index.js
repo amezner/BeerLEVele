@@ -62,7 +62,7 @@ class CartRow extends Component {
     const customerId = CartStore.getCustomerId();
 
     if (customerId) {
-      const customer = CartStore.customerStore.getCustomer(customerId);
+      const customer = CartStore.customerStore.getCustomer(parseInt(customerId));
       if (customer) {
         multiplier = 1 - (customer.discount / 100);
       }

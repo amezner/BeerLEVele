@@ -110,26 +110,39 @@ class Cart extends Component {
   }
 
   render() {
-    let customerOptions = {0: "Kérem válasszon vásárlót"};
+    let customerOptions = [{
+      "value":0,
+      "label": "Kérem válasszon vásárlót"
+    }];
     const customers = CartStore.customerStore.getCustomers();
     if (customers) {
       if (customers.length > 0) {
-        customers.map((customer) => {
-          return customerOptions[customer.id] = customer.name;
+        customers.map((customer, index) => {
+          customerOptions.push({
+            value: customer.id,
+            label: customer.name
+          });
+          return true;
         });
       }
     }
 
 
-    let productOptions = {0: "Kérem válasszon terméket"};
+    let productOptions = [{
+      value: 0,
+      label: "Kérem válasszon terméket"
+    }];
     const stockInCart = CartStore.getProductIds();
 
     const products = CartStore.productStore.getProducts();
     if (products) {
       if (products.length > 0) {
-        products.map((product) => {
+        products.map((product, index) => {
           if (!stockInCart || (stockInCart && !stockInCart.includes(product.id))) {
-            productOptions[product.id] = product.name;
+            productOptions.push({
+              value: product.id,
+              label: product.name
+            });
           }
           return true;
         });
