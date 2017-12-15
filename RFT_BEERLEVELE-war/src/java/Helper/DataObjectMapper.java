@@ -9,8 +9,9 @@ import java.util.List;
 
 
 public class DataObjectMapper<Object> extends ObjectMapper {
+    
 
-    public DataObjectMapper(Object o) {
+   public DataObjectMapper(Object o) {
         super(o);
     }
 

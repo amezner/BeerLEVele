@@ -10,6 +10,7 @@ import Entities.User;
 import Helper.Authorizator;
 import Helper.DataObjectMapper;
 import Logic.UserLogic;
+import java.util.List;
 import java.util.Map;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -54,13 +55,11 @@ public class UserController {
     @GET
     @Produces("application/json")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Map getAll(@HeaderParam("authToken") String authToken) throws Exception {
+    public List<User> getAll(@HeaderParam("authToken") String authToken) throws Exception {
 
         authorizator.checkAuthorization(authToken, "admin");
-        
-        DataObjectMapper<User> o = new DataObjectMapper<>(userLogic.findAllUser());
-      
-        return o.getMap();
+              
+        return userLogic.findAllUser();
 
     }
 
@@ -82,9 +81,8 @@ public class UserController {
         
         authorizator.checkAuthorization(authToken, "admin");
         
-        DataObjectMapper<User> o = new DataObjectMapper<>(userLogic.findUserById(id));
         
-        return (User) o.getEntry();
+        return userLogic.findUserById(id);
     
     }
     

@@ -11,8 +11,8 @@ import Exceptions.AuthorizationFailedException;
 import Exceptions.NoSuchATokenException;
 import Exceptions.NoSuchAUserException;
 import Helper.Authorizator;
-import Helper.DataObjectMapper;
 import Helper.Email;
+import java.util.List;
 import java.util.Map;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -63,7 +63,6 @@ public class CustomerController {
     public void saveCustomer(@HeaderParam("authToken") String authToken, Map<String, String> customerdetails) throws AuthorizationFailedException, NoSuchAUserException, NoSuchATokenException, Exception  {
         
         authorizator.checkAuthorization(authToken, "admin");
-        
         customerLogic.insertCustomer(customerdetails.get("name"), customerdetails.get("country"), customerdetails.get("city"), customerdetails.get("address"), customerdetails.get("postalcode"), customerdetails.get("email"), customerdetails.get("phone"), Boolean.parseBoolean(customerdetails.get("loyaltycard")), new Integer(customerdetails.get("discount")));
         
     }
@@ -78,12 +77,11 @@ public class CustomerController {
     @GET
     @Produces("application/json")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Map getAll(@HeaderParam("authToken") String authToken) throws Exception {
+    public List<Customer> getAll(@HeaderParam("authToken") String authToken) throws Exception {
         
         authorizator.checkAuthorization(authToken, "operator");        
-        DataObjectMapper<Customer> o = new DataObjectMapper<>(customerLogic.findAllCustomer());
         
-        return o.getMap();
+        return customerLogic.findAllCustomer();
         
     }
     
@@ -121,9 +119,9 @@ public class CustomerController {
         
         authorizator.checkAuthorization(authToken, "operator");
         
-        DataObjectMapper<Customer> o = new DataObjectMapper<>(customerLogic.findCustomerById(id));
         
-        return (Customer) o.getEntry();
+        
+        return customerLogic.findCustomerById(id);
         
     }
     
@@ -182,12 +180,12 @@ public class CustomerController {
     @GET
     @Produces("application/json")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Map filterCustomer(@HeaderParam("authToken") String authToken, @PathParam("filter") String filter) throws Exception {
+    public List<Customer> filterCustomer(@HeaderParam("authToken") String authToken, @PathParam("filter") String filter) throws Exception {
 
         authorizator.checkAuthorization(authToken, "operator");
-        DataObjectMapper<Customer> o = new DataObjectMapper<>(customerLogic.filterCustomerByName(filter));
+        
       
-        return o.getMap();
+        return customerLogic.filterCustomerByName(filter);
 
     }
     

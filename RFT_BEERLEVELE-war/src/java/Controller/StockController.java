@@ -9,6 +9,7 @@ import Entities.Stock;
 import Helper.Authorizator;
 import Helper.DataObjectMapper;
 import Logic.StockLogic;
+import java.util.List;
 import java.util.Map;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -56,8 +57,6 @@ public class StockController {
         Integer h = new Integer(map.get("onstockquantity"));
         stockLogic.insertStock(a, b, c, d, e, f, g, h);
 
-//    faszsetudjahogyezmeeeenemjooooo
-//    stockLogic.insertStock(map.get("name"), map.get("description"), map.get("type"), new Double(map.get("alcoholcontent")), new Double(map.get("bottlesize")), new Double(map.get("purcahaseprice")), new Double(map.get("sellingprice")), new Integer(map.get("onstockquantity")));
 
     }
 
@@ -65,13 +64,12 @@ public class StockController {
     @GET
     @Produces("application/json")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Map getAll(@HeaderParam("authToken") String authToken) throws Exception {
+    public List<Stock> getAll(@HeaderParam("authToken") String authToken) throws Exception {
 
         authorizator.checkAuthorization(authToken, "operator");
         
-        DataObjectMapper<Stock> o = new DataObjectMapper<>(stockLogic.findAllStock());
       
-        return o.getMap();
+        return stockLogic.findAllStock();
 
     }
 
@@ -93,9 +91,8 @@ public class StockController {
         
         authorizator.checkAuthorization(authToken, "operator");
         
-        DataObjectMapper<Stock> o = new DataObjectMapper<>(stockLogic.findStockById(id));
         
-        return (Stock) o.getEntry();
+        return stockLogic.findStockById(id);
     }
     
     @Path("editstock/{id}")
@@ -124,13 +121,12 @@ public class StockController {
     @GET
     @Produces("application/json")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Map filterStock(@HeaderParam("authToken") String authToken, @PathParam("filter") String filter) throws Exception {
+    public List<Stock> filterStock(@HeaderParam("authToken") String authToken, @PathParam("filter") String filter) throws Exception {
 
         authorizator.checkAuthorization(authToken, "operator");
         
-        DataObjectMapper<Stock> o = new DataObjectMapper<>(stockLogic.filterStockByName(filter));
       
-        return o.getMap();
+        return stockLogic.filterStockByName(filter);
 
     }
     

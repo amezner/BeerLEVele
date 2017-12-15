@@ -147,8 +147,10 @@ public class Customer implements Serializable {
 
     @Override
     public String toString() {
-        return "Entities.Customer[ id=" + id + " ]";
+        return "Customer{" + "id=" + id + ", name=" + name + ", country=" + country + ", city=" + city + ", address=" + address + ", postalcode=" + postalcode + ", email=" + email + ", phone=" + phone + ", loyaltycard=" + loyaltycard + ", discount=" + discount + '}';
     }
+
+   
 
     public String getName() {
         return name;

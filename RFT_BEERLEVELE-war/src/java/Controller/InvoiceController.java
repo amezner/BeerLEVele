@@ -11,7 +11,9 @@ import Helper.Authorizator;
 import Helper.DataObjectMapper;
 import Helper.InvoiceWrapper;
 import Helper.ProfitPerInvoice;
+import Helper.StockConsumption;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -64,14 +66,12 @@ public class InvoiceController {
     @GET
     @Produces("application/json")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Map getAll(@HeaderParam("authToken") String authToken) throws Exception {
+    public List<Invoice> getAll(@HeaderParam("authToken") String authToken) throws Exception {
 
         authorizator.checkAuthorization(authToken, "finance");
 
-        Map ret = new HashMap<>();
-        DataObjectMapper<Invoice> o = new DataObjectMapper<>(invoiceLogic.findAllInvoices());
 
-        return o.getMap();
+        return invoiceLogic.findAllInvoices();
 
     }
 
@@ -87,19 +87,31 @@ public class InvoiceController {
 
     }
 
-    @Path("stockconsumption")
+    @Path("stockconsumptionpermonth")
     @GET
     @Produces("application/json")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Map stockConsumption(@HeaderParam("authToken") String authToken) throws Exception {
+    public List<StockConsumption> stockConsumptionPerMonth(@HeaderParam("authToken") String authToken) throws Exception {
 
         authorizator.checkAuthorization(authToken, "finance");
 
-        DataObjectMapper<Object> o = new DataObjectMapper<>(invoiceLogic.stockConsumption());
 
-        return o.getMap();
-        //return new Gson().toJsonTree(invoiceLogic.stockConsumption());
-        //.toJson(invoiceLogic.stockConsumption());
+        return invoiceLogic.stockConsumptionPerMonth();
+
+
+    }
+   
+    @Path("stockconsumptionperstock/{id}")
+    @GET
+    @Produces("application/json")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public List<StockConsumption> stockConsumptionPerMonth(@HeaderParam("authToken") String authToken,@PathParam("id") Integer id) throws Exception {
+
+        authorizator.checkAuthorization(authToken, "finance");
+
+
+        return invoiceLogic.stockConsumptionPerStock(id);
+
 
     }
 
@@ -107,12 +119,11 @@ public class InvoiceController {
     @GET
     @Produces("application/json")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Map profitPerInvoice(@HeaderParam("authToken") String authToken) throws Exception {
+    public List<ProfitPerInvoice> profitPerInvoice(@HeaderParam("authToken") String authToken) throws Exception {
 
         authorizator.checkAuthorization(authToken, "finance");
-        DataObjectMapper<ProfitPerInvoice> o = new DataObjectMapper<>(invoiceLogic.profitPerInvoice());
 
-        return o.getMap();
+        return invoiceLogic.profitPerInvoice();
 
     }
 

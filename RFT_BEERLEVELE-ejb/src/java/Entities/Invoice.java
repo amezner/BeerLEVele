@@ -5,6 +5,7 @@
  */
 package Entities;
 
+import Helper.StockConsumption;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -13,6 +14,8 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.ColumnResult;
+import javax.persistence.ConstructorResult;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -23,7 +26,7 @@ import javax.persistence.NamedNativeQuery;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.SecondaryTable;
+import javax.persistence.SqlResultSetMapping;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -36,12 +39,43 @@ import javax.xml.bind.annotation.XmlTransient;
  *
  * @author danida
  */
+@SqlResultSetMapping(name = "stockConsumptionResults",
+        classes = @ConstructorResult(targetClass = StockConsumption.class,
+                columns = {
+                    @ColumnResult(name = "stockid"),
+                    @ColumnResult(name = "quantity"),
+                    @ColumnResult(name = "month"),
+                    @ColumnResult(name = "year"),
+                    @ColumnResult(name = "avg_purchase"),
+                    @ColumnResult(name = "avg_sold"),
+                    @ColumnResult(name = "avg_profit"),
+                    @ColumnResult(name = "income"),
+                    @ColumnResult(name = "purchase"),
+                    @ColumnResult(name = "profit")})
+)
 @Entity
 @Table(name = "invoice")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Invoice.findAll", query = "SELECT i FROM Invoice i ORDER BY i.date DESC"),
     @NamedQuery(name = "Invoice.findByInvoicenumber", query = "SELECT i FROM Invoice i WHERE i.invoicenumber = :invoicenumber")
+})
+@NamedNativeQueries({
+    @NamedNativeQuery(name = "Invoice.stockConsumptionPerMonth", query = "select ip.stockid, sum(ip.soldquantity) as quantity, month(i.date) as month, year(i.date) as year, avg(ip.purchaseprice) as avg_purchase,    avg(ip.soldprice) as avg_sold,    avg(ip.soldprice - ip.purchaseprice) as avg_profit,    sum(ip.soldquantity * ip.soldprice) as income,     sum(ip.soldquantity * ip.purchaseprice) as purchase,    sum((ip.soldprice - ip.purchaseprice) * ip.soldquantity) as profit from invoicedproducts as ip join invoice i on i.invoicenumber = ip.invoicenumber group by ip.stockid, month(i.date), year(i.date) order by year(i.date) asc, month(i.date) asc", resultSetMapping = "stockConsumptionResults"),
+    @NamedNativeQuery(name = "Invoice.stockConsumptionPerStock", query = "select \n"
+            + "    ip.stockid, sum(ip.soldquantity) as quantity, \n"
+            + "    month(i.date) as month, year(i.date) as year, \n"
+            + "    avg(ip.purchaseprice) as avg_purchase,\n"
+            + "    avg(ip.soldprice) as avg_sold,\n"
+            + "    avg(ip.soldprice - ip.purchaseprice) as avg_profit,\n"
+            + "    sum(ip.soldquantity * ip.soldprice) as income, \n"
+            + "    sum(ip.soldquantity * ip.purchaseprice) as purchase,\n"
+            + "    sum((ip.soldprice - ip.purchaseprice) * ip.soldquantity) as profit \n"
+            + "from invoicedproducts as ip\n"
+            + "join invoice i on i.invoicenumber = ip.invoicenumber\n"
+            + "where ip.stockid = ?1\n"
+            + "group by ip.stockid, month(i.date), year(i.date)\n"
+            + "order by year(i.date) asc, month(i.date) asc", resultSetMapping = "stockConsumptionResults")
 })
 
 public class Invoice implements Serializable {
@@ -115,7 +149,7 @@ public class Invoice implements Serializable {
         this.loyaltycard = loyaltycard;
         this.discount = discount;
     }
-    
+
     public Invoice(Integer invoicenumber) {
         this.invoicenumber = invoicenumber;
     }
@@ -187,8 +221,9 @@ public class Invoice implements Serializable {
 
     @XmlTransient
     public Collection<Invoicedproducts> getInvoicedproductsCollection() {
-        if (invoicedproductsCollection == null) 
+        if (invoicedproductsCollection == null) {
             invoicedproductsCollection = new ArrayList<>();
+        }
         return invoicedproductsCollection;
     }
 

@@ -28,6 +28,7 @@ public class DefaultExceptionMapper implements ExceptionMapper<Exception> {
         LoginExceptionMapper.Error error = new LoginExceptionMapper.Error();
         error.cause = "failure";
         error.message = e.getMessage();
+        e.printStackTrace();
         return Response.status(400).entity(error).build();
     }
 

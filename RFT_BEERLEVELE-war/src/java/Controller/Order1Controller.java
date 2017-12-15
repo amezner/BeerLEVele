@@ -9,6 +9,7 @@ import Entities.Order1;
 import Helper.Authorizator;
 import Helper.DataObjectMapper;
 import Logic.Order1Logic;
+import java.util.List;
 import java.util.Map;
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
@@ -41,11 +42,10 @@ public class Order1Controller {
     @GET
     @Produces("application/json")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Map getAllFromCart(@HeaderParam("authToken") String authToken) throws Exception {
+    public List<Order1> getAllFromCart(@HeaderParam("authToken") String authToken) throws Exception {
         
         authorizator.checkAuthorization(authToken, "admin");
-        DataObjectMapper<Order1> o = new DataObjectMapper<>(order1logic.findCartByUid(authorizator.getUserID(authToken)));
-        return o.getMap();
+        return order1logic.findCartByUid(authorizator.getUserID(authToken));
 
     }
 

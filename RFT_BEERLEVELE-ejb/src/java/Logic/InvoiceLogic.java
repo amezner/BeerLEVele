@@ -16,6 +16,7 @@ import Facades.Order1Facade;
 import Facades.StockFacade;
 import Helper.InvoiceWrapper;
 import Helper.ProfitPerInvoice;
+import Helper.StockConsumption;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -125,10 +126,16 @@ public class InvoiceLogic {
 
     }
     
-    public List stockConsumption() {
-        return invoiceFacade.stockConsumption();
+    public List<StockConsumption> stockConsumptionPerMonth() {
+        return invoiceFacade.stockConsumptionPerMonth();
 
     }
+    public List<StockConsumption> stockConsumptionPerStock(Integer id) {
+        return invoiceFacade.stockConsumptionPerStock(id);
+
+    }
+    
+    
     public Double calculateProfit(Invoice i){
        Collection<Invoicedproducts> lista =  i.getInvoicedproductsCollection();
        Double profit = 0.0;
