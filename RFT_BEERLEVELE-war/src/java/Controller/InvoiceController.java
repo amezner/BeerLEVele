@@ -8,11 +8,9 @@ package Controller;
 import Logic.InvoiceLogic;
 import Entities.Invoice;
 import Helper.Authorizator;
-import Helper.DataObjectMapper;
 import Helper.InvoiceWrapper;
 import Helper.ProfitPerInvoice;
 import Helper.StockConsumption;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.ejb.EJB;
@@ -56,9 +54,8 @@ public class InvoiceController {
     public InvoiceWrapper getInvoice(@HeaderParam("authToken") String authToken, @PathParam("id") Integer id) throws Exception {
 
         authorizator.checkAuthorization(authToken, "admin");
-        DataObjectMapper<InvoiceWrapper> o = new DataObjectMapper<>(invoiceLogic.findInvoiceByInvoicenumber(id));
 
-        return (InvoiceWrapper) o.getEntry();
+        return invoiceLogic.findInvoiceByInvoicenumber(id);
 
     }
 
