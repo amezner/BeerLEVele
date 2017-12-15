@@ -11,12 +11,21 @@ import Dropdown from '../dropdown';
 
 class UserForm extends Component {
   static defaultProps = {
-    rules: {
-      0: 'Kérem válasszon jogosultságot!',
-      admin: 'Admin',
-      operator: 'Operátor',
-      finance: 'Pénzügy'
-    }
+    rules: [
+      {
+        value: 0,
+        label: 'Kérem válasszon jogosultságot!',
+      }, {
+        value: 'admin',
+        label: 'Admin',
+      }, {
+        value: 'operator',
+        label: 'Operátor'
+      }, {
+        value: 'finance',
+        label: 'Pénzügy'
+      }
+    ]
   };
 
   static propTypes = {

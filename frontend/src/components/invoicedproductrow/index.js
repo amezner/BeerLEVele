@@ -12,6 +12,9 @@ class InvoicedProductRow extends Component {
           <NumberFormat decimalSeparator="," thousandSeparator="." value={parseInt(soldquantity)} decimalScale={2} displayType="text" suffix=" db" />
         </div>
         <div className="table-cell number-cell">
+          <NumberFormat decimalSeparator="," thousandSeparator="." value={parseFloat(soldprice)}  decimalScale={2} displayType="text" suffix=" Ft" />
+        </div>
+        <div className="table-cell number-cell">
           <NumberFormat decimalSeparator="," thousandSeparator="." value={parseFloat(soldprice) * parseInt(soldquantity)}  decimalScale={2} displayType="text" suffix=" Ft" />
         </div>
       </div>

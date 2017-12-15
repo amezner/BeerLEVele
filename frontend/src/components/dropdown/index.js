@@ -19,7 +19,7 @@ class DropDown extends Component {
     name: PropTypes.string,
     id: PropTypes.string,
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    options: PropTypes.object
+    options: PropTypes.array
   };
 
   constructor(props) {
@@ -75,10 +75,11 @@ class DropDown extends Component {
       <span className="custom-select">
         <select name={name} id={id} onChange={this.handleChange} value={this.state.value ? this.state.value : 0}>
             {
-              Object.keys(options).length > 0 ?
-                Object.entries(options).map(([value, label]) => {
-                  return <option key={value} value={value}>{label}</option>
-                }) : null
+              options.length > 0 ?
+              options.map((item) => {
+                return <option key={item.value} value={item.value}>{item.label}</option>
+              })
+              : null
             }
         </select>
       </span>

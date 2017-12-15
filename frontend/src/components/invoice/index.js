@@ -11,16 +11,12 @@ import './invoice.css';
 
 class Invoice extends Component {
   static defaultProps = {
-    tableFields: ['Termék neve', 'Mennyiség', 'Eladási ár']
+    tableFields: ['Termék neve', 'Mennyiség', 'Eladási ár', 'Részösszeg']
   };
 
   static propTypes = {
     tableFields: PropTypes.array
   };
-
-  constructor(props) {
-    super(props);
-  }
 
   componentDidMount() {
     const invoiceId = this.props.match.params.id;
@@ -28,7 +24,6 @@ class Invoice extends Component {
       InvoiceStore.loadInvoice(invoiceId);
     }
   }
-
 
   render() {
     const invoice = InvoiceStore.getInvoice();
@@ -85,6 +80,7 @@ class Invoice extends Component {
               total > 0 ? (
                 <div className="table-row total-row header-row">
                   <div className="table-cell">Összesen</div>
+                  <div className="table-cell"></div>
                   <div className="table-cell"></div>
                   <div className="table-cell number-cell">
                     <NumberFormat decimalSeparator="," thousandSeparator="." value={total}  decimalScale={2} displayType="text" suffix=" Ft" />

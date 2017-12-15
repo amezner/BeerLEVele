@@ -28,11 +28,11 @@ class CustomersStore {
   async loadData() {
     try {
       let resp = await get('customer/getallcustomer');
-     /* if (!Array.isArray(resp)) {
-        resp = Object.values(resp);
-      }*/
+      if (!Array.isArray(resp)) {
+          resp = Object.values(resp);
+        }
 
-      this.setCustomers(resp.customer);
+      this.setCustomers(resp);
     } catch (e) {
       const message = e.message ? e.message : 'Ismeretlen hiba';
       NotificationManager.error(message);
