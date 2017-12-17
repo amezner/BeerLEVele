@@ -1,4 +1,3 @@
-
 import React, {Component} from 'react';
 import MenuItem from '../menuitem';
 import {observer} from 'mobx-react';
@@ -69,10 +68,10 @@ class MainMenu extends Component {
               name: 'Profit',
               link: '/statistic/profit'
             }, {
-              name: 'Termékek bontásban',
+              name: 'Éves',
               link: '/statistic/permonth'
             }, {
-              name: 'Egy termék havi bontásban',
+              name: 'Termék',
               link: '/statistic/perstock'
             }]
           },
@@ -132,15 +131,17 @@ class MainMenu extends Component {
                 name: 'Profit',
                 link: '/statistic/profit'
               }, {
-                name: 'Termékek bontásban',
+                name: 'Éves',
                 link: '/statistic/permonth'
               }, {
-                name: 'Egy termék havi bontásban',
+                name: 'Termék',
                 link: '/statistic/perstock'
               }]
             },
             {name:'Kilépés', type:'logout'}
           ];
+          break;
+        default: 
           break;
       }
 

@@ -22,6 +22,8 @@ import UserForm from './components/userform';
 import Cart from './components/cart';
 import Invoice from './components/invoice';
 import ProfitList from './components/profitlist';
+import MonthStatistic from './components/monthstatistic';
+import StockStatistic from './components/stockstatistic';
 
 class App extends Component {
   render() {
@@ -38,9 +40,12 @@ class App extends Component {
               <Route path="/invoicelist" component={InvoiceList} />
               <Route path="/cart" component={Cart} />
               <Route path="/invoice/:id" component={Invoice} />
-              <Route path="/statistic/profit" component={ProfitList} />
               <Route path="/userlist" component={UserList} />
               <Route path="/userform/:id?" component={UserForm} />
+
+              <Route path="/statistic/profit" component={ProfitList} />
+              <Route path="/statistic/permonth" component={MonthStatistic} />
+              <Route path="/statistic/perstock" component={StockStatistic} />
             </Layout1>
           </Protected>
           <Route path="/login" component={LoginPage} />

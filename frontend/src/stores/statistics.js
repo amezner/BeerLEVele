@@ -8,7 +8,7 @@ class Statistics {
     extendObservable(this, {
       profits: [],
       permonth: [],
-      perstock: []
+      perstock: [],
     });
   }
 
@@ -24,8 +24,16 @@ class Statistics {
     this.permonth = permonth;
   }
 
+  getPerMonth() {
+    return this.permonth;
+  }
+
   setPerStock(perstock) {
     this.perstock = perstock;
+  }
+
+  getPerStock() {
+    return this.perstock;
   }
 
   async loadProfit() {
@@ -36,6 +44,34 @@ class Statistics {
       }
 
       this.setProfits(resp);
+    } catch (e) {
+      const message = e.message ? e.message : 'Ismeretlen hiba';
+      NotificationManager.error(message, 'Sikertelen művelet!', 3000);
+    }
+  }
+
+  async loadPerMonth() {
+    try {
+      let resp = await get('invoice/stockconsumptionpermonth');
+      if (!Array.isArray(resp)) {
+        resp = Object.values(resp);
+      }
+      console.log(resp);
+      this.setPerMonth(resp);
+    } catch (e) {
+      const message = e.message ? e.message : 'Ismeretlen hiba';
+      NotificationManager.error(message, 'Sikertelen művelet!', 3000);
+    }
+  }
+
+  async loadPerStock(productId) {
+    try {
+      let resp = await get('invoice/stockconsumptionperstock/'+productId);
+      if (!Array.isArray(resp)) {
+        resp = Object.values(resp);
+      }
+      
+      this.setPerStock(resp);
     } catch (e) {
       const message = e.message ? e.message : 'Ismeretlen hiba';
       NotificationManager.error(message, 'Sikertelen művelet!', 3000);
