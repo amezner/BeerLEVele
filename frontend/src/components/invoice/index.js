@@ -6,8 +6,10 @@ import Table from '../table';
 import InvoicedProductRow from '../invoicedproductrow';
 import InvoiceStore from '../../stores/invoices';
 import NumberFormat from 'react-number-format';
+import AuthStore from '../../stores/authorization';
 
 import './invoice.css';
+import { NotificationManager } from 'react-notifications';
 
 class Invoice extends Component {
   static defaultProps = {
@@ -19,10 +21,21 @@ class Invoice extends Component {
   };
 
   componentDidMount() {
-    const invoiceId = this.props.match.params.id;
-    if (invoiceId) {
-      InvoiceStore.loadInvoice(invoiceId);
+    if (this.checkUserPermission()) {
+      const invoiceId = this.props.match.params.id;
+      if (invoiceId) {
+        InvoiceStore.loadInvoice(invoiceId);
+      }
     }
+  }
+
+  checkUserPermission() {
+    if (!AuthStore.hasPermission('viewinvoice')) {
+      NotificationManager.warning('Ehhez a modulhoz nincs joga!', 'Hoppá');
+      this.props.history.push('/invoicelist')
+      return false;
+    }
+    return true;
   }
 
   render() {
@@ -71,19 +84,25 @@ class Invoice extends Component {
         </section>
 
         <section className="content-section">
-          <FormRow label="Számla kelte">
-            {dateString}
-          </FormRow>
+          <div>
+            <FormRow label="Számla kelte" extraClass="half">
+              {dateString}
+            </FormRow>
+            <FormRow label="Számlaszám" extraClass="half">
+              {InvoiceStore.createInvoiceNumber(invoice)}
+            </FormRow>
+            <div className="clear"></div>
+          </div>
           <h3>Termékek</h3>
           <Table fields={this.props.tableFields} rowClass={InvoicedProductRow} datas={invoicedproducts}>
             {
               total > 0 ? (
                 <div className="table-row total-row header-row">
-                  <div className="table-cell">Összesen</div>
+                  <div className="table-cell text-cell">Összesen</div>
                   <div className="table-cell"></div>
                   <div className="table-cell"></div>
                   <div className="table-cell number-cell">
-                    <NumberFormat decimalSeparator="," thousandSeparator="." value={total}  decimalScale={2} displayType="text" suffix=" Ft" />
+                    <NumberFormat decimalSeparator="," thousandSeparator="." value={total} fixedDecimalScale={true} decimalScale={2} displayType="text" suffix=" Ft" />
                   </div>
                 </div>
               ) : null

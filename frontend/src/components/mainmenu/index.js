@@ -1,4 +1,3 @@
-
 import React, {Component} from 'react';
 import MenuItem from '../menuitem';
 import {observer} from 'mobx-react';
@@ -62,6 +61,19 @@ class MainMenu extends Component {
                 link:'/cart'
               }
             ]
+          }, {
+            name: 'Statisztikák',
+            link: '/statistic/profit',
+            children: [{
+              name: 'Profit',
+              link: '/statistic/profit'
+            }, {
+              name: 'Éves',
+              link: '/statistic/permonth'
+            }, {
+              name: 'Termék',
+              link: '/statistic/perstock'
+            }]
           },
           {
             name:'Felhasználók',
@@ -80,6 +92,66 @@ class MainMenu extends Component {
         ]
       }
     };
+  }
+
+  componentDidMount() {
+    if (AuthStore.getRole() !== 'admin') {
+      let children = [];
+      switch (AuthStore.getRole()) {
+        case 'operator': 
+          children = [
+            {
+              name:'Vásárlók',
+              link: '/customerlist',
+            },
+            {
+              name:'Termékek',
+              link:'/productlist',
+            },
+            {name:'Kilépés', type:'logout'}
+          ];
+          break;
+        case 'finance':
+          children = [
+            {
+              name:'Vásárlók',
+              link: '/customerlist',
+            },
+            {
+              name:'Termékek',
+              link:'/productlist',
+            },
+            {
+              name:'Számlák',
+              link:'/invoicelist'
+            }, {
+              name: 'Statisztikák',
+              link: '/statistic/profit',
+              children: [{
+                name: 'Profit',
+                link: '/statistic/profit'
+              }, {
+                name: 'Éves',
+                link: '/statistic/permonth'
+              }, {
+                name: 'Termék',
+                link: '/statistic/perstock'
+              }]
+            },
+            {name:'Kilépés', type:'logout'}
+          ];
+          break;
+        default: 
+          break;
+      }
+
+      this.setState({
+        menu: {
+          ...this.state.menu,
+          children: children
+        }
+      });
+    }
   }
 
   async handleLogout(e) {

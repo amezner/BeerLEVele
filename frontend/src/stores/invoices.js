@@ -35,6 +35,21 @@ class InvoiceStore {
     return total;
   }
 
+  createInvoiceNumber(invoice) {
+    const {date, invoicenumber} = invoice;
+    let result = new String(invoicenumber);
+    
+    if (result.length < 6) {
+      const max = (6 - result.length);
+      for (var i = 0; i < max; i++) {
+        result = "0"+result;
+      }
+    }
+    const year = new Date(date).getFullYear();
+
+    return `${year}/${result}`;
+  }
+
   async loadInvoice(invoiceId) {
     try {
       const resp = await get('invoice/getinvoice/'+invoiceId);

@@ -1,28 +1,36 @@
 import {extendObservable} from 'mobx';
+import CartStore from './cart';
+import ProductStore from './products';
+import CustomerStore from './customers';
+import InvoiceStore from './invoices';
+import UserStore from './users';
 
 class Auth {
   constructor() {
+    this.modulRights = {
+      operator: ['productlist', 'editproduct', 'customerlist', 'editcustomer'],
+      finance: ['productlist', 'editproduct', 'customerlist', 'editcustomer', 'invoicelist', 'profitperinvoice', 'permonth', 'perstock']
+    };
     extendObservable(this, {
       isLoggedIn: !!(JSON.parse(localStorage.getItem('isLoggedIn'))),
       oldUrl: '/',
-      role: localStorage.getItem('adminRole'),
       name: localStorage.getItem('adminName')
     });
   }
   setIsLoggedIn(value, data) {
-    localStorage.setItem('isLoggedIn', value);
     localStorage.setItem('adminRole', data.privilege);
     localStorage.setItem('authToken', data.token);
     localStorage.setItem('adminName', data.username);
+    localStorage.setItem('isLoggedIn', value);
     this.isLoggedIn = value;
   }
 
   getRole() {
-    return this.role;
+    return localStorage.getItem('adminRole');
   }
 
   getName() {
-    return this.name;
+    return localStorage.getItem('adminName');
   }
 
   logout() {
@@ -30,33 +38,30 @@ class Auth {
     localStorage.removeItem('adminRole');
     localStorage.removeItem('authToken');
     localStorage.removeItem('adminName');
+    this.resetStores();
     this.isLoggedIn = false;
   }
 
-  hasRight(modul) {
-    const role = this.role;
+  hasPermission(modul) {
+    const role = localStorage.getItem('adminRole');
+    
     switch (role) {
       case 'admin':
         return true;
-      case 'operator':
-        return this.checkOperatorRights(modul);
-      case 'finance':
-        return this.checkFinanceRights(modul);
       default:
+        if (typeof this.modulRights[role] !== 'undefined') {
+          return this.modulRights[role].includes(modul);
+        }
         return false;
     }
   }
 
-  checkOperatorRights(modul) {
-    const modules = ['productlist', 'customerlist'];
-
-    return modules.includes(modul);
-  }
-
-  checkFinanceRights(modul) {
-    const modules = ['customerlist', 'productlist'];
-
-    return modules.includes(modul);
+  resetStores() {
+    ProductStore.setProducts([]);
+    CustomerStore.setCustomers([]);
+    InvoiceStore.setInvoices([]);
+    UserStore.setUsers([]);
+    CartStore.resetCart();
   }
 }
 

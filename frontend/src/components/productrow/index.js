@@ -5,6 +5,7 @@ import {Link} from 'react-router-dom';
 import {del, post} from '../../lib/client';
 import {NotificationManager} from 'react-notifications';
 import CartStore from '../../stores/cart';
+import AuthStore from '../../stores/authorization';
 import NumberFormat from 'react-number-format';
 import Edit from 'react-icons/lib/md/edit';
 import Delete from 'react-icons/lib/md/delete';
@@ -66,10 +67,10 @@ class ProductRow extends Component {
           <Link to={`/productform/${id}`}>{name}</Link>
         </div>
         <div className="table-cell number-cell">
-          <NumberFormat value={purchaseprice} decimalSeparator="," thousandSeparator="." decimalScale={2} displayType="text" suffix=" Ft" />
+          <NumberFormat value={purchaseprice} decimalSeparator="," thousandSeparator="." decimalScale={2} fixedDecimalScale={true} displayType="text" suffix=" Ft" />
         </div>
         <div className="table-cell number-cell">
-          <NumberFormat value={sellingprice} decimalSeparator="," thousandSeparator="." decimalScale={2} displayType="text" suffix=" Ft" />
+          <NumberFormat value={sellingprice} decimalSeparator="," thousandSeparator="." decimalScale={2} fixedDecimalScale={true} displayType="text" suffix=" Ft" />
         </div>
         <div className="table-cell number-cell">
           <NumberFormat value={onstockquantity} decimalSeparator="," thousandSeparator="." decimalScale={2} displayType="text" suffix=" db" />
@@ -79,9 +80,12 @@ class ProductRow extends Component {
             <Link className="feature-item" to={`/productform/${id}`}>
               <Edit />
             </Link>
-            <span className="feature-item" onClick={this.addToCart}>
-              <AddToCart />
-            </span>
+            {
+              AuthStore.hasPermission('cart') ?
+              (<span className="feature-item" onClick={this.addToCart}>
+                <AddToCart />
+              </span>) : null
+            }
             <span className="feature-item" onClick={this.handleClick}>
               <Delete />
             </span>
