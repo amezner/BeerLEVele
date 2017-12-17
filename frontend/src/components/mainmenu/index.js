@@ -62,6 +62,19 @@ class MainMenu extends Component {
                 link:'/cart'
               }
             ]
+          }, {
+            name: 'Statisztikák',
+            link: '/statistic/profit',
+            children: [{
+              name: 'Profit',
+              link: '/statistic/profit'
+            }, {
+              name: 'Termékek bontásban',
+              link: '/statistic/permonth'
+            }, {
+              name: 'Egy termék havi bontásban',
+              link: '/statistic/perstock'
+            }]
           },
           {
             name:'Felhasználók',
@@ -80,6 +93,64 @@ class MainMenu extends Component {
         ]
       }
     };
+  }
+
+  componentDidMount() {
+    if (AuthStore.getRole() !== 'admin') {
+      let children = [];
+      switch (AuthStore.getRole()) {
+        case 'operator': 
+          children = [
+            {
+              name:'Vásárlók',
+              link: '/customerlist',
+            },
+            {
+              name:'Termékek',
+              link:'/productlist',
+            },
+            {name:'Kilépés', type:'logout'}
+          ];
+          break;
+        case 'finance':
+          children = [
+            {
+              name:'Vásárlók',
+              link: '/customerlist',
+            },
+            {
+              name:'Termékek',
+              link:'/productlist',
+            },
+            {
+              name:'Számlák',
+              link:'/invoicelist'
+            }, {
+              name: 'Statisztikák',
+              link: '/statistic/profit',
+              children: [{
+                name: 'Profit',
+                link: '/statistic/profit'
+              }, {
+                name: 'Termékek bontásban',
+                link: '/statistic/permonth'
+              }, {
+                name: 'Egy termék havi bontásban',
+                link: '/statistic/perstock'
+              }]
+            },
+            {name:'Kilépés', type:'logout'}
+          ];
+          break;
+      }
+
+      this.setState({
+        menu: {
+          ...this.state.menu,
+          children: children
+        }
+      });
+    }
   }
 
   async handleLogout(e) {

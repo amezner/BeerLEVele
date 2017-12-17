@@ -10,6 +10,7 @@ import FormRow from '../formrow';
 import {post, del} from '../../lib/client';
 import {NotificationManager} from 'react-notifications';
 import {withRouter} from 'react-router-dom';
+import AuthStore from '../../stores/authorization';
 
 import './cart.css';
 
@@ -33,7 +34,12 @@ class Cart extends Component {
   }
 
   componentDidMount() {
-    CartStore.loadResources();
+    if (AuthStore.hasPermission('cart')) {
+      CartStore.loadResources();
+    } else {
+      NotificationManager.warning('Ehhez a modulhoz nincs joga!', 'Hoppá!');
+      this.props.history.push('/produclist');
+    }
   }
 
   async closeInvoice() {

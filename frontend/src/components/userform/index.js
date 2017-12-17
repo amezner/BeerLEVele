@@ -91,13 +91,18 @@ class UserForm extends Component {
   }
 
   componentDidMount() {
-    const userId = this.props.match.params.id;
-    if (userId) {
-      this.loadUser(userId).then((resp) => {
-        if (resp) {
-          this.setState({user:resp});
-        }
-      });
+    if (AuthStore.hasPermission('createuser')) {
+      const userId = this.props.match.params.id;
+      if (userId) {
+        this.loadUser(userId).then((resp) => {
+          if (resp) {
+            this.setState({user:resp});
+          }
+        });
+      }
+    } else {
+      NotificationManager.warning('Ehhez a modulhoz nincs joga!', 'Hoppá!');
+      this.props.history.push('/userlist');
     }
   }
   
@@ -137,12 +142,9 @@ class UserForm extends Component {
             <FormRow label="Jogosultság" id="role">
               <Dropdown options={this.props.rules} value={role} ref="role" id="role"></Dropdown>
             </FormRow>
-            {
-              AuthStore.hasRight('adduser') ? 
-            (<FormRow extraClass="button-row">
+            <FormRow extraClass="button-row">
               <Button text="mentés" type="submit" ref="button" />
-            </FormRow>) : null
-            }
+            </FormRow>
           </form>
         </section>
       </div>

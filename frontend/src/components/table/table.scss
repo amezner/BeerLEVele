@@ -17,6 +17,10 @@
       font-weight:$bold-fweight;
       .table-cell {
         text-align:center;
+
+        &:first-of-type {
+          text-align:left;
+        }
       }
     }
 
@@ -38,6 +42,10 @@
 
       &.number-cell {
         text-align:right;
+      }
+
+      &.text-cell {
+        text-align:left;
       }
 
       &.feature-cell {
