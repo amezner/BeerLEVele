@@ -4,6 +4,8 @@ import Table from '../table';
 import {observer} from 'mobx-react';
 import UserStore from '../../stores/users';
 import UserRow from '../userrow';
+import AuthStore from '../../stores/authorization';
+import { NotificationManager } from 'react-notifications';
 
 class UserList extends Component {
   static defaultProps = {
@@ -15,7 +17,19 @@ class UserList extends Component {
   };
 
   componentDidMount() {
-    UserStore.loadData();
+    if (this.checkUserPermission()) {
+      UserStore.loadData();
+    }
+  }
+
+  checkUserPermission() {
+    if (!AuthStore.hasPermission('userlist')) {
+      NotificationManager.warning('Ehhez modulhoz nincs joga!', 'Hoppá!');
+      this.props.history.push('/productlist');
+      return false;
+    }
+
+    return true;
   }
 
   render() {

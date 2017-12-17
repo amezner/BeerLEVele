@@ -82,6 +82,51 @@ class MainMenu extends Component {
     };
   }
 
+  componentDidMount() {
+    if (AuthStore.getRole() !== 'admin') {
+      let children = [];
+      switch (AuthStore.getRole()) {
+        case 'operator': 
+          children = [
+            {
+              name:'Vásárlók',
+              link: '/customerlist',
+            },
+            {
+              name:'Termékek',
+              link:'/productlist',
+            },
+            {name:'Kilépés', type:'logout'}
+          ];
+          break;
+        case 'finance':
+          children = [
+            {
+              name:'Vásárlók',
+              link: '/customerlist',
+            },
+            {
+              name:'Termékek',
+              link:'/productlist',
+            },
+            {
+              name:'Számlák',
+              link:'/invoicelist'
+            },
+            {name:'Kilépés', type:'logout'}
+          ];
+          break;
+      }
+
+      this.setState({
+        menu: {
+          ...this.state.menu,
+          children: children
+        }
+      });
+    }
+  }
+
   async handleLogout(e) {
     e.preventDefault();
 

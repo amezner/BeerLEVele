@@ -75,13 +75,13 @@ class CartRow extends Component {
           <Field ref="quantity" value={data.quantity} changeEvt={this.modifyQuantity} extraClass="quantity-field"  />
         </div>
         <div className="table-cell number-cell">
-          <NumberFormat decimalSeparator="," thousandSeparator="." value={price} displayType="text" suffix=" Ft" decimalScale={2} />
+          <NumberFormat decimalSeparator="," thousandSeparator="." value={price} fixedDecimalScale={true} displayType="text" suffix=" Ft" decimalScale={2} />
         </div>
         <div className="table-cell number-cell">
-          <NumberFormat decimalSeparator="," thousandSeparator="." value={(price * multiplier)} displayType="text" suffix=" Ft" decimalScale={2} />
+          <NumberFormat decimalSeparator="," thousandSeparator="." value={(price * multiplier)} fixedDecimalScale={true} displayType="text" suffix=" Ft" decimalScale={2} />
         </div>
         <div className="table-cell number-cell">
-          <NumberFormat decimalSeparator="," thousandSeparator="." value={(price * multiplier * data.quantity)} decimalScale={2} displayType="text" suffix=" Ft" />
+          <NumberFormat decimalSeparator="," thousandSeparator="." value={(price * multiplier * data.quantity)} decimalScale={2} fixedDecimalScale={true} displayType="text" suffix=" Ft" />
         </div>
         <div className="table-cell feature-cell">
           <div className="features-content">

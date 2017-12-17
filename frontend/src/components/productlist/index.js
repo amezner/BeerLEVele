@@ -3,6 +3,7 @@ import Table from '../table';
 import PropTypes from 'prop-types';
 import ProductsStore from '../../stores/products';
 import CartStore from '../../stores/cart';
+import AuthStore from '../../stores/authorization';
 import {observer} from 'mobx-react';
 import ProductRow from '../productrow';
 
@@ -25,7 +26,9 @@ class Productlist extends Component {
 
   componentDidMount() {
     ProductsStore.loadData();
-    CartStore.loadData();
+    if (AuthStore.hasPermission('cart')) {
+      CartStore.loadData();
+    }
   }
 
   render () {

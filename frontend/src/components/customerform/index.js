@@ -3,11 +3,13 @@ import {post, get, put} from '../../lib/client';
 import {NotificationManager} from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
 import {withRouter} from 'react-router-dom';
+import AuthStore from '../../stores/authorization';
 
 import FormRow from '../formrow';
 import Field from '../field';
 import Button from '../button';
 import CheckField from '../checkfield';
+
 
 class CustomerForm extends Component {
   constructor(props) {
@@ -74,6 +76,9 @@ class CustomerForm extends Component {
 
   componentDidMount() {
     let customerId = this.props.match.params.id;
+
+    this.checkUserPermission(this.props);
+
     if (customerId) {
       this.loadCustomer(customerId).then((resp) => {
         this.setState({
@@ -81,6 +86,20 @@ class CustomerForm extends Component {
           'loyalty':resp.loyaltycard
         });
       });
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.checkUserPermission(nextProps);
+  }
+
+  checkUserPermission(props) {
+    const customerId = props.match.params.id;
+    const modul = customerId ? 'editcustomer' : 'createcustomer';
+
+    if (!AuthStore.hasPermission(modul)) {
+      NotificationManager.warning('Ehhez modulhoz nincs joga!', 'Hoppá!');
+      this.props.history.push('/customerlist');
     }
   }
 
@@ -99,10 +118,6 @@ class CustomerForm extends Component {
     }
 
     return true;
-  }
-
-  handleCheckfieldChange() {
-
   }
 
   render() {

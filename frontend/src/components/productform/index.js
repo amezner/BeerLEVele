@@ -12,6 +12,7 @@ class ProductForm extends Component {
     super(props);
 
     this.handleSubmit = this.handleSubmit.bind(this);
+    
     this.state = {
       product: {}
     }
@@ -59,12 +60,19 @@ class ProductForm extends Component {
   }
 
   componentDidMount() {
-    let productId = this.props.match.params.id;
+    const productId = this.props.match.params.id;
+    
+    this.checkUserPermission(this.props);
+
     if (productId) {
       this.loadProduct(productId).then((resp) => {
         this.setState({'product':resp});
       });
     }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.checkUserPermission(nextProps);
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -73,6 +81,15 @@ class ProductForm extends Component {
     }
 
     return true;
+  }
+
+  checkUserPermission(props) {
+    const productId = props.match.params.id;
+    const modul = productId ? 'editproduct' : 'createproduct';
+    if (!AuthStore.hasPermission(modul)) {
+      NotificationManager.warning('Ehhez modulhoz nincs joga!', 'Hoppá!');
+      this.props.history.push('/productlist');
+    }
   }
 
   async loadProduct(productId) {
@@ -121,13 +138,9 @@ class ProductForm extends Component {
             <FormRow label="Készlet (db)" id="quantity">
               <Field ref="onstockquantity" value={onstockquantity} type="text" id="quantity" />
             </FormRow>
-            {
-              AuthStore.hasRight('addproduct') ? 
-              (<FormRow extraClass="button-row">
+            <FormRow extraClass="button-row">
               <Button text="mentés" type="submit" ref="button" />
-              </FormRow>) : null
-            }
-            
+            </FormRow>
           </form>
         </section>
       </div>
