@@ -16,6 +16,8 @@ package Helper;
  */
 import Entities.Customer;
 import Entities.Invoice;
+import Entities.Invoicedproducts;
+import Entities.Stock;
 import com.itextpdf.text.BadElementException;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Chunk;
@@ -32,6 +34,8 @@ import com.itextpdf.text.pdf.PdfWriter;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Collection;
+import java.util.List;
 
 /**
  *
@@ -104,25 +108,67 @@ public class PDFGeneration {
 
         PdfPTable details = new PdfPTable(4);
         details.setWidthPercentage(100);
-        Paragraph szamlaadatok = new Paragraph();
+        Chunk cust = new Chunk("Vevő:");
+        cust.setBackground(BaseColor.LIGHT_GRAY);
+        cust.setFont(catFont);
 
-        Chunk c = new Chunk("Vevő:");
-        c.setBackground(BaseColor.LIGHT_GRAY);
-        c.setFont(catFont);
-        Paragraph vevo = new Paragraph(c);
-        Chunk d = new Chunk("Számla:");
-        d.setBackground(BaseColor.LIGHT_GRAY);
-        d.setFont(catFont);
-        Paragraph szamla = new Paragraph(d);
+        Paragraph vevo = new Paragraph(cust);
+        Chunk inv = new Chunk("Számla:");
+        inv.setBackground(BaseColor.LIGHT_GRAY);
+        inv.setFont(catFont);
+        Paragraph szamla = new Paragraph(inv);
 
         details.addCell(getCell(vevo, PdfPCell.ALIGN_LEFT));
         details.addCell(getCell(setCustomerDetails(customer), PdfPCell.ALIGN_CENTER));
         details.addCell(getCell(szamla, PdfPCell.ALIGN_CENTER));
-        details.addCell(getCell(szamlaadatok, PdfPCell.ALIGN_RIGHT));
+        details.addCell(getCell(setInvoiceDetails(invoice), PdfPCell.ALIGN_RIGHT));
+
+        PdfPTable stocks = new PdfPTable(4);
+
+        Chunk quant = new Chunk("Mennyiség:");
+        quant.setBackground(BaseColor.LIGHT_GRAY);
+        quant.setFont(catFont);
+        Paragraph menny = new Paragraph(quant);
+
+        Chunk name = new Chunk("Tétel megnevezése:");
+        name.setBackground(BaseColor.LIGHT_GRAY);
+        name.setFont(catFont);
+        Paragraph nev = new Paragraph(name);
+
+        Chunk price = new Chunk("Egység ár:");
+        price.setBackground(BaseColor.LIGHT_GRAY);
+        price.setFont(catFont);
+        Paragraph ar = new Paragraph(price);
+
+        Chunk sum = new Chunk("Összesen:");
+        sum.setBackground(BaseColor.LIGHT_GRAY);
+        sum.setFont(catFont);
+        Paragraph osszesen = new Paragraph(sum);
+
+        Double fullprice = 0.0;
+        
+        for (Invoicedproducts stock : invoice.getInvoicedproductsCollection()) {
+            menny.add(stock.getSoldquantity().toString());
+            addEmptyLine(menny, 1);
+            nev.add(stock.getName());
+            addEmptyLine(nev, 1);
+            ar.add(stock.getSoldprice().toString());
+            addEmptyLine(ar, 1);
+            Double full = stock.getSoldprice() * stock.getSoldquantity();
+            fullprice += full;
+            osszesen.add(full.toString());
+            addEmptyLine(osszesen, 1);
+            
+        }
+
+        stocks.addCell(getCell(menny, PdfPCell.ALIGN_LEFT));
+        stocks.addCell(getCell(nev, PdfPCell.ALIGN_CENTER));
+        stocks.addCell(getCell(ar, PdfPCell.ALIGN_CENTER));
+        stocks.addCell(getCell(osszesen, PdfPCell.ALIGN_RIGHT));
 
         document.add(header);
         document.add(details);
-
+        document.add(stocks);
     }
 
     public Paragraph setCustomerDetails(Customer customer) {
