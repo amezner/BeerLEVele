@@ -9,7 +9,7 @@ class Auth {
   constructor() {
     this.modulRights = {
       operator: ['productlist', 'editproduct', 'customerlist', 'editcustomer'],
-      finance: ['productlist', 'editproduct', 'customerlist', 'editcustomer', 'invoicelist']
+      finance: ['productlist', 'editproduct', 'customerlist', 'editcustomer', 'invoicelist', 'profitperinvoice']
     };
     extendObservable(this, {
       isLoggedIn: !!(JSON.parse(localStorage.getItem('isLoggedIn'))),

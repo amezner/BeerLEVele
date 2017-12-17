@@ -62,6 +62,19 @@ class MainMenu extends Component {
                 link:'/cart'
               }
             ]
+          }, {
+            name: 'Statisztikák',
+            link: '/statistic/profit',
+            children: [{
+              name: 'Profit',
+              link: '/statistic/profit'
+            }, {
+              name: 'Termékek bontásban',
+              link: '/statistic/permonth'
+            }, {
+              name: 'Egy termék havi bontásban',
+              link: '/statistic/perstock'
+            }]
           },
           {
             name:'Felhasználók',
@@ -112,6 +125,19 @@ class MainMenu extends Component {
             {
               name:'Számlák',
               link:'/invoicelist'
+            }, {
+              name: 'Statisztikák',
+              link: '/statistic/profit',
+              children: [{
+                name: 'Profit',
+                link: '/statistic/profit'
+              }, {
+                name: 'Termékek bontásban',
+                link: '/statistic/permonth'
+              }, {
+                name: 'Egy termék havi bontásban',
+                link: '/statistic/perstock'
+              }]
             },
             {name:'Kilépés', type:'logout'}
           ];

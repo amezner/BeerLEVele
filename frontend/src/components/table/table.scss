@@ -17,6 +17,10 @@
       font-weight:$bold-fweight;
       .table-cell {
         text-align:center;
+
+        &:first-of-type {
+          text-align:left;
+        }
       }
     }
 
