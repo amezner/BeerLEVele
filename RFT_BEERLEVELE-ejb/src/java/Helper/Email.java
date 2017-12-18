@@ -11,17 +11,23 @@ import java.io.IOException;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.activation.DataHandler;
+import javax.activation.DataSource;
+import javax.activation.FileDataSource;
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
 import javax.faces.bean.ManagedBean;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
+import javax.mail.Multipart;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 
 /**
  *
@@ -58,7 +64,7 @@ public class Email {
 
     }
 
-    public void SendMail(String from, String to, String password, String subject, String msg) {
+    public void SendMail(String to, String msg) {
 
         Session session = Session.getInstance(props,
                 new javax.mail.Authenticator() {
@@ -69,7 +75,6 @@ public class Email {
         });
 
         try {
-
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress(from));
             message.setRecipients(Message.RecipientType.TO,
@@ -84,40 +89,41 @@ public class Email {
         }
     }
 
-    public void SendMaiWithAttachment(String from, String to, String password, String subject, String msg) {
+    public void SendMaiWithAttachment(String to, String msg) {
 
         Session session = Session.getInstance(props,
                 new javax.mail.Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(from, password);
+                return new PasswordAuthentication(props.getProperty("from"), props.getProperty("password"));
             }
         });
 
         try {
 
             Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress(from));
+            message.setFrom(new InternetAddress(props.getProperty("from")));
             message.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse(to));
-            message.setSubject(subject);
-            message.setText(msg);
-            
- /**          
+            message.setSubject(props.getProperty("subject"));
+
             MimeBodyPart messageBodyPart = new MimeBodyPart();
 
             Multipart multipart = new MimeMultipart();
 
             messageBodyPart = new MimeBodyPart();
-            String file = "path of file to be attached";
-            String fileName = "attachmentName";
+            String file = "szamla.pdf";
+            String fileName = "szamla.pdf";
             DataSource source = new FileDataSource(file);
             messageBodyPart.setDataHandler(new DataHandler(source));
             messageBodyPart.setFileName(fileName);
+            messageBodyPart.setText(msg);
+
             multipart.addBodyPart(messageBodyPart);
 
             message.setContent(multipart);
- **/
+            message.setText(msg);
+
             Transport.send(message);
 
         } catch (MessagingException e) {

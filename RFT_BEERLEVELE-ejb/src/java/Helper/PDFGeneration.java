@@ -17,36 +17,40 @@ package Helper;
 import Entities.Customer;
 import Entities.Invoice;
 import Entities.Invoicedproducts;
-import Entities.Stock;
+import Logic.InvoiceLogic;
 import com.itextpdf.text.BadElementException;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.BaseFont;
+import com.itextpdf.text.pdf.ColumnText;
+import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.Collection;
-import java.util.List;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 /**
  *
  * @author danida
  */
-public class PDFGeneration {
+public final class PDFGeneration {
 
     /**
      * @param args the command line arguments
      */
-    private String FILE = "c:/temp/FirstPdf.pdf";
+    private String FILE;
     private Customer customer;
     private Invoice invoice;
     private Document document;
@@ -54,10 +58,9 @@ public class PDFGeneration {
     private static BaseFont times_new_roman;
     private static Font catFont = new Font(Font.FontFamily.TIMES_ROMAN, 18, Font.BOLD);
     private static Font titleFont = new Font(Font.FontFamily.TIMES_ROMAN, 24, Font.BOLD);
-    private static Font redFont = new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.NORMAL, BaseColor.RED);
-    private static Font subFont = new Font(Font.FontFamily.TIMES_ROMAN, 16, Font.BOLD);
     private static Font smallBold = new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD);
     private static Font normal = new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.NORMAL);
+    private static Font small = new Font(Font.FontFamily.TIMES_ROMAN, 6, Font.NORMAL);
 
     public PDFGeneration(Invoice invoice, Customer customer) throws FileNotFoundException, DocumentException, IOException {
 
@@ -65,19 +68,19 @@ public class PDFGeneration {
 
         catFont = new Font(times_new_roman, 18, Font.BOLD);
         titleFont = new Font(times_new_roman, 24, Font.BOLD);
-        redFont = new Font(times_new_roman, 12, Font.NORMAL, BaseColor.RED);
-        subFont = new Font(times_new_roman, 16, Font.BOLD);
+
         smallBold = new Font(times_new_roman, 12, Font.BOLD);
         normal = new Font(times_new_roman, 12, Font.NORMAL);
 
         this.invoice = invoice;
         this.customer = customer;
-
+        this.FILE = "szamla.pdf";
         document = new Document();
-        PdfWriter.getInstance(document, new FileOutputStream(FILE));
+        PdfWriter pdfwriter = PdfWriter.getInstance(document, new FileOutputStream(FILE));
         document.open();
         addMetaData(document);
         generateInvoice(document);
+        addFooter(pdfwriter, document);
         document.close();
 
     }
@@ -90,85 +93,116 @@ public class PDFGeneration {
         document.addCreator("BeerLevele Zrt.");
     }
 
-    private void generateInvoice(Document document)
+    public void generateInvoice(Document document)
             throws DocumentException, BadElementException, IOException {
 
         Paragraph cegadatok = new Paragraph();
         addEmptyLine(cegadatok, 1);
         cegadatok.add(new Paragraph("BeerLevele Zrt.", catFont));
         addEmptyLine(cegadatok, 1);
-        cegadatok.add(new Paragraph("4030, Debrecen, Vágóhíd utca 1", normal));
-        Image img = Image.getInstance("C:\\Users\\danida\\Desktop\\kep.jpg");
+        cegadatok.add(new Paragraph("4030, Debrecen, Vágóhíd u. 1", normal));
+        Image img = Image.getInstance("/home/dnovak/Desktop/kep.jpg");
 
         PdfPTable header = new PdfPTable(3);
         header.setWidthPercentage(100);
-        header.addCell(getCell(cegadatok, PdfPCell.ALIGN_LEFT));
-        header.addCell(getCell(new Paragraph("Számla", titleFont), PdfPCell.ALIGN_CENTER));
+        header.addCell(getCell(cegadatok, PdfPCell.ALIGN_LEFT, BaseColor.WHITE));
+        header.addCell(getCell(new Paragraph("Számla", titleFont), PdfPCell.ALIGN_CENTER, BaseColor.WHITE));
         header.addCell(img);
 
         PdfPTable details = new PdfPTable(4);
         details.setWidthPercentage(100);
+
+        float[] columnWidths = new float[]{10f, 35f, 28f, 27f};
+        details.setWidths(columnWidths);
         Chunk cust = new Chunk("Vevő:");
         cust.setBackground(BaseColor.LIGHT_GRAY);
-        cust.setFont(catFont);
-
+        cust.setFont(smallBold);
         Paragraph vevo = new Paragraph(cust);
-        Chunk inv = new Chunk("Számla:");
-        inv.setBackground(BaseColor.LIGHT_GRAY);
-        inv.setFont(catFont);
-        Paragraph szamla = new Paragraph(inv);
 
-        details.addCell(getCell(vevo, PdfPCell.ALIGN_LEFT));
-        details.addCell(getCell(setCustomerDetails(customer), PdfPCell.ALIGN_CENTER));
-        details.addCell(getCell(szamla, PdfPCell.ALIGN_CENTER));
-        details.addCell(getCell(setInvoiceDetails(invoice), PdfPCell.ALIGN_RIGHT));
+        PdfPTable cdetails = new PdfPTable(1);
+        cdetails.addCell(getCell(new Paragraph("Számlaszám: "), PdfPCell.ALIGN_LEFT, BaseColor.LIGHT_GRAY, smallBold));
+        cdetails.addCell(getCell(new Paragraph("Kiállítás ideje: "), PdfPCell.ALIGN_LEFT, BaseColor.LIGHT_GRAY, smallBold));
+        cdetails.addCell(getCell(new Paragraph("Bizalomkártya szintje: "), PdfPCell.ALIGN_LEFT, BaseColor.LIGHT_GRAY, smallBold));
+        cdetails.addCell(getCell(new Paragraph("Alkalmazott kedvezmény: "), PdfPCell.ALIGN_LEFT, BaseColor.LIGHT_GRAY, smallBold));
+        cdetails.setWidthPercentage(100);
+
+        PdfPCell cell = new PdfPCell(cdetails);
+        cell.setPadding(0);
+        cell.setBorder(PdfPCell.NO_BORDER);
+
+        details.addCell(getCell(vevo, PdfPCell.ALIGN_LEFT, BaseColor.WHITE));
+        details.addCell(getCell(setCustomerDetails(customer), PdfPCell.ALIGN_CENTER, BaseColor.WHITE));
+        details.addCell(cell);
+        details.addCell(getCell(setInvoiceDetails(invoice), PdfPCell.ALIGN_RIGHT, BaseColor.WHITE));
+        details.setSpacingBefore(10);
 
         PdfPTable stocks = new PdfPTable(4);
+        stocks.setWidthPercentage(100);
 
         Chunk quant = new Chunk("Mennyiség:");
         quant.setBackground(BaseColor.LIGHT_GRAY);
-        quant.setFont(catFont);
+        quant.setFont(smallBold);
+
         Paragraph menny = new Paragraph(quant);
+        menny.setFont(normal);
+        addEmptyLine(menny, 1);
 
         Chunk name = new Chunk("Tétel megnevezése:");
         name.setBackground(BaseColor.LIGHT_GRAY);
-        name.setFont(catFont);
+        name.setFont(smallBold);
         Paragraph nev = new Paragraph(name);
+        nev.setFont(normal);
+        addEmptyLine(nev, 1);
 
         Chunk price = new Chunk("Egység ár:");
         price.setBackground(BaseColor.LIGHT_GRAY);
-        price.setFont(catFont);
+        price.setFont(smallBold);
         Paragraph ar = new Paragraph(price);
+        ar.setFont(normal);
+        addEmptyLine(ar, 1);
 
         Chunk sum = new Chunk("Összesen:");
         sum.setBackground(BaseColor.LIGHT_GRAY);
-        sum.setFont(catFont);
+        sum.setFont(smallBold);
         Paragraph osszesen = new Paragraph(sum);
+        osszesen.setFont(normal);
+        addEmptyLine(osszesen, 1);
 
         Double fullprice = 0.0;
-        
+
         for (Invoicedproducts stock : invoice.getInvoicedproductsCollection()) {
             menny.add(stock.getSoldquantity().toString());
             addEmptyLine(menny, 1);
             nev.add(stock.getName());
             addEmptyLine(nev, 1);
-            ar.add(stock.getSoldprice().toString());
+            ar.add(stock.getSoldprice().toString() + " Ft");
             addEmptyLine(ar, 1);
             Double full = stock.getSoldprice() * stock.getSoldquantity();
             fullprice += full;
-            osszesen.add(full.toString());
+            osszesen.add(full.toString() + " Ft");
             addEmptyLine(osszesen, 1);
-            
+
         }
 
-        stocks.addCell(getCell(menny, PdfPCell.ALIGN_LEFT));
-        stocks.addCell(getCell(nev, PdfPCell.ALIGN_CENTER));
-        stocks.addCell(getCell(ar, PdfPCell.ALIGN_CENTER));
-        stocks.addCell(getCell(osszesen, PdfPCell.ALIGN_RIGHT));
+        stocks.addCell(getCell(menny, PdfPCell.ALIGN_LEFT, BaseColor.WHITE));
+        stocks.addCell(getCell(nev, PdfPCell.ALIGN_LEFT, BaseColor.WHITE));
+        stocks.addCell(getCell(ar, PdfPCell.ALIGN_LEFT, BaseColor.WHITE));
+        stocks.addCell(getCell(osszesen, PdfPCell.ALIGN_LEFT, BaseColor.WHITE));
+        stocks.setSpacingBefore(10);
 
         document.add(header);
         document.add(details);
         document.add(stocks);
+        Phrase footer2 = new Phrase("A számla 27% ÁFA-t tartalmaz, a feltüntetett árak az ÁFA-T tartalmazzák.", small);
+        document.add(footer2);
+
+        Chunk fullprice1 = new Chunk("Végösszeg: " + fullprice.toString() + " Ft");
+        fullprice1.setFont(smallBold);
+        Paragraph sumall = new Paragraph(fullprice1);
+        sumall.setAlignment(Element.ALIGN_RIGHT);
+
+        document.add(sumall);
+
     }
 
     public Paragraph setCustomerDetails(Customer customer) {
@@ -183,29 +217,47 @@ public class PDFGeneration {
         adatok.add(customer.getPostalcode());
         addEmptyLine(adatok, 1);
         adatok.add(customer.getCountry());
+        addEmptyLine(adatok, 1);
         return adatok;
 
     }
 
     public Paragraph setInvoiceDetails(Invoice invoice) {
         Paragraph adatok = new Paragraph();
-        adatok.add(invoice.getInvoicenumber().toString());
+        adatok.add(InvoiceLogic.generateInvoiceNumber(invoice));
         addEmptyLine(adatok, 1);
-        adatok.add(invoice.getDate().toGMTString());
+        DateFormat hungarianDay = new SimpleDateFormat("yyyy. MMMM dd. HH:mm", new Locale("hu"));
+
+        adatok.add(hungarianDay.format(invoice.getDate()));
         addEmptyLine(adatok, 1);
-        adatok.add(invoice.getLoyaltycard().toString());
+        adatok.add(invoice.getLoyaltycard() ? "Arany" : "Nincs");
         addEmptyLine(adatok, 1);
-        adatok.add(invoice.getDiscount().toString());
+        adatok.add(invoice.getDiscount().toString() + "%");
 
         return adatok;
 
     }
 
-    public PdfPCell getCell(Paragraph text, int alignment) {
-        PdfPCell cell = new PdfPCell(new Phrase(text));
+    public PdfPCell getCell(Paragraph text, int alignment, BaseColor color) {
+        Phrase p = new Phrase(text);
+        PdfPCell cell = new PdfPCell(p);
         cell.setPadding(0);
         cell.setHorizontalAlignment(alignment);
         cell.setBorder(PdfPCell.NO_BORDER);
+        cell.setBackgroundColor(color);
+
+        return cell;
+    }
+
+    public PdfPCell getCell(Paragraph text, int alignment, BaseColor color, Font font) {
+        Chunk p = new Chunk(text.getContent());
+        p.setFont(font);
+        PdfPCell cell = new PdfPCell(new Paragraph(p));
+        cell.setPadding(0);
+        cell.setHorizontalAlignment(alignment);
+        cell.setBorder(PdfPCell.NO_BORDER);
+        cell.setBackgroundColor(color);
+
         return cell;
     }
 
@@ -213,6 +265,18 @@ public class PDFGeneration {
         for (int i = 0; i < number; i++) {
             paragraph.add(new Paragraph("\n"));
         }
+    }
+
+    public void addFooter(PdfWriter writer, Document document) {
+
+        PdfContentByte cb = writer.getDirectContent();
+        Phrase footer = new Phrase("Köszönjük, hogy nálunk vásárolt!", smallBold);
+
+        ColumnText.showTextAligned(cb, Element.ALIGN_CENTER,
+                footer,
+                (document.right() - document.left()) / 2 + document.leftMargin(),
+                document.bottom() - 10, 0);
+
     }
 
     public String getFILE() {

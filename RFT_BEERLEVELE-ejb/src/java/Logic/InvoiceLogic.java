@@ -5,6 +5,7 @@
  */
 package Logic;
 
+import Entities.Customer;
 import Entities.Invoice;
 import Entities.Invoicedproducts;
 import Entities.Order1;
@@ -14,16 +15,16 @@ import Facades.InvoiceFacade;
 import Facades.InvoicedproductsFacade;
 import Facades.Order1Facade;
 import Facades.StockFacade;
+import Helper.Email;
 import Helper.InvoiceWrapper;
+import Helper.PDFGeneration;
 import Helper.ProfitPerInvoice;
 import Helper.StockConsumption;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import javax.annotation.ManagedBean;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
@@ -36,6 +37,9 @@ import javax.inject.Inject;
 @Stateless
 
 public class InvoiceLogic {
+
+    @EJB
+    private Email email;
     
     @Inject
     InvoiceFacade invoiceFacade;
@@ -70,30 +74,33 @@ public class InvoiceLogic {
             throw new Exception("Cart is empty, please add items to cart before closing invoice");
         if (customerFacade.findById(customer_id) == null)
             throw new Exception("Invalid customer ID");
+        
+        Customer customer = customerFacade.findById(customer_id);
         Invoice invoice = new Invoice(
-                customerFacade.findById(customer_id).getId(),
-                customerFacade.findById(customer_id).getName(),
-                customerFacade.findById(customer_id).getCountry(),
-                customerFacade.findById(customer_id).getCity(),
-                customerFacade.findById(customer_id).getAddress(),
-                customerFacade.findById(customer_id).getPostalcode(),
-                customerFacade.findById(customer_id).getEmail(),
-                customerFacade.findById(customer_id).getPhone(),
-                customerFacade.findById(customer_id).getLoyaltycard(),
-                customerFacade.findById(customer_id).getDiscount()
+                customer.getId(),
+                customer.getName(),
+                customer.getCountry(),
+                customer.getCity(),
+                customer.getAddress(),
+                customer.getPostalcode(),
+                customer.getEmail(),
+                customer.getPhone(),
+                customer.getLoyaltycard(),
+                customer.getDiscount()
         );
 
         invoiceFacade.create(invoice);
              
         for (Order1 o : orderFacade.findCartByUid(uid)) {
+            Stock stock = stockFacade.findStockById(o.getStockId());
             Invoicedproducts ip = new Invoicedproducts(
                 o.getStockId(),
-                stockFacade.findStockById(o.getStockId()).getName(),
-                stockFacade.findStockById(o.getStockId()).getType(),
-                stockFacade.findStockById(o.getStockId()).getAlcoholcontent(),
-                stockFacade.findStockById(o.getStockId()).getBottlesize(),
-                stockFacade.findStockById(o.getStockId()).getPurchaseprice(),
-                stockFacade.findStockById(o.getStockId()).getSellingprice() * (100 - customerFacade.findById(customer_id).getDiscount())/100,
+                stock.getName(),
+                stock.getType(),
+                stock.getAlcoholcontent(),
+                stock.getBottlesize(),
+                stock.getPurchaseprice(),
+                stock.getSellingprice() * (100 - customer.getDiscount())/100,
                 o.getQuantity()
             );
             ip.setInvoice(invoice);
@@ -106,7 +113,9 @@ public class InvoiceLogic {
             stockFacade.edit(updatestock);
             
         }
-
+        PDFGeneration pdfgenerator = new PDFGeneration(invoice, customer);
+        email.SendMaiWithAttachment(customer.getEmail(), "Tisztelt " + customer.getName() + ",\n\n\n Számlája érkezett.\n\n Üdvözlettel,\nBeerLevele Zrt.\n");
+        
         orderFacade.emptyCart(uid);
         
     }
@@ -141,6 +150,11 @@ public class InvoiceLogic {
        Double profit = 0.0;
        profit = lista.stream().map((ip) -> (ip.getSoldprice()-ip.getPurchaseprice())*ip.getSoldquantity()).reduce(profit, (accumulator, _item) -> accumulator + _item);
        return profit;
+    }
+    
+    public static String generateInvoiceNumber(Invoice i){
+        String r = i.getDate().getYear()+1900 + "/" + String.format("%06d", i.getInvoicenumber());
+        return r;
     }
     
     

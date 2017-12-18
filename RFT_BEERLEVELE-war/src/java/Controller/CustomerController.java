@@ -160,12 +160,9 @@ public class CustomerController {
     @Consumes(MediaType.APPLICATION_JSON)
     public void sendEmail(@HeaderParam("authToken") String authToken, Map emaildetails) throws Exception {
         authorizator.checkAuthorization(authToken, "admin");
-        String from = (String) emaildetails.get("from");
         String to = (String) emaildetails.get("to");
-        String subject = (String) emaildetails.get("subject");
         String message = (String) emaildetails.get("message");
-        String password = (String) emaildetails.get("password");
-        emailservice.SendMail(from, to, password, subject, message);
+        emailservice.SendMail(to, message);
     }
     
     /**
