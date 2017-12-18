@@ -17,6 +17,7 @@ import javax.activation.FileDataSource;
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
 import javax.faces.bean.ManagedBean;
+import javax.mail.BodyPart;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -107,22 +108,21 @@ public class Email {
                     InternetAddress.parse(to));
             message.setSubject(props.getProperty("subject"));
 
-            MimeBodyPart messageBodyPart = new MimeBodyPart();
+            BodyPart messageBodyPart = new MimeBodyPart();
+            messageBodyPart.setText(msg);
 
             Multipart multipart = new MimeMultipart();
-
+            multipart.addBodyPart(messageBodyPart);
+            
             messageBodyPart = new MimeBodyPart();
             String file = "szamla.pdf";
             String fileName = "szamla.pdf";
             DataSource source = new FileDataSource(file);
             messageBodyPart.setDataHandler(new DataHandler(source));
             messageBodyPart.setFileName(fileName);
-            messageBodyPart.setText(msg);
-
             multipart.addBodyPart(messageBodyPart);
-
             message.setContent(multipart);
-            message.setText(msg);
+        
 
             Transport.send(message);
 
