@@ -1,21 +1,72 @@
+@import '../../global.scss';
+
 .button {
   display:inline-block;
   box-sizing:border-box;
-  padding:5px 12px 5px 12px;
-  height:48px;
-  font-size:16px;
-  line-height:24px;
+  padding:8px 35px 10px 35px;
+  height:50px;
+  font-size:$primary-fsize;
+  line-height:26px;
   border:none;
   outline:none;
   box-shadow: none;
-  border-radius:2px;
-  color:#282828;
-  background:#B18E66;
-  transition:background 0.2s ease;
+  border-radius:$border-radius;
+  color:#ffffff;
+  background:$primary-button-bg;
+  transition:$border-color-transition, $bg-transition, $color-transition, $shadow-transition;
   cursor:pointer;
-  font-weight:700;
+  font-weight:$bold-fweight;
+  letter-spacing:1.2px;
+
+
+  &.secondary {
+    background:$secondary-button-bg;
+    border-color:$secondary-button-bg
+  }
 
   &:hover {
-    background:#A17D56;
+    border-color:$primary-button-hover-bg;
+    background:$primary-button-hover-bg;
+    box-shadow: 0px 10px 15px rgba(17, 53, 21, 0.2);
+
+    &.secondary {
+      border-color:$secondary-button-hover-bg;
+      background:$secondary-button-hover-bg;
+      box-shadow: 0px 10px 15px rgba(5, 43, 45, 0.2);
+    }
+  }
+
+  &:active {
+    background:$primary-button-pressed-bg;
+    border-color:$primary-button-pressed-bg;
+    box-shadow:none;
+
+    &.secondary {
+      background:$secondary-button-pressed-bg;
+      border-color:$secondary-button-pressed-bg;
+      box-shadow:none;
+    }
+  }
+
+  &:disabled {
+    background:$primary-button-inactive-bg;
+    border-color:$primary-button-inactive-bg;
+
+    &.secondary {
+      background:$secondary-button-inactive-bg;
+      border-color:$secondary-button-inactive-bg;
+    }
+
+    &:hover {
+      background:$primary-button-inactive-bg;
+      border-color:$primary-button-inactive-bg;
+      box-shadow:none;
+
+      &.secondary {
+        background:$secondary-button-inactive-bg;
+        border-color:$secondary-button-inactive-bg;
+        box-shadow:none;
+      }
+    }
   }
 }

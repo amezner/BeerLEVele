@@ -13,31 +13,77 @@ and open the template in the editor.
         <script src="js/customer.js"></script>
     </head>
     <body>
+        Username: <input id="username" type="text"  ><br>
+        Password: <input id="password" type="password"  ><br>
+        <button id="authenticate">Login</button>
+        <button id="logout">Logout</button><br>
+        <br><br>
+
         Name: <input id="name" type="text"  value="Mickey"><br>
-        Address: <input id="address" type="text"  ><br>
+        Country: <input id="country" type="text"><br>
+        City: <input id="city" type="text"><br>
+        Address: <input id="address" type="text"><br>
+        Postalcode: <input id="postalcode" type="text"><br>
         Email: <input id="email" type="text" ><br>
         Phone: <input id="phone" type="text"  ><br>
         Loyalty Card: <input id="loyalty" type="checkbox" ><br>
-        Discount: <input id="discount" type="text"  ><br>
-        Username: <input id="username" type="text"  ><br>
-        Password: <input id="password" type="text"  ><br>
-        <button id="authenticate">Login</button><br>
+        Discount: <input id="discount" type="text" value="0" ><br>
+        <button id="add_customer">Add customer</button><br><br>
 
-        <button id="submit">Add customer</button><br>
-        <button id="getall">Get_all</button>
-        <button id="deletecustomer">Delete</button>
-        <table id="customer_table">
-            <tr>
-                <th>
-                    Customer
-                </th>
-                <th>
-                    Delete?
-                </th>
-            </tr>
+        Customer ID to DELETE : <input id="customeridtodelete">
+        <button id="deletecustomer">Delete customer</button><br>
+        Customer ID to GET: <input id="customeridtoget">
+        <button id="getcustomer">Get customer</button><br>
+        <br>
+        <button id="getallcustomer">Get ALL customers</button><br>
+         <br>
+        Filtering: <input id="filtercustomer" ><br>
+        <button id="filterc">Get filtered customers</button><br>
+        <br>
+        
+        <br>
 
-            
-        </table>
+        Name: <input id="stockname" type="text" value="Tavoli galaxis"><br>
+        Description: <input id="stockdescription" type="text" value="Csak siman fasza."><br>
+        Type: <input id="type" type="text" value="IPA"><br>
+        Alcohol content: <input id="alcoholcontent" type="number" value="3.1"><br>
+        Bottle size: <input id="bottlesize" type="number" value="0.33"><br>
+        Purchase price: <input id="purchaseprice" type="number" value="300"><br>
+        Selling price: <input id="sellingprice" type="number" value="500"><br>
+        On stock quantity: <input id="onstockquantity" type="number" value="100"><br>
 
+        <button id="add_stock">Add product to stock</button><br>
+        <br><br>
+
+        Stock ID to DELETE: <input id="stockidtodelete">
+        <button id="deletestock">Delete Stock</button><br>
+        Stock ID to GET: <input id="stockidtoget">
+        <button id="getstock">Get stock item</button><br>
+        <br>
+        Filtering: <input id="filterstock" ><br>
+        <button id="filters">Get filtered items</button><br>
+        <br>
+
+        <button id="getallstock">Get ALL stock items</button><br><br>
+
+        <button id="getcart">Items from cart</button><br>
+        <button id="emptycart">Empty cart</button><br>
+
+        Stock ID to CART: <input id="stockidtocart" type="text"><br>
+        Stock Quantity to CART: <input id="stockquantitytocart" type="text"><br>
+        <button id="addtocart">ADD/UPDATE item to cart</button><br>
+        <button id="deletefromcart">DELETE item from cart</button><br><br>
+
+        Invoicenumber to GET: <input id="invoicenumber">
+        <button id="getinvoice">Get invoice</button><br>
+        <button id="getallinvoices">Get ALL invoices</button><br><br>
+
+        Customer ID for INVOICE: <input id="customerforinvoice">
+        <button id="closeinvoice">Close invoice</button><br><br>
+
+        <button id="stockconsumption">Stock Consumption</button><br><br>
+        <button id="profitperinvoice">Profit per invoice</button><br><br>
     </body>
+
+
 </html>

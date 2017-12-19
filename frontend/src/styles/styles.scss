@@ -1,0 +1,177 @@
+@import 'variables.scss';
+@import 'mixins.scss';
+@import url('https://fonts.googleapis.com/css?family=Titillium+Web:300,400,400i,700,700i&subset=latin-ext');
+
+body {
+  font-size: $primary-fsize;
+  line-height: $primary-lheight;
+  color: $primary-color;
+  font-family: $fontstack;
+  -webkit-font-smoothing: antialiased;
+  -moz-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-overflow-scrolling: touch;
+  text-rendering: auto;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.content-width {
+  width: 96%;
+  max-width: $content-width;
+  display: block;
+  margin: auto;
+
+  &.thin {
+    max-width: $thin-content-width;
+  }
+}
+
+.form-row {
+  &.half {
+    float:left;
+    width:48%;
+
+    &:nth-of-type(2n+2) {
+      float:right;
+    }
+  }
+  margin-bottom: 20px;
+
+  &:last-of-type {
+    margin-bottom: 0;
+  }
+
+  &.button-row {
+    margin-top:40px;
+  }
+
+  label {
+    font-weight:$bold-fweight;
+    margin-bottom:5px;
+    display:inline-block;
+  }
+
+  .checkfield {
+    margin-right:30px;
+    &:last-child {
+      margin-right:0px;
+    }
+  }
+}
+
+.address-row {
+  .zip-row {
+    width:85px;
+    float:left;
+  }
+
+  .city-row {
+    float:right;
+    width:calc(100% - 105px);
+  }
+}
+
+.clear {
+  display: block;
+  float: none;
+  clear: both;
+  width: 0;
+  height: 0;
+}
+
+.like-h1,
+.like-h2,
+.like-h3,
+h1,
+h2,
+h3 {
+  font-weight: $bold-fweight;
+  margin: 0;
+}
+
+.like-h1,
+h1 {
+  font-size: 42px;
+  line-height: 52px;
+}
+
+.like-h2,
+h2 {
+  font-size: 34px;
+  line-height: 44px;
+}
+
+.like-h3,
+h3 {
+  font-size: 26px;
+  line-height: 36px;
+}
+
+a {
+  color:$primary-color;
+  text-decoration:none;
+
+  &:hover {
+    text-decoration:underline;
+  }
+}
+
+@include below-lying-tablet {
+  .content-width {
+    width:92%;
+  }
+
+  .like-h1,
+  h1 {
+    font-size: 36px;
+    line-height: 46px;
+  }
+  
+  .like-h2,
+  h2 {
+    font-size: 28px;
+    line-height: 38px;
+  }
+  
+  .like-h3,
+  h3 {
+    font-size: 20px;
+    line-height: 30px;
+  }
+}
+
+@include mobile {
+  h1 {
+    font-size: 32px;
+    line-height: 38px;
+  }
+  
+  .like-h2,
+  h2 {
+    font-size: 24px;
+    line-height: 30px;
+  }
+  
+  .like-h3,
+  h3 {
+    font-size: 18px;
+    line-height: 24px;
+  }
+
+  .form-row {
+    margin-bottom:15px;
+
+    &.half {
+      width:100%;
+      float:none;
+    }
+
+    &.button-row {
+      .button {
+        display:block;
+        width:100%;
+      }
+    }
+  }
+}

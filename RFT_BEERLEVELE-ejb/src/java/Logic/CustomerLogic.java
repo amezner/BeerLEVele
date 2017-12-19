@@ -6,8 +6,12 @@
 package Logic;
 
 import Entities.Customer;
+import Entities.Stock;
+import Exceptions.NoSuchACustomer;
 import Facades.CustomerFacade;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 import javax.annotation.ManagedBean;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -26,8 +30,8 @@ public class CustomerLogic {
     @Inject
     CustomerFacade facade;
 
-    public void insertCustomer(String name, String address, String email, int phone, boolean loyaltycard, int discount) throws Exception {
-        Customer customer = new Customer(name, address, email, phone, loyaltycard, discount);
+    public void insertCustomer(String name, String country, String city, String address, String postalcode, String email, String phone, Boolean loyaltycard, Integer discount) throws Exception   {
+        Customer customer = new Customer(name, country, city, address, postalcode, email, phone, loyaltycard, discount);
         Logger logger = LoggerFactory.getLogger(CustomerLogic.class);
         logger.debug("Check, if the customer is persistable");
         if (CheckIfCorrectCustomer(customer) && !CheckIfDuplicatedCustomer(customer)) {
@@ -56,6 +60,21 @@ public class CustomerLogic {
 
     }
 
+    public Customer findCustomerById(int id) throws NoSuchACustomer{
+        return facade.findById(id);
+    }
+
+    
+      public List<Customer> filterCustomerByName(String searchpattern) {
+        List<Customer> allCustomer = facade.findAll();
+        List<Customer> r = new ArrayList<>();
+        String pattern = ".*" + searchpattern.toLowerCase() + ".*";
+        allCustomer.stream().filter((s) -> (Pattern.matches(pattern, s.getName().toLowerCase()))).forEach((s) -> {
+            r.add(s);
+        });
+        return r;
+    }
+    
     private boolean CheckIfCorrectCustomer(Customer customer) {
         if (customer.getLoyaltycard() == null || customer.getAddress() == null || customer.getDiscount() == null || customer.getEmail() == null || customer.getName() == null) {
             return false;

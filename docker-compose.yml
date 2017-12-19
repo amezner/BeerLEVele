@@ -1,30 +1,47 @@
 version: "3.0"
 services:
-  backend:
-    image: danida/beer_stock_for_rft_levelezo:GLASSFISH
-    ports:
-      - 4848:4848
-      - 8080:8080
+
+  backend: 
+    image: danida/beer_stock_for_rft_levelezo:GLASSFISH 
+    ports: 
+      - 4848:4848 
+      - 8080:8080 
     networks: 
       my_net: 
-          ipv4_address: 192.168.2.2
-
+        ipv4_address: 192.168.2.2 
+        
   mysql:
-    image: danida/beer_stock_for_rft_levelezo:SQL
+    image: mysql:5.6
     environment:
       MYSQL_ROOT_PASSWORD: admin
-    networks: 
-      my_net: 
+      MYSQL_DATABASE: beer_stock
+    volumes:
+      - ./beer_stock.sql:/docker-entrypoint-initdb.d/beer_stock.sql:ro
+      - ./data:/var/lib/mysql
+    ports:
+      - 3306:3306
+    networks:
+      my_net:
         ipv4_address: 192.168.2.3
 
-      
-    volumes:
-      - my-datavolume:/var/lib/mysql
-volumes:
-  my-datavolume:
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    depends_on: [mysql]
+    environment:
+      PMA_HOST: 192.168.2.3
+      PMA_USER: root
+      PMA_PASSWORD: admin
+    ports:
+      - 8081:80
+    networks:
+      my_net:
+        ipv4_address: 192.168.2.4
+
+
 networks:
   my_net:
      driver: bridge
      ipam:
-          config: 
+          config:
                - subnet: 192.168.2.0/24

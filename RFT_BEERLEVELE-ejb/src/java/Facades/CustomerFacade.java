@@ -6,6 +6,7 @@
 package Facades;
 
 import Entities.Customer;
+import Exceptions.NoSuchACustomer;
 import Interfaces.FacadeInterface;
 import java.util.List;
 import javax.ejb.LocalBean;
@@ -30,7 +31,7 @@ public class CustomerFacade implements FacadeInterface<Customer> {
 
     public void create(Customer cu) {
         Logger logger = LoggerFactory.getLogger(CustomerFacade.class);
-        logger.debug("Persist customer");
+        logger.debug("Create customer, ID : ", cu.getId());
         em.persist(cu);
     }
 
@@ -38,7 +39,7 @@ public class CustomerFacade implements FacadeInterface<Customer> {
 
     public void remove(Customer cu) {
         Logger logger = LoggerFactory.getLogger(CustomerFacade.class);
-        logger.debug("Remove customer");
+        logger.debug("Remove customer, ID : ", cu.getId());
         em.remove(cu);
     }
 
@@ -46,7 +47,7 @@ public class CustomerFacade implements FacadeInterface<Customer> {
 
     public void edit(Customer cu) {
         Logger logger = LoggerFactory.getLogger(CustomerFacade.class);
-        logger.debug("Editting customer");
+        logger.debug("Edit customer, ID : ", cu.getId());
         em.merge(cu);
     }
 
@@ -60,10 +61,13 @@ public class CustomerFacade implements FacadeInterface<Customer> {
         return em.createNamedQuery("Customer.findByName").setParameter("name", name).getResultList();
     }
 
-    public Customer findById(Integer id) {
+    public Customer findById(Integer id) throws NoSuchACustomer {
         Logger logger = LoggerFactory.getLogger(CustomerFacade.class);
         logger.debug("findCustomerbyId");
-        return (Customer) em.createNamedQuery("Customer.findById").setParameter("id", id).getResultList().get(0);
+        if (em.createNamedQuery("Customer.findById").setParameter("id", id).getResultList().isEmpty())
+            throw new NoSuchACustomer("No such a customer");
+        else
+            return (Customer) em.createNamedQuery("Customer.findById").setParameter("id", id).getResultList().get(0);
     }
 
     public List<Customer> findByEmail(String email) {

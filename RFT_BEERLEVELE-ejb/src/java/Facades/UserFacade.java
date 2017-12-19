@@ -6,6 +6,7 @@
 package Facades;
 
 import Entities.User;
+import Exceptions.NoSuchAUserException;
 import Interfaces.FacadeInterface;
 import java.util.List;
 import javax.ejb.LocalBean;
@@ -28,36 +29,47 @@ public class UserFacade implements FacadeInterface<User> {
     EntityManager em;
 
     @Override
-    public void create(User t) {
+    public void create(User user) {
         Logger logger = LoggerFactory.getLogger(UserFacade.class);
-        logger.debug("Creating user");
-        em.persist(t);
+        logger.debug("Create user, ID : ", user.getId());
+        em.persist(user);
     }
 
     @Override
-    public void remove(User t) {
+    public void remove(User user) {
         Logger logger = LoggerFactory.getLogger(UserFacade.class);
-        logger.debug("Remove user");
-        em.remove(t);
+        logger.debug("Remove user, ID : ", user.getId());
+        em.remove(user);
     }
 
     @Override
-    public void edit(User t) {
+    public void edit(User user) {
         Logger logger = LoggerFactory.getLogger(UserFacade.class);
-        logger.debug("Editting user");
-        em.merge(t);
+        logger.debug("Edit user, ID : ", user.getId());
+        em.merge(user);
     }
     public List<User> findAll(){
         Logger logger = LoggerFactory.getLogger(UserFacade.class);
         logger.debug("Listing all the users");
         return em.createNamedQuery("User.findAll").getResultList();
     }
-    public User findByUsername(String username){
+    public User findByUsername(String username) throws  NoSuchAUserException{
         Logger logger = LoggerFactory.getLogger(UserFacade.class);
         logger.debug("Finding user by username");
-        return (User)em.createNamedQuery("User.findByName").setParameter("name", username).getResultList().get(0);
-                
         
+        List result = em.createNamedQuery("User.findByName").setParameter("name", username).getResultList();
+        if (!result.isEmpty())
+            return (User)em.createNamedQuery("User.findByName").setParameter("name", username).getResultList().get(0);
+        else
+            throw new NoSuchAUserException("User does not exist!");
+        
+    }
+    
+    public User findUserById(Integer id) {
+        Logger logger = LoggerFactory.getLogger(UserFacade.class);
+        logger.debug("findUserbyId");
+        return (User) em.createNamedQuery("User.findById").setParameter("id", id).getResultList().get(0);
+
     }
 
 }

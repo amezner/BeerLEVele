@@ -8,6 +8,8 @@ package Facades;
 import Entities.Stock;
 import Interfaces.FacadeInterface;
 import java.util.List;
+import javax.ejb.LocalBean;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.slf4j.Logger;
@@ -17,26 +19,33 @@ import org.slf4j.LoggerFactory;
  *
  * @author danida
  */
+
+@LocalBean
+@Stateless
 public class StockFacade implements FacadeInterface<Stock> {
 
     @PersistenceContext(name = "RFT_BEERLEVELE-ejbPU")
     EntityManager em;
 
     @Override
-    public void create(Stock cu) {
+    public void create(Stock stock) {
         Logger logger = LoggerFactory.getLogger(StockFacade.class);
-        logger.debug("Persist stock");
-        em.persist(cu);
+        logger.debug("Create stock, ID : ", stock.getId());
+        em.persist(stock);
     }
 
     @Override
-    public void remove(Stock t) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void remove(Stock stock) {
+        Logger logger = LoggerFactory.getLogger(StockFacade.class);
+        logger.debug("Remove stock, ID : ", stock.getId());
+        em.remove(stock);    
     }
 
     @Override
-    public void edit(Stock t) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void edit(Stock stock) {
+        Logger logger = LoggerFactory.getLogger(StockFacade.class);
+        logger.debug("Edit stock, ID : ", stock.getId());
+        em.merge(stock);
     }
 
     public List<Stock> findAll() {
@@ -52,7 +61,10 @@ public class StockFacade implements FacadeInterface<Stock> {
     public Stock findStockById(Integer id) {
         Logger logger = LoggerFactory.getLogger(StockFacade.class);
         logger.debug("findStockbyId");
-        return (Stock) em.createNamedQuery("Stock.findById").setParameter("id", id).getResultList().get(0);
+        if (em.createNamedQuery("Stock.findById").setParameter("id", id).getResultList().isEmpty())
+            return null;
+        else
+            return (Stock) em.createNamedQuery("Stock.findById").setParameter("id", id).getResultList().get(0);
     }
 
     public List<Stock> findStockByPurchaseprice(Integer purchaseprice) {

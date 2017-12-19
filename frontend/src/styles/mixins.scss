@@ -1,0 +1,147 @@
+@import 'variables.scss';
+
+@mixin padding-change-breakpoint {
+  @media screen and (min-width: #{$padding-change-width}) {
+    @content;
+  }
+}
+
+@mixin lying-tablet-breakpoint{
+    @media screen and (max-width: #{$lying-tablet-width}){
+        @content;
+    }
+}
+
+@mixin below-lying-tablet{
+    @media screen and (max-width: #{$lying-tablet-width - 1px}){
+        @content;
+    }
+}
+
+@mixin below-breakpoint {
+  @media screen and (max-width: #{$tablet-breakpoint}) {
+    @content;
+  }
+}
+
+@mixin standing-tablet{
+  @media screen and (max-width: #{$tablet-breakpoint + 1px}) {
+    @content;
+  }
+}
+
+@mixin above-breakpoint {
+  @media screen and (min-width: #{$tablet-breakpoint + 1px}) {
+    @content;
+  }
+}
+
+@mixin mobile {
+  @media screen and (max-width: #{$mobile-breakpoint}) {
+    @content;
+  }
+}
+
+
+/* media queries */
+
+@mixin bgimg($name,$ext: 'png') {
+  $url: '#{$img-path}#{$name}.#{$ext}';
+  background-image: url($url);
+}
+
+@mixin background($name, $position, $size, $repeat: no-repeat){
+    $url: '#{$img-path}#{$name}';
+    background: url($url) $repeat $position / $size;
+}
+
+@mixin retina {
+  @media
+    only screen and (-webkit-min-device-pixel-ratio: 2),
+    only screen and (min--moz-device-pixel-ratio: 2),
+    only screen and (-o-min-device-pixel-ratio: 2/1),
+    only screen and (min-device-pixel-ratio: 2),
+    only screen and (min-resolution: 192dpi),
+    only screen and (min-resolution: 2dppx) {
+    @content;
+  }
+}
+
+/** transition mixin **/
+@mixin transition($transition...) {
+    -webkit-transition: $transition;
+    transition:         $transition;
+}
+
+/** animation mixin **/
+@mixin animation($animation...) {
+    -webkit-animation: $animation;
+    animation:         $animation;
+}
+
+@mixin placeholder {
+  ::-webkit-input-placeholder {@content}
+  :-moz-placeholder           {@content}
+  ::-moz-placeholder          {@content}
+  :-ms-input-placeholder      {@content}
+}
+
+@mixin selection {
+    ::selection {@content}
+    ::-moz-selection {@content}
+    :-moz-selection {@content}
+}
+
+@mixin linear-gradient($angle, $color-stops...) {
+  $_angle-with-vendor-prefix: "";
+  $_angle: "";
+  @if $angle == "to top" or $angle == "bottom" {
+    $_angle-with-vendor-prefix: bottom;
+    $_angle: to top;
+  } @else if $angle == "to right" or $angle == "left" {
+    $_angle-with-vendor-prefix: left;
+    $_angle: to right;
+  } @else if $angle == "to bottom" or $angle == "top" {
+    $_angle-with-vendor-prefix: top;
+    $_angle: to bottom;
+  } @else if $angle == "to left" or $angle == "right" {
+    $_angle-with-vendor-prefix: right;
+    $_angle: to left;
+  } @else if $angle == "to top right" or $angle == "bottom left" {
+    $_angle-with-vendor-prefix: bottom left;
+    $_angle: to top right;
+  } @else if $angle == "to bottom right" or $angle == "top left" {
+    $_angle-with-vendor-prefix: top left;
+    $_angle: to bottom right;
+  } @else if $angle == "to bottom left" or $angle == "top right" {
+    $_angle-with-vendor-prefix: top right;
+    $_angle: to bottom left;
+  } @else if $angle == "to top left" or $angle == "bottom right" {
+    $_angle-with-vendor-prefix: bottom right;
+    $_angle: to top left;
+  } @else {
+    $_angle-with-vendor-prefix: $angle % 360;
+    $_angle: (90 - $angle) % 360;
+  }
+  background: -webkit-linear-gradient($_angle-with-vendor-prefix, $color-stops);
+  background: -moz-linear-gradient($_angle-with-vendor-prefix, $color-stops);
+  background: -o-linear-gradient($_angle-with-vendor-prefix, $color-stops);
+  background: linear-gradient($_angle, $color-stops);
+}
+
+@mixin calculate($property, $calculations...) {
+  #{$property}: -webkit-calc(#{$calculations});
+  #{$property}: -moz-calc(#{$calculations});
+  #{$property}: calc(#{$calculations});
+}
+
+@mixin transform($transforms) {
+  -webkit-transform: $transforms;
+          transform: $transforms;
+}
+
+@mixin appearance ($appearance) {
+  -webkit-appearance: $appearance;
+  -moz-appearance: $appearance;
+  appearance: $appearance;
+}

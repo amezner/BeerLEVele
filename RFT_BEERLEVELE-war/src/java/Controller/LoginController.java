@@ -5,17 +5,21 @@
  */
 package Controller;
 
-import Entities.Customer;
+import Exceptions.NoSuchAUserException;
 import Helper.Authenticator;
-import java.util.List;
+import Helper.Authorizator;
+import java.security.GeneralSecurityException;
+import java.util.HashMap;
+import java.util.Map;
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
-import javax.ws.rs.FormParam;
-import javax.ws.rs.HeaderParam;
+import javax.security.auth.login.LoginException;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 
 /**
  *
@@ -26,22 +30,38 @@ import javax.ws.rs.Produces;
 @Path("authentication")
 
 public class LoginController {
-    
-    @EJB 
+
+    @EJB
     private Authenticator authenticator;
-    
-    
+    @EJB
+    private Authorizator authorizator;
+
     @Path("login")
     @POST
     @Produces("application/json")
-    public String login( @FormParam("username") String username,@FormParam("password") String password) {
-        try {
-            return authenticator.login(username, password);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return "No such a user";
-    }
-    
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Map<String, String> login(Map<String, String> map) throws LoginException, NoSuchAUserException {
 
+        String token = authenticator.login(map.get("username"), map.get("password"));
+        Map<String, String> tok = new HashMap<String, String>();
+        tok.put("username", map.get("username"));
+        tok.put("token", token);
+
+        tok.put("privilege", authorizator.getPrivilege(map.get("username")));
+        return tok;
+
+    }
+
+    @Path("logout")
+    @POST
+    @Produces("application/json")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Map<String, String> logout(Map<String, String> map) throws GeneralSecurityException {
+
+        authenticator.logout(map.get("authtoken"));
+        Map<String, String> tok = new HashMap<>();
+        tok.put("message", "Logout was successful");
+        return tok;
+
+    }
 }

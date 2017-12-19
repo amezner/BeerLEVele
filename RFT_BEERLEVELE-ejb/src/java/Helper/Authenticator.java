@@ -9,19 +9,18 @@ package Helper;
  *
  * @author danida
  */
-import Entities.User;
+import Exceptions.NoSuchAUserException;
 import Facades.UserFacade;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import java.security.GeneralSecurityException;
-import java.util.ArrayList;
-import java.util.List;
-import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.faces.bean.ManagedBean;
 import javax.inject.Inject;
 import javax.security.auth.login.LoginException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @ManagedBean
 @Stateless
@@ -29,10 +28,9 @@ import javax.security.auth.login.LoginException;
 public class Authenticator {
 
     @Inject
-     UserFacade userfacade;
+    UserFacade userfacade;
 
     private static Authenticator authenticator = null;
-
 
     // An authentication token storage which stores <service_key, auth_token>.
     private static Map<String, String> authorizationTokensStorage = new HashMap();
@@ -48,24 +46,30 @@ public class Authenticator {
         return authenticator;
     }
 
-    public String login(String username, String password) throws LoginException {
-        String storedPassword = userfacade.findByUsername(username).getPassword();
+    public String login(String username, String password) throws LoginException, NoSuchAUserException {
+        
+        Logger logger = LoggerFactory.getLogger(Authenticator.class);
+        logger.debug("Authenticator is checking the details of the user");
+        
         
 
-            if (storedPassword != null && storedPassword.equals(password) ) {
+        if (userfacade.findByUsername(username)
+                .getPassword() != null) {
 
+            if (userfacade.findByUsername(username).getPassword().equals(password)) {
                 /**
-                 * Once all params are matched, the authToken will be generated
-                 * and will be stored in the authorizationTokensStorage. The
-                 * authToken will be needed for every REST API invocation and is
-                 * only valid within the login session
+                 * Once all params are matched, the authToken will be generated and
+                 * will be stored in the authorizationTokensStorage. The authToken
+                 * will be needed for every REST API invocation and is only valid
+                 * within the login session
                  */
                 String authToken = UUID.randomUUID().toString();
-                authorizationTokensStorage.put(authToken, username);
-
+                authorizationTokensStorage.put(authToken, username.toLowerCase());
+                
                 return authToken;
-            }
-        
+            } else
+                throw new LoginException("Incorrect password!");
+        }
 
         throw new LoginException("Don't Come Here Again!");
     }
@@ -87,7 +91,7 @@ public class Authenticator {
         return false;
     }
 
-    public void logout(String authToken) throws GeneralSecurityException {
+    public String logout(String authToken) throws GeneralSecurityException {
 
         if (authorizationTokensStorage.containsKey(authToken)) {
 
@@ -96,7 +100,7 @@ public class Authenticator {
              * and will be made invalid.
              */
             authorizationTokensStorage.remove(authToken);
-            return;
+            return "Successful logout!";
 
         }
 
@@ -106,6 +110,4 @@ public class Authenticator {
     public static Map<String, String> getAuthorizationTokensStorage() {
         return authorizationTokensStorage;
     }
-    
-    
 }

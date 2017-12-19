@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "stock")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Stock.findAll", query = "SELECT s FROM Stock s")
+    @NamedQuery(name = "Stock.findAll", query = "SELECT s FROM Stock s ORDER BY s.name ASC")
     , @NamedQuery(name = "Stock.findById", query = "SELECT s FROM Stock s WHERE s.id = :id")
     , @NamedQuery(name = "Stock.findByName", query = "SELECT s FROM Stock s WHERE s.name = :name")
     , @NamedQuery(name = "Stock.findByDescription", query = "SELECT s FROM Stock s WHERE s.description = :description")
@@ -42,23 +42,51 @@ public class Stock implements Serializable {
     @Basic(optional = false)
     @Column(name = "ID")
     private Integer id;
-    @Size(max = 20)
+
+    @Size(max = 100)
     @Column(name = "name")
     private String name;
-    @Size(max = 255)
+
+    @Size(max = 1000)
     @Column(name = "description")
     private String description;
-    @Column(name = "purchaseprice")
-    private Integer purchaseprice;
-    @Column(name = "sellingprice")
-    private Integer sellingprice;
-    @Column(name = "onstockquantity")
-    private Integer onstockquantity;
+
     @Size(max = 20)
     @Column(name = "type")
     private String type;
 
+    @Column(name="alcoholcontent")    
+    private Double alcoholcontent;
+
+    @Column(name = "bottlesize")
+    private Double bottlesize;
+
+    @Column(name = "purchaseprice")
+    private Double purchaseprice;
+
+    @Column(name = "sellingprice")
+    private Double sellingprice;
+
+    @Column(name = "onstockquantity")
+    private Integer onstockquantity;
+//    @OneToMany(mappedBy = "stockid")
+//    private Collection<Invoicedproducts> invoicedproductsCollection;
+//    @OneToMany(mappedBy = "stockId")
+//    private Collection<Order1> order1Collection;
+
     public Stock() {
+    }
+
+    public Stock(String name, String description, String type, Double alcoholcontent, Double bottlesize, Double purchaseprice, Double sellingprice, Integer onstockquantity) {
+        this.name = name;
+        this.description = description;
+        this.type = type;
+        this.alcoholcontent = alcoholcontent;
+        this.bottlesize = bottlesize;
+        this.purchaseprice = purchaseprice;
+        this.sellingprice = sellingprice;
+        this.onstockquantity = onstockquantity;
+
     }
 
     public Stock(Integer id) {
@@ -73,37 +101,6 @@ public class Stock implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Integer getPurchaseprice() {
-        return purchaseprice;
-    }
-
-    public void setPurchaseprice(Integer purchaseprice) {
-        this.purchaseprice = purchaseprice;
-    }
-
-    public Integer getSellingprice() {
-        return sellingprice;
-    }
-
-    public void setSellingprice(Integer sellingprice) {
-        this.sellingprice = sellingprice;
-    }
 
     public Integer getOnstockquantity() {
         return onstockquantity;
@@ -113,13 +110,6 @@ public class Stock implements Serializable {
         this.onstockquantity = onstockquantity;
     }
 
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
 
     @Override
     public int hashCode() {
@@ -144,6 +134,82 @@ public class Stock implements Serializable {
     @Override
     public String toString() {
         return "Entities.Stock[ id=" + id + " ]";
+    }
+
+
+    public Double getPurchaseprice() {
+        return purchaseprice;
+    }
+
+    public void setPurchaseprice(Double purchaseprice) {
+        this.purchaseprice = purchaseprice;
+    }
+
+    public Double getSellingprice() {
+        return sellingprice;
+    }
+
+    public void setSellingprice(Double sellingprice) {
+        this.sellingprice = sellingprice;
+    }
+
+//    @XmlTransient
+//    public Collection<Order1> getOrder1Collection() {
+//        return order1Collection;
+//    }
+//
+//    public void setOrder1Collection(Collection<Order1> order1Collection) {
+//        this.order1Collection = order1Collection;
+//    }
+
+
+    public Double getBottlesize() {
+        return bottlesize;
+    }
+
+    public void setBottlesize(Double bottlesize) {
+        this.bottlesize = bottlesize;
+    }
+
+//    @XmlTransient
+//    public Collection<Invoicedproducts> getInvoicedproductsCollection() {
+//        return invoicedproductsCollection;
+//    }
+//
+//    public void setInvoicedproductsCollection(Collection<Invoicedproducts> invoicedproductsCollection) {
+//        this.invoicedproductsCollection = invoicedproductsCollection;
+//    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public Double getAlcoholcontent() {
+        return alcoholcontent;
+    }
+
+    public void setAlcoholcontent(Double alcoholcontent) {
+        this.alcoholcontent = alcoholcontent;
     }
     
 }

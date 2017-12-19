@@ -1,0 +1,69 @@
+@import '../../global.scss';
+
+.cart-page {
+  .cart-content {
+    margin-top:40px;
+  }
+
+  .customer-content {
+    margin-bottom:40px;
+  }
+
+  .product-content {
+    .button-row {
+      padding-top:31px;
+      margin-top:0px;
+
+      .button {
+        display:block;
+        width:100%;
+      }
+    }
+  }
+
+  .quantity-field {
+    width:88px;
+  }
+
+  .buttons-content {
+    text-align:right;
+
+    .button {
+      margin-right:25px;
+      &:last-child {
+        margin-right:0px;
+      }
+    }
+  }
+}
+
+@include mobile {
+  .cart-page {
+    .cart-content {
+      margin-top:25px;
+    }
+  
+    .customer-content {
+      margin-bottom:25px;
+    }
+
+    .product-content {
+      .button-row {
+        padding-top:0px;
+      }
+    }
+
+    .buttons-content {
+      margin-top:40px;
+      .button {
+        margin-right:0px;
+        width:100%;
+        display:block;
+        margin-bottom:15px;
+        &:last-child {
+          margin-bottom:0px;
+        }
+      }
+    }
+  }
+}
