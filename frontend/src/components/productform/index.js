@@ -44,13 +44,9 @@ class ProductForm extends Component {
           resp = await post('stock/savestock', data);
         }
         
-        if (resp) {
-          NotificationManager.success('', 'Sikeres mentés!', 3000);
-          this.props.history.push('/productlist');
-        } else {
-          NotificationManager.error('Hiba a művelet során! Van ehhez joga?', 'Sikertelen mentés!', 3000);
-          button.setDisabled(false);
-        }
+        
+        NotificationManager.success('', 'Sikeres mentés!', 3000);
+        this.props.history.push('/productlist');
       } catch (e) {
         const message = e.message != null ? e.message : 'Ismeretlen hiba';
         NotificationManager.error(message, 'Sikertelen mentés!', 3000);
